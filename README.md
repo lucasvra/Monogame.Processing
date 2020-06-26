@@ -29,6 +29,12 @@ static void Main()
 
 ## Implementation
 
+| Symbol  | Meaning                         |
+|:-------:|---------------------------------|
+|    ✅   | Implemented                     |
+|    ⬜️   | Not implemented yet             |
+|    ❌   | Probably, won't be implemented  |
+
 ### Structure
 
 - ✅ draw()
