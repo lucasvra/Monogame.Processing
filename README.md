@@ -31,19 +31,19 @@ static void Main()
 
 ### Structure
 
-- [x] draw()
-- [x] exit()
-- [x] loop()
-- [x] noLoop()
-- [x] pop()
-- [x] popStyle()
-- [x] push()
-- [x] pushStyle()
-- [x] redraw()
+- [*] draw()
+- [*] exit()
+- [*] loop()
+- [*] noLoop()
+- [*] pop()
+- [*] popStyle()
+- [*] push()
+- [*] pushStyle()
+- [*] redraw()
 - [ ] setLocation()
 - [ ] setResizable()
 - [ ] setTitle()
-- [x] setup()
+- [*] setup()
 - [ ] thread()
 
 
@@ -54,19 +54,19 @@ static void Main()
 - [ ] displayDensity()
 - [ ] focused
 - [ ] frameCount
-- [x] frameRate()
-- [x] frameRate
-- [x] fullScreen()
-- [x] height
+- [*] frameRate()
+- [*] frameRate
+- [*] fullScreen()
+- [*] height
 - [ ] noCursor()
-- [x] noSmooth()
+- [*] noSmooth()
 - [ ] pixelDensity()
 - [ ] pixelHeight
 - [ ] pixelWidth
 - [ ] settings()
-- [x] size()
-- [x] smooth()
-- [x] width
+- [*] size()
+- [*] smooth()
+- [*] width
 
 ### Conversion
 
@@ -114,23 +114,23 @@ static void Main()
 
 ### 2D Primitives
 
-- [x] arc()
-- [x] circle()
-- [x] ellipse()
-- [x] line()
-- [x] point()
-- [x] quad()
-- [x] rect()
-- [x] square()
-- [x] triangle()
+- [*] arc()
+- [*] circle()
+- [*] ellipse()
+- [*] line()
+- [*] point()
+- [*] quad()
+- [*] rect()
+- [*] square()
+- [*] triangle()
 
 ### Curves
 
-- [x] bezier()
+- [*] bezier()
 - [ ] bezierDetail()
 - [ ] bezierPoint()
 - [ ] bezierTangent()
-- [x] curve()
+- [*] curve()
 - [ ] curveDetail()
 - [ ] curvePoint()
 - [ ] curveTangent()
@@ -144,11 +144,11 @@ static void Main()
 
 ### Attributes
 
-- [x] ellipseMode()
-- [x] rectMode()
+- [*] ellipseMode()
+- [*] rectMode()
 - [ ] strokeCap()
 - [ ] strokeJoin()
-- [x] strokeWeight()
+- [*] strokeWeight()
 
 ### Vertex
 
@@ -168,27 +168,27 @@ static void Main()
 
 ### Mouse
 
-- [x] mouseButton
-- [x] mouseClicked()
-- [x] mouseDragged()
-- [x] mouseMoved()
-- [x] mousePressed()
-- [x] mousePressed
-- [x] mouseReleased()
-- [x] mouseWheel()
-- [x] mouseX
-- [x] mouseY
-- [x] pmouseX
-- [x] pmouseY
+- [*] mouseButton
+- [*] mouseClicked()
+- [*] mouseDragged()
+- [*] mouseMoved()
+- [*] mousePressed()
+- [*] mousePressed
+- [*] mouseReleased()
+- [*] mouseWheel()
+- [*] mouseX
+- [*] mouseY
+- [*] pmouseX
+- [*] pmouseY
 
 ### Keyboard
 
-- [x] key
-- [x] keyCode
-- [x] keyPressed()
-- [x] keyPressed
-- [x] keyReleased()
-- [x] keyTyped()
+- [*] key
+- [*] keyCode
+- [*] keyPressed()
+- [*] keyPressed
+- [*] keyReleased()
+- [*] keyTyped()
 
 ### Files
 
@@ -210,13 +210,13 @@ static void Main()
 
 ### Time & Date
 
-- [x] day()
-- [x] hour()
-- [x] millis()
-- [x] minute()
-- [x] month()
-- [x] second()
-- [x] year()
+- [*] day()
+- [*] hour()
+- [*] millis()
+- [*] minute()
+- [*] month()
+- [*] second()
+- [*] year()
 
 ### Text Area
 
@@ -250,18 +250,18 @@ static void Main()
 ### Transform
 
 - [ ] applyMatrix()
-- [x] popMatrix()
+- [*] popMatrix()
 - [ ] printMatrix()
-- [x] pushMatrix()
-- [x] resetMatrix()
-- [x] rotate()
-- [x] rotateX()
-- [x] rotateY()
-- [x] rotateZ()
-- [x] scale()
-- [x] shearX()
-- [x] shearY()
-- [x] translate()
+- [*] pushMatrix()
+- [*] resetMatrix()
+- [*] rotate()
+- [*] rotateX()
+- [*] rotateY()
+- [*] rotateZ()
+- [*] scale()
+- [*] shearX()
+- [*] shearY()
+- [*] translate()
 
 ### Lights, Camera
 
@@ -304,36 +304,36 @@ static void Main()
 
 ### Color Setting
 
-- [x] background()
+- [*] background()
 - [ ] clear()
 - [ ] colorMode()
-- [x] fill()
-- [x] noFill()
-- [x] noStroke()
-- [x] stroke()
+- [*] fill()
+- [*] noFill()
+- [*] noStroke()
+- [*] stroke()
 
 ### Creating & Reading
 
-- [x] alpha()
-- [x] blue()
-- [x] brightness()
-- [x] color()
-- [x] green()
-- [x] hue()
-- [x] lerpColor()
-- [x] red()
-- [x] saturation()
+- [*] alpha()
+- [*] blue()
+- [*] brightness()
+- [*] color()
+- [*] green()
+- [*] hue()
+- [*] lerpColor()
+- [*] red()
+- [*] saturation()
 
 ### Image
 
-- [x] createImage()
-- [x] PImage
+- [*] createImage()
+- [*] PImage
 
 ### Loading & Displaying
 
-- [x] image()
+- [*] image()
 - [ ] imageMode()
-- [x] loadImage()
+- [*] loadImage()
 - [ ] noTint()
 - [ ] requestImage()
 - [ ] tint()
@@ -345,13 +345,13 @@ static void Main()
 ### Pixels
 
 - [ ] blend()
-- [x] copy()
+- [*] copy()
 - [ ] filter()
-- [x] get()
-- [x] loadPixels()
-- [x] pixels[]
-- [x] set()
-- [x] updatePixels()
+- [*] get()
+- [*] loadPixels()
+- [*] pixels[]
+- [*] set()
+- [*] updatePixels()
 
 ### Rendering
 
@@ -391,53 +391,53 @@ static void Main()
 
 ### Math
 
-- [x] PVector
+- [*] PVector
 
 ### Calculation
 
-- [x] abs()
-- [x] ceil()
-- [x] constrain()
-- [x] dist()
-- [x] exp()
-- [x] floor()
-- [x] lerp()
-- [x] log()
-- [x] mag()
-- [x] map()
-- [x] max()
-- [x] min()
-- [x] norm()
-- [x] pow()
-- [x] round()
-- [x] sq()
-- [x] sqrt()
+- [*] abs()
+- [*] ceil()
+- [*] constrain()
+- [*] dist()
+- [*] exp()
+- [*] floor()
+- [*] lerp()
+- [*] log()
+- [*] mag()
+- [*] map()
+- [*] max()
+- [*] min()
+- [*] norm()
+- [*] pow()
+- [*] round()
+- [*] sq()
+- [*] sqrt()
 
 ### Trigonometry
 
-- [x] acos()
-- [x] asin()
-- [x] atan()
-- [x] atan2()
-- [x] cos()
-- [x] degrees()
-- [x] radians()
-- [x] sin()
-- [x] tan()
+- [*] acos()
+- [*] asin()
+- [*] atan()
+- [*] atan2()
+- [*] cos()
+- [*] degrees()
+- [*] radians()
+- [*] sin()
+- [*] tan()
 
 ### Random
 
 - [ ] noise()
 - [ ] noiseDetail()
 - [ ] noiseSeed()
-- [x] random()
+- [*] random()
 - [ ] randomGaussian()
-- [x] randomSeed()
+- [*] randomSeed()
 
 ### Constants
 
-- [x] HALF_PI
-- [x] PI
-- [x] QUARTER_PI
-- [x] TAU
-- [x] TWO_PI
+- [*] HALF_PI
+- [*] PI
+- [*] QUARTER_PI
+- [*] TAU
+- [*] TWO_PI
