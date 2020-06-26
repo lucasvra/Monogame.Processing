@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
 using static System.Math;
 
@@ -7,6 +8,14 @@ namespace Monogame.Processing
 {
     public abstract partial class Processing
     {
+        /// <summary>
+        /// The delay() function halts for a specified time. Delay times are specified in thousandths of a second.
+        /// For example, running delay(3000) will stop the program for three seconds and delay(500) will stop the
+        /// program for a half-second.
+        /// </summary>
+        /// <param name="napTime">int: milliseconds to pause before running draw() again</param>
+        public void delay(int napTime) => System.Threading.Thread.Sleep(napTime);
+
         public void push()
         {
             pushStyle();
@@ -22,17 +31,75 @@ namespace Monogame.Processing
 
         public void popMatrix()
         {
-            if (_matrixStack.Count > 0)
-            {
-                _matrix = _matrixStack.Pop();
-                _primitives.TransformMat = _matrix;
-            }
+            if (_matrixStack.Count <= 0) return;
+            _matrix = _matrixStack.Pop();
+            _primitives.TransformMat = _matrix;
         }
 
         public void resetMatrix()
         {
             _matrix = Matrix.Identity;
             _primitives.TransformMat = _matrix;
+        }
+
+        public void applyMatrix(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23, float n30, float n31, float n32, float n33)
+        {
+            var aux = new Matrix(n00, n01, n02, n03, n10, n11, n12, n13, n20, n21, n22, n23, n30, n31, n32, n33);
+            _matrix *= aux;
+            _primitives.TransformMat = _matrix;
+        }
+
+        public void applyMatrix(float n00, float n01, float n02, float n10, float n11, float n12)
+        {
+            applyMatrix(n00, n01, n02, 0.0f, n10, n11, n12, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        }
+
+        public void printMatrix()
+        {
+            Console.WriteLine($"{_matrix.M11: 0.0000;-0.0000}  {_matrix.M12: 0.0000;-0.0000}  {_matrix.M13: 0.0000;-0.0000}  {_matrix.M14: 0.0000;-0.0000}");
+            Console.WriteLine($"{_matrix.M21: 0.0000;-0.0000}  {_matrix.M22: 0.0000;-0.0000}  {_matrix.M23: 0.0000;-0.0000}  {_matrix.M24: 0.0000;-0.0000}");
+            Console.WriteLine($"{_matrix.M31: 0.0000;-0.0000}  {_matrix.M32: 0.0000;-0.0000}  {_matrix.M33: 0.0000;-0.0000}  {_matrix.M34: 0.0000;-0.0000}");
+            Console.WriteLine($"{_matrix.M41: 0.0000;-0.0000}  {_matrix.M42: 0.0000;-0.0000}  {_matrix.M43: 0.0000;-0.0000}  {_matrix.M44: 0.0000;-0.0000}");
+        }
+
+        /// <summary>
+        /// The print() function writes to the console area, the black rectangle at the bottom of the Processing
+        /// environment. This function is often helpful for looking at the data a program is producing.
+        /// The companion function println() works like print(), but creates a new line of text for each call to
+        /// the function. More than one parameter can be passed into the function by separating them with commas.
+        /// Alternatively, individual elements can be separated with quotes ("") and joined with the addition
+        /// operator (+).
+        /// </summary>
+        /// <param name="val"></param>
+        public void print(params object[] val)
+        {
+            if (val.Length == 0) return;
+            Console.Write(val[0]);
+            for (var i = 1; i < val.Length; i++) Console.Write($" {val[i]}");
+        }
+
+        /// <summary>
+        /// The println() function writes to the console area, the black rectangle at the bottom of the Processing environment.
+        /// This function is often helpful for looking at the data a program is producing. Each call to this function creates
+        /// a new line of output. More than one parameter can be passed into the function by separating them with commas.
+        /// Alternatively, individual elements can be separated with quotes ("") and joined with the addition operator (+).
+        /// </summary>
+        /// <param name="val"></param>
+        public void printLn(params object[] val)
+        {
+            print(val);
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// The printArray() function writes array data to the text area of the Processing environment's
+        /// console. A new line is put between each element of the array. This function can only print one
+        /// dimensional arrays.
+        /// </summary>
+        /// <param name="array"></param>
+        public void printArray(object[] array)
+        {
+            for (int i = 0; i < array.Length; i++) Console.WriteLine($"[{i}] {array[i]}");
         }
 
         public void pushStyle() => _styleStack.Push(_style);
@@ -337,6 +404,7 @@ namespace Monogame.Processing
                 ShapeMode.RADIUS => (a + c, b + d, c * 2, d * 2),
                 ShapeMode.CORNER => (a, b, c, d),
                 ShapeMode.CORNERS => (a, b, c - a, d - b),
+                _ => throw new ArgumentOutOfRangeException()
             };
 
             var rx = w / 2;
@@ -379,6 +447,7 @@ namespace Monogame.Processing
                 ShapeMode.RADIUS => (a + c, b + d, c * 2, d * 2),
                 ShapeMode.CORNER => (a, b, c, d),
                 ShapeMode.CORNERS => (a, b, c - a, d - b),
+                _ => throw new ArgumentOutOfRangeException()
             };
 
             var rx = w / 2;
@@ -386,7 +455,7 @@ namespace Monogame.Processing
             var center = new Vector2(x + rx, y + ry);
 
             if (_style.Fill.A != 0) _primitives.FillEllipse(center, rx, ry, _style.Fill);
-            if (_style.Stroke.A != 0) _primitives.DrawEllipse(center + 0.5f * Vector2.One, rx, ry, _style.Stroke, _style.StrokeWidth);
+            if (_style.Stroke.A != 0) _primitives.DrawEllipse(center, rx, ry, _style.Stroke, _style.StrokeWidth);
 
         }
 
@@ -422,7 +491,7 @@ namespace Monogame.Processing
             };
 
             if (_style.Fill.A != 0) _primitives.FillRectangle(x, y, w, h, _style.Fill);
-            if (_style.Stroke.A != 0) _primitives.DrawRectangle(x - _style.StrokeWidth / 2, y - _style.StrokeWidth / 2, w + _style.StrokeWidth, h + _style.StrokeWidth, _style.Stroke, _style.StrokeWidth);
+            if (_style.Stroke.A != 0) _primitives.DrawRectangle(x, y, w, h, _style.Stroke, _style.StrokeWidth);
         }
 
 
@@ -1106,6 +1175,88 @@ namespace Monogame.Processing
         public float brightness(color c) => c.HSL().l;
         public float saturation(color c) => c.HSL().s;
         public color lerpColor(color c1, color c2, float amt) => Color.Lerp(c1, c2, amt);
+
+        #endregion
+
+        #region String Functions
+
+        public string join(string[] list, string separator) => list.Skip(1).Aggregate(list[0], (str, acc) => acc + separator + str);
+
+        public string[] split(string value, string delim) => value.Split(new []{delim}, StringSplitOptions.RemoveEmptyEntries);
+
+        public string[] splitTokens(string value, string[] delim) => value.Split(delim, StringSplitOptions.RemoveEmptyEntries);
+
+        public string[] splitTokens(string value) => value.Split(' ', '\n', '\r', '\t', '\f');
+
+        public string[] trim(string[] array) => array.Select(str => str.Trim()).ToArray();
+
+        public string trim(string str) =>  str.Trim();
+
+        public string nf(double num, int left, int right = 0) => ((int) num).ToString($"D{left}") + ((right == 0) ? "" : "." + (int) (Pow(10, right) * (num - (int) num)));
+
+        public string[] nf(double[] nums, int left, int right = 0) => nums.Select(num => nf(num, left, right)).ToArray();
+
+        public string nfc(double num, int right) => num.ToString($"N{right}");
+
+        public string[] nfc(double[] nums, int right) => nums.Select(num => nfc(num, right)).ToArray();
+
+        public string nfp(double num, int left, int right = 0) => (num >= 0 ? "+" : "-") + nf(Math.Abs(num), left, right);
+
+        public string[] nfp(double[] nums, int left, int right = 0) => nums.Select(num => nfp(num, left, right)).ToArray();
+
+        public string nfs(double num, int left, int right = 0) => (num >= 0 ? " " : "-") + nf(Math.Abs(num), left, right);
+
+        public string[] nfs(double[] nums, int left, int right = 0) => nums.Select(num => nfs(num, left, right)).ToArray();
+
+        public string[] match(string str, string regexp)
+        {
+            var matches = Regex.Matches(str, regexp);
+            if (matches.Count == 0) return null;
+
+            return Enumerable.Range(0, matches[0].Groups.Count).Select(i => matches[0].Groups[i].Value).ToArray();
+        }
+
+        public string[][] matchAll(string str, string regexp)
+        {
+            var matches = Regex.Matches(str, regexp);
+            if (matches.Count == 0) return null;
+
+            return Enumerable.Range(0, matches.Count).Select(i => matches[i]).Select(match =>
+                Enumerable.Range(0, match.Groups.Count).Select(i => match.Groups[i].Value).ToArray()).ToArray();
+        }
+
+        #endregion
+
+        #region Array Functions
+
+        public T[] append<T>(T[] array, T value) => array.Append(value).ToArray();
+
+        public void arrayCopy<T>(T[] src, int srcPosition, T[] dst, int dstPosition, int length) =>
+            Array.ConstrainedCopy(src, srcPosition, dst, dstPosition, length);
+
+        public void arrayCopy<T>(T[] src, T[] dst, int length) => arrayCopy(src, 0, dst, 0, length);
+        public void arrayCopy<T>(T[] src, T[] dst) => arrayCopy(src, 0, dst, 0, src.Length);
+
+        public T[] concat<T>(T[] a, T[] b) => a.Concat(b).ToArray();
+
+        public T[] expand<T>(T[] list, int newSize = -1)
+        {
+            newSize = newSize < 0 ? list.Length * 2 : newSize;
+
+            var newList = new T[newSize];
+            list.CopyTo(newList, 0);
+            return newList;
+        }
+
+        public T[] reverse<T>(T[] list) => list.Reverse().ToArray();
+        public T[] shorten<T>(T[] list) => list.Take(list.Length - 1).ToArray();
+        public T[] sort<T>(T[] list, int count) => list.Take(count).OrderBy(e => e).Concat(list.Skip(count)).ToArray();
+        public T[] sort<T>(T[] list) => list.OrderBy(e => e).ToArray();
+
+        public T[] splice<T>(T[] list, T[] value, int index) => list.Take(index).Concat(value).Concat(list.Skip(index)).ToArray();
+
+        public T[] subset<T>(T[] list, int start, int count) => list.Skip(start).Take(count).ToArray();
+        public T[] subset<T>(T[] list, int start) => list.Skip(start).ToArray();
 
         #endregion
     }

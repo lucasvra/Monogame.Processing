@@ -113,6 +113,14 @@ namespace Monogame.Processing
 
         public virtual void KeyTyped(Keys pkey) { }
 
+        SamplerState ss_ansiostropic_clamp = new SamplerState()
+        {
+            Filter = TextureFilter.Anisotropic,
+            AddressU = TextureAddressMode.Clamp,
+            AddressV = TextureAddressMode.Clamp,
+            AddressW = TextureAddressMode.Clamp,
+        };
+
         protected Processing()
         {
             surface = new Surface(Window);
@@ -136,15 +144,13 @@ namespace Monogame.Processing
                 PreferredBackBufferHeight = height
             };
 
-            _graphics.ApplyChanges();
-
             IsMouseVisible = true;
             IsFixedTimeStep = true;
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            size(Window.ClientBounds.Width, Window.ClientBounds.Width);
+            if(Window.AllowUserResizing) size(Window.ClientBounds.Width, Window.ClientBounds.Height);
         }
 
         protected override void Update(GameTime gameTime)
@@ -155,8 +161,12 @@ namespace Monogame.Processing
         protected override void LoadContent()
         {
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            GraphicsDevice.SamplerStates[0] = ss_ansiostropic_clamp;
+            GraphicsDevice.PresentationParameters.MultiSampleCount = 8;
 
-            
+            _graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            _graphics.ApplyChanges();
+
             _primitives = new Primitives(GraphicsDevice);
             PImage.graphicsDevice = GraphicsDevice;
             PImage.spriteBatch = _primitives.SpriteBatch;

@@ -16,9 +16,10 @@ namespace Worm
 
         public override void Setup()
         {
-            fullScreen();
+            //fullScreen();
+            size(600, 600);
             background(255);
-        }
+            }
 
         public override void Draw()
         {

@@ -22,7 +22,7 @@ namespace Monogame.Processing
 
         public Primitives(GraphicsDevice device)
         {
-            Sides = 60;
+            Sides = 30;
             TransformMat = Matrix.Identity;
 
             _device = device;
@@ -49,15 +49,18 @@ namespace Monogame.Processing
             SpriteBatch.End();
         }
 
-        private void DrawPoints(Vector2 position, List<Vector2> points, Color color, float thickness)
+        private void DrawPoints(Vector2 position, IReadOnlyList<Vector2> points, Color color, float thickness)
         {
             if (points.Count < 2) return;
-            for (var i = 1; i < points.Count; i++)
+
+            var lines = Enumerable.Range(1, points.Count - 1).Select(i =>
             {
                 var (x1, y1) = points[i - 1] + position;
                 var (x2, y2) = points[i] + position;
-                DrawLine(x1, y1, x2, y2, color, thickness);
-            }
+                return (x1, y1, x2, y2);
+            });
+
+            DrawLine(lines, color, thickness);
         }
 
         public void FillTriangle(IEnumerable<(Vector2 v1, Vector2 v2, Vector2 v3)> triangles, Color color)
@@ -229,20 +232,19 @@ namespace Monogame.Processing
             FillTriangles(Vector2.Zero, triangles, color);
         }
 
-        public void DrawLine(float x1, float y1, float x2, float y2, Color color, float thickness)
+        public void DrawLine(IEnumerable<(float x1, float y1, float x2, float y2)> lines, Color color, float thickness)
         {
-            var (point1, point2) = (new Vector2(x1, y1), new Vector2(x2, y2));
+            var points =  lines.Select(l => (p1: new Vector2(l.x1, l.y1), p2: new Vector2(l.x2, l.y2)))
+                .Select(p => (p1: p.p1, distance: Vector2.Distance(p.p1, p.p2), angle: (float) Atan2(p.p2.Y - p.p1.Y, p.p2.X - p.p1.X)))
+                .ToArray();
 
-            point1 = Vector2.Transform(point1, TransformMat);
-            point2 = Vector2.Transform(point2, TransformMat);
-
-            var distance = Vector2.Distance(point1, point2);
-            var angle = (float)Atan2(point2.Y - point1.Y, point2.X - point1.X);
-
-                SpriteBatch.Begin();
-                SpriteBatch.Draw(Pixel, point1, null, color, angle, Vector2.Zero, new Vector2(distance, thickness), SpriteEffects.None, 0);
-                SpriteBatch.End();
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, TransformMat);
+            foreach (var l in points) 
+                SpriteBatch.Draw(Pixel, l.p1, null, color, l.angle, new Vector2(0, 0.5f), new Vector2(l.distance, thickness), SpriteEffects.None, 0);
+            SpriteBatch.End();
         }
+
+        public void DrawLine(float x1, float y1, float x2, float y2, Color color, float thickness) => DrawLine(new[] {(x1, y1, x2, y2)}, color, thickness);
 
         public void DrawEllipse(Vector2 center, float radiusx, float radiusy, Color color, float thickness) =>
             DrawPoints(center, CreateEllipsePoints(radiusx, radiusy), color, thickness);
