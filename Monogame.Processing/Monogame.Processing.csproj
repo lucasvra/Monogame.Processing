@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+    <Version>0.1.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright></Copyright>
+    <Authors>Lucas Alves</Authors>
+    <PackageTags>monogame, game, processing</PackageTags>
+    <PackageReleaseNotes>- Most 2D Primitives are implemented, but the drawing functions need optimization for better performance.
+- Some types as color, PImage and PVector are partially implemented.
+- Many implemented functions were not tested, so but could occur.</PackageReleaseNotes>
+    <Description>A library that implements Processing Language functions for 2D graphics on Monogame</Description>
+    <RepositoryUrl>https://github.com/lucasvra/Monogame.Processing</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageProjectUrl>https://github.com/lucasvra/Monogame.Processing</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
+  </ItemGroup>
+
+</Project>
