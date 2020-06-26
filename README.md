@@ -31,413 +31,415 @@ static void Main()
 
 ### Structure
 
-- [x] draw()
-- [x] exit()
-- [x] loop()
-- [x] noLoop()
-- [x] pop()
-- [x] popStyle()
-- [x] push()
-- [x] pushStyle()
-- [x] redraw()
-- [ ] setLocation()
-- [ ] setResizable()
-- [ ] setTitle()
-- [x] setup()
-- [ ] thread()
+✅ draw()
+✅ exit()
+✅ loop()
+✅ noLoop()
+✅ pop()
+✅ popStyle()
+✅ push()
+✅ pushStyle()
+✅ redraw()
+⬜️ setLocation()
+⬜️ setResizable()
+⬜️ setTitle()
+✅ setup()
+⬜️ thread()
 
 
 ### Environment
 
-- [ ] cursor()
-- [ ] delay()
-- [ ] displayDensity()
-- [ ] focused
-- [ ] frameCount
-- [x] frameRate()
-- [x] frameRate
-- [x] fullScreen()
-- [x] height
-- [ ] noCursor()
-- [x] noSmooth()
-- [ ] pixelDensity()
-- [ ] pixelHeight
-- [ ] pixelWidth
-- [ ] settings()
-- [x] size()
-- [x] smooth()
-- [x] width
+⬜️ cursor()
+⬜️ delay()
+⬜️ displayDensity()
+⬜️ focused
+⬜️ frameCount
+✅ frameRate()
+✅ frameRate
+✅ fullScreen()
+✅ height
+⬜️ noCursor()
+✅ noSmooth()
+⬜️ pixelDensity()
+⬜️ pixelHeight
+⬜️ pixelWidth
+⬜️ settings()
+✅ size()
+✅ smooth()
+✅ width
 
 ### Conversion
 
-- [ ] binary()
-- [ ] boolean()
-- [ ] byte()
-- [ ] char()
-- [ ] float()
-- [ ] hex()
-- [ ] int()
-- [ ] str()
-- [ ] unbinary()
-- [ ] unhex()
+⬜️ binary()
+⬜️ boolean()
+⬜️ byte()
+⬜️ char()
+⬜️ float()
+⬜️ hex()
+⬜️ int()
+⬜️ str()
+⬜️ unbinary()
+⬜️ unhex()
 
 ### String Functions
 
-- [ ] join()
-- [ ] match()
-- [ ] matchAll()
-- [ ] nf()
-- [ ] nfc()
-- [ ] nfp()
-- [ ] nfs()
-- [ ] split()
-- [ ] splitTokens()
-- [ ] trim()
+⬜️ join()
+⬜️ match()
+⬜️ matchAll()
+⬜️ nf()
+⬜️ nfc()
+⬜️ nfp()
+⬜️ nfs()
+⬜️ split()
+⬜️ splitTokens()
+⬜️ trim()
 
 ### Array Functions
 
-- [ ] append()
-- [ ] arrayCopy()
-- [ ] concat()
-- [ ] expand()
-- [ ] reverse()
-- [ ] shorten()
-- [ ] sort()
-- [ ] splice()
-- [ ] subset()
+⬜️ append()
+⬜️ arrayCopy()
+⬜️ concat()
+⬜️ expand()
+⬜️ reverse()
+⬜️ shorten()
+⬜️ sort()
+⬜️ splice()
+⬜️ subset()
 
 ### Shape
 
-- [ ] createShape()
-- [ ] loadShape()
-- [ ] PShape
+⬜️ createShape()
+⬜️ loadShape()
+⬜️ PShape
 
 ### 2D Primitives
 
-- [x] arc()
-- [x] circle()
-- [x] ellipse()
-- [x] line()
-- [x] point()
-- [x] quad()
-- [x] rect()
-- [x] square()
-- [x] triangle()
+✅ arc()
+✅ circle()
+✅ ellipse()
+✅ line()
+✅ point()
+✅ quad()
+✅ rect()
+✅ square()
+✅ triangle()
 
 ### Curves
 
-- [x] bezier()
-- [ ] bezierDetail()
-- [ ] bezierPoint()
-- [ ] bezierTangent()
-- [x] curve()
-- [ ] curveDetail()
-- [ ] curvePoint()
-- [ ] curveTangent()
-- [ ] curveTightness()
+✅ bezier()
+⬜️ bezierDetail()
+⬜️ bezierPoint()
+⬜️ bezierTangent()
+✅ curve()
+⬜️ curveDetail()
+⬜️ curvePoint()
+⬜️ curveTangent()
+⬜️ curveTightness()
 
 ### 3D Primitives
 
-- [ ] box()
-- [ ] sphere()
-- [ ] sphereDetail()
+❌ box()
+❌ sphere()
+❌ sphereDetail()
 
 ### Attributes
 
-- [x] ellipseMode()
-- [x] rectMode()
-- [ ] strokeCap()
-- [ ] strokeJoin()
-- [x] strokeWeight()
+✅ ellipseMode()
+✅ rectMode()
+⬜️ strokeCap()
+⬜️ strokeJoin()
+✅ strokeWeight()
 
 ### Vertex
 
-- [ ] beginContour()
-- [ ] beginShape()
-- [ ] bezierVertex()
-- [ ] curveVertex()
-- [ ] endContour()
-- [ ] endShape()
-- [ ] quadraticVertex()
-- [ ] vertex()
+⬜️ beginContour()
+⬜️ beginShape()
+⬜️ bezierVertex()
+⬜️ curveVertex()
+⬜️ endContour()
+⬜️ endShape()
+⬜️ quadraticVertex()
+⬜️ vertex()
 
 ### Loading & Displaying
 
-- [ ] shape()
-- [ ] shapeMode()
+⬜️ shape()
+⬜️ shapeMode()
 
 ### Mouse
 
-- [x] mouseButton
-- [x] mouseClicked()
-- [x] mouseDragged()
-- [x] mouseMoved()
-- [x] mousePressed()
-- [x] mousePressed
-- [x] mouseReleased()
-- [x] mouseWheel()
-- [x] mouseX
-- [x] mouseY
-- [x] pmouseX
-- [x] pmouseY
+✅ mouseButton
+✅ mouseClicked()
+✅ mouseDragged()
+✅ mouseMoved()
+✅ mousePressed()
+✅ mousePressed
+✅ mouseReleased()
+✅ mouseWheel()
+✅ mouseX
+✅ mouseY
+✅ pmouseX
+✅ pmouseY
 
 ### Keyboard
 
-- [x] key
-- [x] keyCode
-- [x] keyPressed()
-- [x] keyPressed
-- [x] keyReleased()
-- [x] keyTyped()
+✅ key
+✅ keyCode
+✅ keyPressed()
+✅ keyPressed
+✅ keyReleased()
+✅ keyTyped()
 
 ### Files
 
-- [ ] BufferedReader
-- [ ] createInput()
-- [ ] createReader()
-- [ ] launch()
-- [ ] loadBytes()
-- [ ] loadJSONArray()
-- [ ] loadJSONObject()
-- [ ] loadStrings()
-- [ ] loadTable()
-- [ ] loadXML()
-- [ ] parseJSONArray()
-- [ ] parseJSONObject()
-- [ ] parseXML()
-- [ ] selectFolder()
-- [ ] selectInput()
+⬜️ BufferedReader
+⬜️ createInput()
+⬜️ createReader()
+⬜️ launch()
+⬜️ loadBytes()
+⬜️ loadJSONArray()
+⬜️ loadJSONObject()
+⬜️ loadStrings()
+⬜️ loadTable()
+⬜️ loadXML()
+⬜️ parseJSONArray()
+⬜️ parseJSONObject()
+⬜️ parseXML()
+⬜️ selectFolder()
+⬜️ selectInput()
 
 ### Time & Date
 
-- [x] day()
-- [x] hour()
-- [x] millis()
-- [x] minute()
-- [x] month()
-- [x] second()
-- [x] year()
+✅ day()
+✅ hour()
+✅ millis()
+✅ minute()
+✅ month()
+✅ second()
+✅ year()
 
 ### Text Area
 
-- [ ] print()
-- [ ] printArray()
-- [ ] println()
+⬜️ print()
+⬜️ printArray()
+⬜️ println()
 
 ### Image
 
-- [ ] save()
-- [ ] saveFrame()
+⬜️ save()
+⬜️ saveFrame()
 
 ### Files
 
-- [ ] beginRaw()
-- [ ] beginRecord()
-- [ ] createOutput()
-- [ ] createWriter()
-- [ ] endRaw()
-- [ ] endRecord()
-- [ ] PrintWriter
-- [ ] saveBytes()
-- [ ] saveJSONArray()
-- [ ] saveJSONObject()
-- [ ] saveStream()
-- [ ] saveStrings()
-- [ ] saveTable()
-- [ ] saveXML()
-- [ ] selectOutput()
+⬜️ beginRaw()
+⬜️ beginRecord()
+⬜️ createOutput()
+⬜️ createWriter()
+⬜️ endRaw()
+⬜️ endRecord()
+⬜️ PrintWriter
+⬜️ saveBytes()
+⬜️ saveJSONArray()
+⬜️ saveJSONObject()
+⬜️ saveStream()
+⬜️ saveStrings()
+⬜️ saveTable()
+⬜️ saveXML()
+⬜️ selectOutput()
 
 ### Transform
 
-- [ ] applyMatrix()
-- [x] popMatrix()
-- [ ] printMatrix()
-- [x] pushMatrix()
-- [x] resetMatrix()
-- [x] rotate()
-- [x] rotateX()
-- [x] rotateY()
-- [x] rotateZ()
-- [x] scale()
-- [x] shearX()
-- [x] shearY()
-- [x] translate()
+⬜️ applyMatrix()
+✅ popMatrix()
+⬜️ printMatrix()
+✅ pushMatrix()
+✅ resetMatrix()
+✅ rotate()
+✅ rotateX()
+✅ rotateY()
+✅ rotateZ()
+✅ scale()
+✅ shearX()
+✅ shearY()
+✅ translate()
 
 ### Lights, Camera
 
-- [ ] ambientLight()
-- [ ] directionalLight()
-- [ ] lightFalloff()
-- [ ] lights()
-- [ ] lightSpecular()
-- [ ] noLights()
-- [ ] normal()
-- [ ] pointLight()
-- [ ] spotLight()
+❌ ambientLight()
+❌ directionalLight()
+❌ lightFalloff()
+❌ lights()
+❌ lightSpecular()
+❌ noLights()
+❌ normal()
+❌ pointLight()
+❌ spotLight()
 
 ### Camera
 
-- [ ] beginCamera()
-- [ ] camera()
-- [ ] endCamera()
-- [ ] frustum()
-- [ ] ortho()
-- [ ] perspective()
-- [ ] printCamera()
-- [ ] printProjection()
+❌ beginCamera()
+❌ camera()
+❌ endCamera()
+❌ frustum()
+❌ ortho()
+❌ perspective()
+❌ printCamera()
+❌ printProjection()
 
 ### Coordinates
 
-- [ ] modelX()
-- [ ] modelY()
-- [ ] modelZ()
-- [ ] screenX()
-- [ ] screenY()
-- [ ] screenZ()
+⬜️ modelX()
+⬜️ modelY()
+⬜️ modelZ()
+⬜️ screenX()
+⬜️ screenY()
+⬜️ screenZ()
 
 ### Material Properties
 
-- [ ] ambient()
-- [ ] emissive()
-- [ ] shininess()
-- [ ] specular()
+❌ ambient()
+❌ emissive()
+❌ shininess()
+❌ specular()
 
 ### Color Setting
 
-- [x] background()
-- [ ] clear()
-- [ ] colorMode()
-- [x] fill()
-- [x] noFill()
-- [x] noStroke()
-- [x] stroke()
+✅ background()
+⬜️ clear()
+⬜️ colorMode()
+✅ fill()
+✅ noFill()
+✅ noStroke()
+✅ stroke()
 
 ### Creating & Reading
 
-- [x] alpha()
-- [x] blue()
-- [x] brightness()
-- [x] color()
-- [x] green()
-- [x] hue()
-- [x] lerpColor()
-- [x] red()
-- [x] saturation()
+✅ alpha()
+✅ blue()
+✅ brightness()
+✅ color()
+✅ green()
+✅ hue()
+✅ lerpColor()
+✅ red()
+✅ saturation()
 
 ### Image
 
-- [x] createImage()
-- [x] PImage
+✅ createImage()
+✅ PImage
 
 ### Loading & Displaying
 
-- [x] image()
-- [ ] imageMode()
-- [x] loadImage()
-- [ ] noTint()
-- [ ] requestImage()
-- [ ] tint()
-- [ ] Textures
-- [ ] texture()
-- [ ] textureMode()
-- [ ] textureWrap()
+✅ image()
+⬜️ imageMode()
+✅ loadImage()
+⬜️ noTint()
+⬜️ requestImage()
+⬜️ tint()
+⬜️ Textures
+⬜️ texture()
+⬜️ textureMode()
+⬜️ textureWrap()
 
 ### Pixels
 
-- [ ] blend()
-- [x] copy()
-- [ ] filter()
-- [x] get()
-- [x] loadPixels()
-- [x] pixels[]
-- [x] set()
-- [x] updatePixels()
+⬜️ blend()
+✅ copy()
+⬜️ filter()
+✅ get()
+✅ loadPixels()
+✅ pixels[]
+✅ set()
+✅ updatePixels()
 
 ### Rendering
 
-- [ ] blendMode()
-- [ ] clip()
-- [ ] createGraphics()
-- [ ] hint()
-- [ ] noClip()
-- [ ] PGraphics
-- [ ] Shaders
-- [ ] loadShader()
-- [ ] PShader
-- [ ] resetShader()
-- [ ] shader()
-- [ ] Typography
-- [ ] PFont
+⬜️ blendMode()
+⬜️ clip()
+⬜️ createGraphics()
+⬜️ hint()
+⬜️ noClip()
+⬜️ PGraphics
+⬜️ Shaders
+⬜️ loadShader()
+⬜️ PShader
+⬜️ resetShader()
+⬜️ shader()
+
+### Typography
+
+⬜️ PFont
 
 ### Loading & Displaying
 
-- [ ] createFont()
-- [ ] loadFont()
-- [ ] text()
-- [ ] textFont()
+⬜️ createFont()
+⬜️ loadFont()
+⬜️ text()
+⬜️ textFont()
 
 ### Attributes
 
-- [ ] textAlign()
-- [ ] textLeading()
-- [ ] textMode()
-- [ ] textSize()
-- [ ] textWidth()
+⬜️ textAlign()
+⬜️ textLeading()
+⬜️ textMode()
+⬜️ textSize()
+⬜️ textWidth()
 
 ### Metrics
 
-- [ ] textAscent()
-- [ ] textDescent()
+⬜️ textAscent()
+⬜️ textDescent()
 
 ### Math
 
-- [x] PVector
+✅ PVector
 
 ### Calculation
 
-- [x] abs()
-- [x] ceil()
-- [x] constrain()
-- [x] dist()
-- [x] exp()
-- [x] floor()
-- [x] lerp()
-- [x] log()
-- [x] mag()
-- [x] map()
-- [x] max()
-- [x] min()
-- [x] norm()
-- [x] pow()
-- [x] round()
-- [x] sq()
-- [x] sqrt()
+✅ abs()
+✅ ceil()
+✅ constrain()
+✅ dist()
+✅ exp()
+✅ floor()
+✅ lerp()
+✅ log()
+✅ mag()
+✅ map()
+✅ max()
+✅ min()
+✅ norm()
+✅ pow()
+✅ round()
+✅ sq()
+✅ sqrt()
 
 ### Trigonometry
 
-- [x] acos()
-- [x] asin()
-- [x] atan()
-- [x] atan2()
-- [x] cos()
-- [x] degrees()
-- [x] radians()
-- [x] sin()
-- [x] tan()
+✅ acos()
+✅ asin()
+✅ atan()
+✅ atan2()
+✅ cos()
+✅ degrees()
+✅ radians()
+✅ sin()
+✅ tan()
 
 ### Random
 
-- [ ] noise()
-- [ ] noiseDetail()
-- [ ] noiseSeed()
-- [x] random()
-- [ ] randomGaussian()
-- [x] randomSeed()
+⬜️ noise()
+⬜️ noiseDetail()
+⬜️ noiseSeed()
+✅ random()
+⬜️ randomGaussian()
+✅ randomSeed()
 
 ### Constants
 
-- [x] HALF_PI
-- [x] PI
-- [x] QUARTER_PI
-- [x] TAU
-- [x] TWO_PI
+✅ HALF_PI
+✅ PI
+✅ QUARTER_PI
+✅ TAU
+✅ TWO_PI
