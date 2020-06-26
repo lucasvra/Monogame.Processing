@@ -31,415 +31,415 @@ static void Main()
 
 ### Structure
 
-✅ draw()
-✅ exit()
-✅ loop()
-✅ noLoop()
-✅ pop()
-✅ popStyle()
-✅ push()
-✅ pushStyle()
-✅ redraw()
-⬜️ setLocation()
-⬜️ setResizable()
-⬜️ setTitle()
-✅ setup()
-⬜️ thread()
+- ✅ draw()
+- ✅ exit()
+- ✅ loop()
+- ✅ noLoop()
+- ✅ pop()
+- ✅ popStyle()
+- ✅ push()
+- ✅ pushStyle()
+- ✅ redraw()
+- ⬜️ setLocation()
+- ⬜️ setResizable()
+- ⬜️ setTitle()
+- ✅ setup()
+- ⬜️ thread()
 
 
 ### Environment
 
-⬜️ cursor()
-⬜️ delay()
-⬜️ displayDensity()
-⬜️ focused
-⬜️ frameCount
-✅ frameRate()
-✅ frameRate
-✅ fullScreen()
-✅ height
-⬜️ noCursor()
-✅ noSmooth()
-⬜️ pixelDensity()
-⬜️ pixelHeight
-⬜️ pixelWidth
-⬜️ settings()
-✅ size()
-✅ smooth()
-✅ width
+- ⬜️ cursor()
+- ⬜️ delay()
+- ⬜️ displayDensity()
+- ⬜️ focused
+- ⬜️ frameCount
+- ✅ frameRate()
+- ✅ frameRate
+- ✅ fullScreen()
+- ✅ height
+- ⬜️ noCursor()
+- ✅ noSmooth()
+- ⬜️ pixelDensity()
+- ⬜️ pixelHeight
+- ⬜️ pixelWidth
+- ⬜️ settings()
+- ✅ size()
+- ✅ smooth()
+- ✅ width
 
 ### Conversion
 
-⬜️ binary()
-⬜️ boolean()
-⬜️ byte()
-⬜️ char()
-⬜️ float()
-⬜️ hex()
-⬜️ int()
-⬜️ str()
-⬜️ unbinary()
-⬜️ unhex()
+- ⬜️ binary()
+- ⬜️ boolean()
+- ⬜️ byte()
+- ⬜️ char()
+- ⬜️ float()
+- ⬜️ hex()
+- ⬜️ int()
+- ⬜️ str()
+- ⬜️ unbinary()
+- ⬜️ unhex()
 
 ### String Functions
 
-⬜️ join()
-⬜️ match()
-⬜️ matchAll()
-⬜️ nf()
-⬜️ nfc()
-⬜️ nfp()
-⬜️ nfs()
-⬜️ split()
-⬜️ splitTokens()
-⬜️ trim()
+- ⬜️ join()
+- ⬜️ match()
+- ⬜️ matchAll()
+- ⬜️ nf()
+- ⬜️ nfc()
+- ⬜️ nfp()
+- ⬜️ nfs()
+- ⬜️ split()
+- ⬜️ splitTokens()
+- ⬜️ trim()
 
 ### Array Functions
 
-⬜️ append()
-⬜️ arrayCopy()
-⬜️ concat()
-⬜️ expand()
-⬜️ reverse()
-⬜️ shorten()
-⬜️ sort()
-⬜️ splice()
-⬜️ subset()
+- ⬜️ append()
+- ⬜️ arrayCopy()
+- ⬜️ concat()
+- ⬜️ expand()
+- ⬜️ reverse()
+- ⬜️ shorten()
+- ⬜️ sort()
+- ⬜️ splice()
+- ⬜️ subset()
 
 ### Shape
 
-⬜️ createShape()
-⬜️ loadShape()
-⬜️ PShape
+- ⬜️ createShape()
+- ⬜️ loadShape()
+- ⬜️ PShape
 
 ### 2D Primitives
 
-✅ arc()
-✅ circle()
-✅ ellipse()
-✅ line()
-✅ point()
-✅ quad()
-✅ rect()
-✅ square()
-✅ triangle()
+- ✅ arc()
+- ✅ circle()
+- ✅ ellipse()
+- ✅ line()
+- ✅ point()
+- ✅ quad()
+- ✅ rect()
+- ✅ square()
+- ✅ triangle()
 
 ### Curves
 
-✅ bezier()
-⬜️ bezierDetail()
-⬜️ bezierPoint()
-⬜️ bezierTangent()
-✅ curve()
-⬜️ curveDetail()
-⬜️ curvePoint()
-⬜️ curveTangent()
-⬜️ curveTightness()
+- ✅ bezier()
+- ⬜️ bezierDetail()
+- ⬜️ bezierPoint()
+- ⬜️ bezierTangent()
+- ✅ curve()
+- ⬜️ curveDetail()
+- ⬜️ curvePoint()
+- ⬜️ curveTangent()
+- ⬜️ curveTightness()
 
 ### 3D Primitives
 
-❌ box()
-❌ sphere()
-❌ sphereDetail()
+- ❌ box()
+- ❌ sphere()
+- ❌ sphereDetail()
 
 ### Attributes
 
-✅ ellipseMode()
-✅ rectMode()
-⬜️ strokeCap()
-⬜️ strokeJoin()
-✅ strokeWeight()
+- ✅ ellipseMode()
+- ✅ rectMode()
+- ⬜️ strokeCap()
+- ⬜️ strokeJoin()
+- ✅ strokeWeight()
 
 ### Vertex
 
-⬜️ beginContour()
-⬜️ beginShape()
-⬜️ bezierVertex()
-⬜️ curveVertex()
-⬜️ endContour()
-⬜️ endShape()
-⬜️ quadraticVertex()
-⬜️ vertex()
+- ⬜️ beginContour()
+- ⬜️ beginShape()
+- ⬜️ bezierVertex()
+- ⬜️ curveVertex()
+- ⬜️ endContour()
+- ⬜️ endShape()
+- ⬜️ quadraticVertex()
+- ⬜️ vertex()
 
 ### Loading & Displaying
 
-⬜️ shape()
-⬜️ shapeMode()
+- ⬜️ shape()
+- ⬜️ shapeMode()
 
 ### Mouse
 
-✅ mouseButton
-✅ mouseClicked()
-✅ mouseDragged()
-✅ mouseMoved()
-✅ mousePressed()
-✅ mousePressed
-✅ mouseReleased()
-✅ mouseWheel()
-✅ mouseX
-✅ mouseY
-✅ pmouseX
-✅ pmouseY
+- ✅ mouseButton
+- ✅ mouseClicked()
+- ✅ mouseDragged()
+- ✅ mouseMoved()
+- ✅ mousePressed()
+- ✅ mousePressed
+- ✅ mouseReleased()
+- ✅ mouseWheel()
+- ✅ mouseX
+- ✅ mouseY
+- ✅ pmouseX
+- ✅ pmouseY
 
 ### Keyboard
 
-✅ key
-✅ keyCode
-✅ keyPressed()
-✅ keyPressed
-✅ keyReleased()
-✅ keyTyped()
+- ✅ key
+- ✅ keyCode
+- ✅ keyPressed()
+- ✅ keyPressed
+- ✅ keyReleased()
+- ✅ keyTyped()
 
 ### Files
 
-⬜️ BufferedReader
-⬜️ createInput()
-⬜️ createReader()
-⬜️ launch()
-⬜️ loadBytes()
-⬜️ loadJSONArray()
-⬜️ loadJSONObject()
-⬜️ loadStrings()
-⬜️ loadTable()
-⬜️ loadXML()
-⬜️ parseJSONArray()
-⬜️ parseJSONObject()
-⬜️ parseXML()
-⬜️ selectFolder()
-⬜️ selectInput()
+- ⬜️ BufferedReader
+- ⬜️ createInput()
+- ⬜️ createReader()
+- ⬜️ launch()
+- ⬜️ loadBytes()
+- ⬜️ loadJSONArray()
+- ⬜️ loadJSONObject()
+- ⬜️ loadStrings()
+- ⬜️ loadTable()
+- ⬜️ loadXML()
+- ⬜️ parseJSONArray()
+- ⬜️ parseJSONObject()
+- ⬜️ parseXML()
+- ⬜️ selectFolder()
+- ⬜️ selectInput()
 
 ### Time & Date
 
-✅ day()
-✅ hour()
-✅ millis()
-✅ minute()
-✅ month()
-✅ second()
-✅ year()
+- ✅ day()
+- ✅ hour()
+- ✅ millis()
+- ✅ minute()
+- ✅ month()
+- ✅ second()
+- ✅ year()
 
 ### Text Area
 
-⬜️ print()
-⬜️ printArray()
-⬜️ println()
+- ⬜️ print()
+- ⬜️ printArray()
+- ⬜️ println()
 
 ### Image
 
-⬜️ save()
-⬜️ saveFrame()
+- ⬜️ save()
+- ⬜️ saveFrame()
 
 ### Files
 
-⬜️ beginRaw()
-⬜️ beginRecord()
-⬜️ createOutput()
-⬜️ createWriter()
-⬜️ endRaw()
-⬜️ endRecord()
-⬜️ PrintWriter
-⬜️ saveBytes()
-⬜️ saveJSONArray()
-⬜️ saveJSONObject()
-⬜️ saveStream()
-⬜️ saveStrings()
-⬜️ saveTable()
-⬜️ saveXML()
-⬜️ selectOutput()
+- ⬜️ beginRaw()
+- ⬜️ beginRecord()
+- ⬜️ createOutput()
+- ⬜️ createWriter()
+- ⬜️ endRaw()
+- ⬜️ endRecord()
+- ⬜️ PrintWriter
+- ⬜️ saveBytes()
+- ⬜️ saveJSONArray()
+- ⬜️ saveJSONObject()
+- ⬜️ saveStream()
+- ⬜️ saveStrings()
+- ⬜️ saveTable()
+- ⬜️ saveXML()
+- ⬜️ selectOutput()
 
 ### Transform
 
-⬜️ applyMatrix()
-✅ popMatrix()
-⬜️ printMatrix()
-✅ pushMatrix()
-✅ resetMatrix()
-✅ rotate()
-✅ rotateX()
-✅ rotateY()
-✅ rotateZ()
-✅ scale()
-✅ shearX()
-✅ shearY()
-✅ translate()
+- ⬜️ applyMatrix()
+- ✅ popMatrix()
+- ⬜️ printMatrix()
+- ✅ pushMatrix()
+- ✅ resetMatrix()
+- ✅ rotate()
+- ✅ rotateX()
+- ✅ rotateY()
+- ✅ rotateZ()
+- ✅ scale()
+- ✅ shearX()
+- ✅ shearY()
+- ✅ translate()
 
 ### Lights, Camera
 
-❌ ambientLight()
-❌ directionalLight()
-❌ lightFalloff()
-❌ lights()
-❌ lightSpecular()
-❌ noLights()
-❌ normal()
-❌ pointLight()
-❌ spotLight()
+- ❌ ambientLight()
+- ❌ directionalLight()
+- ❌ lightFalloff()
+- ❌ lights()
+- ❌ lightSpecular()
+- ❌ noLights()
+- ❌ normal()
+- ❌ pointLight()
+- ❌ spotLight()
 
 ### Camera
 
-❌ beginCamera()
-❌ camera()
-❌ endCamera()
-❌ frustum()
-❌ ortho()
-❌ perspective()
-❌ printCamera()
-❌ printProjection()
+- ❌ beginCamera()
+- ❌ camera()
+- ❌ endCamera()
+- ❌ frustum()
+- ❌ ortho()
+- ❌ perspective()
+- ❌ printCamera()
+- ❌ printProjection()
 
 ### Coordinates
 
-⬜️ modelX()
-⬜️ modelY()
-⬜️ modelZ()
-⬜️ screenX()
-⬜️ screenY()
-⬜️ screenZ()
+- ⬜️ modelX()
+- ⬜️ modelY()
+- ⬜️ modelZ()
+- ⬜️ screenX()
+- ⬜️ screenY()
+- ⬜️ screenZ()
 
 ### Material Properties
 
-❌ ambient()
-❌ emissive()
-❌ shininess()
-❌ specular()
+- ❌ ambient()
+- ❌ emissive()
+- ❌ shininess()
+- ❌ specular()
 
 ### Color Setting
 
-✅ background()
-⬜️ clear()
-⬜️ colorMode()
-✅ fill()
-✅ noFill()
-✅ noStroke()
-✅ stroke()
+- ✅ background()
+- ⬜️ clear()
+- ⬜️ colorMode()
+- ✅ fill()
+- ✅ noFill()
+- ✅ noStroke()
+- ✅ stroke()
 
 ### Creating & Reading
 
-✅ alpha()
-✅ blue()
-✅ brightness()
-✅ color()
-✅ green()
-✅ hue()
-✅ lerpColor()
-✅ red()
-✅ saturation()
+- ✅ alpha()
+- ✅ blue()
+- ✅ brightness()
+- ✅ color()
+- ✅ green()
+- ✅ hue()
+- ✅ lerpColor()
+- ✅ red()
+- ✅ saturation()
 
 ### Image
 
-✅ createImage()
-✅ PImage
+- ✅ createImage()
+- ✅ PImage
 
 ### Loading & Displaying
 
-✅ image()
-⬜️ imageMode()
-✅ loadImage()
-⬜️ noTint()
-⬜️ requestImage()
-⬜️ tint()
-⬜️ Textures
-⬜️ texture()
-⬜️ textureMode()
-⬜️ textureWrap()
+- ✅ image()
+- ⬜️ imageMode()
+- ✅ loadImage()
+- ⬜️ noTint()
+- ⬜️ requestImage()
+- ⬜️ tint()
+- ⬜️ Textures
+- ⬜️ texture()
+- ⬜️ textureMode()
+- ⬜️ textureWrap()
 
 ### Pixels
 
-⬜️ blend()
-✅ copy()
-⬜️ filter()
-✅ get()
-✅ loadPixels()
-✅ pixels[]
-✅ set()
-✅ updatePixels()
+- ⬜️ blend()
+- ✅ copy()
+- ⬜️ filter()
+- ✅ get()
+- ✅ loadPixels()
+- ✅ pixels[]
+- ✅ set()
+- ✅ updatePixels()
 
 ### Rendering
 
-⬜️ blendMode()
-⬜️ clip()
-⬜️ createGraphics()
-⬜️ hint()
-⬜️ noClip()
-⬜️ PGraphics
-⬜️ Shaders
-⬜️ loadShader()
-⬜️ PShader
-⬜️ resetShader()
-⬜️ shader()
+- ⬜️ blendMode()
+- ⬜️ clip()
+- ⬜️ createGraphics()
+- ⬜️ hint()
+- ⬜️ noClip()
+- ⬜️ PGraphics
+- ⬜️ Shaders
+- ⬜️ loadShader()
+- ⬜️ PShader
+- ⬜️ resetShader()
+- ⬜️ shader()
 
 ### Typography
 
-⬜️ PFont
+- ⬜️ PFont
 
 ### Loading & Displaying
 
-⬜️ createFont()
-⬜️ loadFont()
-⬜️ text()
-⬜️ textFont()
+- ⬜️ createFont()
+- ⬜️ loadFont()
+- ⬜️ text()
+- ⬜️ textFont()
 
 ### Attributes
 
-⬜️ textAlign()
-⬜️ textLeading()
-⬜️ textMode()
-⬜️ textSize()
-⬜️ textWidth()
+- ⬜️ textAlign()
+- ⬜️ textLeading()
+- ⬜️ textMode()
+- ⬜️ textSize()
+- ⬜️ textWidth()
 
 ### Metrics
 
-⬜️ textAscent()
-⬜️ textDescent()
+- ⬜️ textAscent()
+- ⬜️ textDescent()
 
 ### Math
 
-✅ PVector
+- ✅ PVector
 
 ### Calculation
 
-✅ abs()
-✅ ceil()
-✅ constrain()
-✅ dist()
-✅ exp()
-✅ floor()
-✅ lerp()
-✅ log()
-✅ mag()
-✅ map()
-✅ max()
-✅ min()
-✅ norm()
-✅ pow()
-✅ round()
-✅ sq()
-✅ sqrt()
+- ✅ abs()
+- ✅ ceil()
+- ✅ constrain()
+- ✅ dist()
+- ✅ exp()
+- ✅ floor()
+- ✅ lerp()
+- ✅ log()
+- ✅ mag()
+- ✅ map()
+- ✅ max()
+- ✅ min()
+- ✅ norm()
+- ✅ pow()
+- ✅ round()
+- ✅ sq()
+- ✅ sqrt()
 
 ### Trigonometry
 
-✅ acos()
-✅ asin()
-✅ atan()
-✅ atan2()
-✅ cos()
-✅ degrees()
-✅ radians()
-✅ sin()
-✅ tan()
+- ✅ acos()
+- ✅ asin()
+- ✅ atan()
+- ✅ atan2()
+- ✅ cos()
+- ✅ degrees()
+- ✅ radians()
+- ✅ sin()
+- ✅ tan()
 
 ### Random
 
-⬜️ noise()
-⬜️ noiseDetail()
-⬜️ noiseSeed()
-✅ random()
-⬜️ randomGaussian()
-✅ randomSeed()
+- ⬜️ noise()
+- ⬜️ noiseDetail()
+- ⬜️ noiseSeed()
+- ✅ random()
+- ⬜️ randomGaussian()
+- ✅ randomSeed()
 
 ### Constants
 
-✅ HALF_PI
-✅ PI
-✅ QUARTER_PI
-✅ TAU
-✅ TWO_PI
+- ✅ HALF_PI
+- ✅ PI
+- ✅ QUARTER_PI
+- ✅ TAU
+- ✅ TWO_PI
