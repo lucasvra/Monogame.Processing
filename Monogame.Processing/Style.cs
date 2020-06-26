@@ -7,6 +7,7 @@ namespace Monogame.Processing
         public Color Fill;
         public Color Stroke;
         public float StrokeWidth;
+        public float TextSize;
         public ShapeMode RectMode;
         public ShapeMode EllipseMode;
     }

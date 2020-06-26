@@ -1,0 +1,105 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Espiral/1.0.0": {
+        "dependencies": {
+          "MonoGame.Framework.DesktopGL": "3.8.0.1375-develop",
+          "Monogame.Processing": "0.2.1"
+        },
+        "runtime": {
+          "Espiral.dll": {}
+        }
+      },
+      "MonoGame.Framework.DesktopGL/3.8.0.1375-develop": {
+        "runtime": {
+          "lib/netstandard2.0/MonoGame.Framework.dll": {
+            "assemblyVersion": "3.8.0.1375",
+            "fileVersion": "3.8.0.1375"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libSDL2-2.0.so.0": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/libopenal.so.1": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx/native/libSDL2-2.0.0.dylib": {
+            "rid": "osx",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx/native/libopenal.1.dylib": {
+            "rid": "osx",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/SDL2.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "2.0.12.0"
+          },
+          "runtimes/win-x64/native/soft_oal.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/SDL2.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "2.0.12.0"
+          },
+          "runtimes/win-x86/native/soft_oal.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "MonoGame.Framework.Portable/3.7.1.189": {},
+      "Monogame.Processing/0.2.1": {
+        "dependencies": {
+          "MonoGame.Framework.Portable": "3.7.1.189"
+        },
+        "runtime": {
+          "Monogame.Processing.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Espiral/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoGame.Framework.DesktopGL/3.8.0.1375-develop": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-keAbaOOawqvL2nfy4hNIDba7ZzTMYUBI90oPkE8FgxSaw7HQODPnvm+2BBzL3T06tXStyv7L+CH4Kw45Ro/QlA==",
+      "path": "monogame.framework.desktopgl/3.8.0.1375-develop",
+      "hashPath": "monogame.framework.desktopgl.3.8.0.1375-develop.nupkg.sha512"
+    },
+    "MonoGame.Framework.Portable/3.7.1.189": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Q5ARWZtCtJa8aD5zeeMmEkAwnguEq6aZqeIh9RdAi9RhaYJxoGc0lYka4sZaq2hGQAP7KFsPe4U9uhK/6c37vg==",
+      "path": "monogame.framework.portable/3.7.1.189",
+      "hashPath": "monogame.framework.portable.3.7.1.189.nupkg.sha512"
+    },
+    "Monogame.Processing/0.2.1": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

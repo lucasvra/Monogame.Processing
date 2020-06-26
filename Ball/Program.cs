@@ -25,13 +25,12 @@ namespace Ball
             fill(0, 100, 0, 200);
             arc(x, y, 50, 50, theta - angle, theta + angle, (ArcMode)CHORD);
 
-
-
             x += vx;
             y += vy;
 
             if (x < 0 || x > width) vx *= -1;
             if (y < 0 || y > height) vy *= -1;
+
         }
 
         public override void MouseDragged()

@@ -113,13 +113,15 @@ namespace Monogame.Processing
 
         public virtual void KeyTyped(Keys pkey) { }
 
-        SamplerState ss_ansiostropic_clamp = new SamplerState()
+        readonly SamplerState ss_ansiostropic_clamp = new SamplerState()
         {
             Filter = TextureFilter.Anisotropic,
             AddressU = TextureAddressMode.Clamp,
             AddressV = TextureAddressMode.Clamp,
             AddressW = TextureAddressMode.Clamp,
         };
+
+        private BasicFontTexture _basicFont;
 
         protected Processing()
         {
@@ -131,6 +133,7 @@ namespace Monogame.Processing
             _style.Fill = Color.White;
             _style.Stroke = Color.Black;
             _style.StrokeWidth = 1;
+            _style.TextSize = 12;
 
             _maxFps = 60;
 
@@ -171,6 +174,8 @@ namespace Monogame.Processing
             PImage.graphicsDevice = GraphicsDevice;
             PImage.spriteBatch = _primitives.SpriteBatch;
 
+            _basicFont = new BasicFontTexture(GraphicsDevice, _primitives.SpriteBatch);
+
             pmouse = Mouse.GetState();
             pkeyboard = Keyboard.GetState();
 
@@ -209,7 +214,7 @@ namespace Monogame.Processing
 
             _redraw = false;
             frameCount++;
-            Debug.WriteLine($"frameRate: {frameRate}");
+            //Debug.WriteLine($"frameRate: {frameRate}");
         }
 
         private RenderTarget2D DrawToTexture(Action draw, Texture2D background)

@@ -8,6 +8,14 @@ namespace Monogame.Processing
 {
     public abstract partial class Processing
     {
+        public void cursor() => IsMouseVisible = true;
+        public void noCursor() => IsMouseVisible = false;
+        public void textSize(float size) => _style.TextSize = size;
+        public void text(string text, float x, float y)
+        {
+            _basicFont.DrawTextToTexture(text, _style.Fill, _style.TextSize, x, y);
+        }
+
         /// <summary>
         /// The delay() function halts for a specified time. Delay times are specified in thousandths of a second.
         /// For example, running delay(3000) will stop the program for three seconds and delay(500) will stop the
