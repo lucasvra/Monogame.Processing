@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jOKgH3HroZAHyS0DVBbzJJXeYOAFk8wWAywVuhsfOed2xOK/lKl9V8uQOPxMTE6fsq9krcAg02QZzmqCnXfXKA==",
+  "dgSpecHash": "55XVRGtt0MrfjaORn9tzOcvYZUz1YqyL9GiJRtMPDl2dx+3oruy9ne2A0TlH2NwcboEcbC0QprQk2fRADleM+w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj",
+  "projectFilePath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1375-develop\\monogame.framework.desktopgl.3.8.0.1375-develop.nupkg.sha512",
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.portable\\3.7.1.189\\monogame.framework.portable.3.7.1.189.nupkg.sha512"

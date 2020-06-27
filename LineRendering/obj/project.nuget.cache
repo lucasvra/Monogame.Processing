@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kyDPDx4tti7EwegyhLIjkxE6Hcdop5P9cT+Gx1gU+smVA4/ZhlysvGIm+Tbkqv140uP1hugi46r9aJW+6m/3XQ==",
+  "dgSpecHash": "1rTDjttDzYyNRkGOPqZRAb6vH6ExTX8ux9SNmhMobcWPBypJL4CNFhydx8eMQRmfQZ3sTSN2J/pV72oRB00Fkg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\LineRendering\\LineRendering.csproj",
+  "projectFilePath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\LineRendering\\LineRendering.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1375-develop\\monogame.framework.desktopgl.3.8.0.1375-develop.nupkg.sha512",
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.portable\\3.7.1.189\\monogame.framework.portable.3.7.1.189.nupkg.sha512"

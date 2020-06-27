@@ -21,6 +21,7 @@ namespace Crowded
 
         public override void Draw()
         {
+            surface.setTitle($"FPS: {frameRate:00.00}");
             if (counterTwo < tTwo)
             {
                 counterTwo++;

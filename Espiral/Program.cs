@@ -25,6 +25,7 @@ namespace Espiral
 
         public override void Draw()
         {
+            surface.setTitle($"FPS: {frameRate:00.00}");
             background(255f);
 
             if (mouseY < height - h[constrain(mouseX, 0, width - 1)] && mousePressed)

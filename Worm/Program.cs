@@ -23,6 +23,7 @@ namespace Worm
 
         public override void Draw()
         {
+            surface.setTitle($"FPS: {frameRate:00.00}");
             ty = mouseY;
             tx = mouseX;
 

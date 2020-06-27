@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ev1sTQyEUSpOXBZ+6zq4J2xBhIS5JiblFTwUahTvw8UelPqM/E1rt10p5pEwq9ftqYaqP2Ok/dYRCHZlRbj7bw==",
+  "dgSpecHash": "1rKMvoXKIlgoNiaiIG5GShMe+E47tST4lPqKfrD4jt+Ra7vemDrkirh/vrY7axU1bRSQiV8MyVHMN/B33mnCZg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Text\\Text.csproj",
+  "projectFilePath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Text\\Text.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1375-develop\\monogame.framework.desktopgl.3.8.0.1375-develop.nupkg.sha512",
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.portable\\3.7.1.189\\monogame.framework.portable.3.7.1.189.nupkg.sha512"

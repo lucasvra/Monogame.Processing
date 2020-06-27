@@ -32,6 +32,7 @@ namespace Clock
 
         public override void Draw()
         {
+            surface.setTitle($"FPS: {frameRate:00.00}");
             background(0f);
 
             // Draw the clock background

@@ -26,6 +26,7 @@ namespace Text
 
         public override void Draw()
         {
+            surface.setTitle($"FPS: {frameRate:00.00}");
             background(255f);
             var n = 9;
             var (x0, y0) = (10f, 10f);

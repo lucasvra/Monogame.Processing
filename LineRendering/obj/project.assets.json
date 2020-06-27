@@ -57,7 +57,7 @@
           "lib/portable-net45+win8+wpa81/MonoGame.Framework.dll": {}
         }
       },
-      "Monogame.Processing/0.2.1": {
+      "Monogame.Processing/0.2.3": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -111,7 +111,7 @@
         "monogame.framework.portable.nuspec"
       ]
     },
-    "Monogame.Processing/0.2.1": {
+    "Monogame.Processing/0.2.3": {
       "type": "project",
       "path": "../Monogame.Processing/Monogame.Processing.csproj",
       "msbuildProject": "../Monogame.Processing/Monogame.Processing.csproj"
@@ -120,7 +120,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "MonoGame.Framework.DesktopGL >= 3.8.0.1375-develop",
-      "Monogame.Processing >= 0.2.1"
+      "Monogame.Processing >= 0.2.3"
     ]
   },
   "packageFolders": {
@@ -129,11 +129,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\LineRendering\\LineRendering.csproj",
+      "projectUniqueName": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\LineRendering\\LineRendering.csproj",
       "projectName": "LineRendering",
-      "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\LineRendering\\LineRendering.csproj",
+      "projectPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\LineRendering\\LineRendering.csproj",
       "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\LineRendering\\obj\\",
+      "outputPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\LineRendering\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -149,8 +149,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
-              "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
+            "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
+              "projectPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
             }
           }
         }

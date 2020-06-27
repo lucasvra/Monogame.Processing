@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Microsoft.Xna.Framework;
+﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
 
@@ -55,13 +55,13 @@ namespace Monogame.Processing
             var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, w, h, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
-            graphicsDevice.SetRenderTarget(img);
+            //graphicsDevice.SetRenderTarget(img);
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(Texture, Vector2.Zero, new Rectangle(x, y, w, h), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-            spriteBatch.End();
+            //spriteBatch.Begin();
+            //spriteBatch.Draw(Texture, Vector2.Zero, new Rectangle(x, y, w, h), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            //spriteBatch.End();
 
-            graphicsDevice.SetRenderTargets(aux);
+            //graphicsDevice.SetRenderTargets(aux);
             return new PImage(img);
         }
 
@@ -72,13 +72,13 @@ namespace Monogame.Processing
             var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, w, h, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
-            graphicsDevice.SetRenderTarget(img);
+            //graphicsDevice.SetRenderTarget(img);
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(Texture, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(w/(float)width, h/(float)height), SpriteEffects.None, 0);
-            spriteBatch.End();
+            //spriteBatch.Begin();
+            //spriteBatch.Draw(Texture, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(w/(float)width, h/(float)height), SpriteEffects.None, 0);
+            //spriteBatch.End();
 
-            graphicsDevice.SetRenderTargets(aux);
+            //graphicsDevice.SetRenderTargets(aux);
             Texture = img;
         }
 
@@ -119,14 +119,14 @@ namespace Monogame.Processing
             var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, width, height, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
-            graphicsDevice.SetRenderTarget(img);
+            //graphicsDevice.SetRenderTarget(img);
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(Texture, Vector2.Zero, Color.White);
-            spriteBatch.Draw(src.Texture, new Vector2(dx, dy), new Rectangle(sx, sy, sw, sh), Color.White, 0, Vector2.Zero, new Vector2(dw / (float) sw, dh / (float)sh), SpriteEffects.None, 0);
-            spriteBatch.End();
+            //spriteBatch.Begin();
+            //spriteBatch.Draw(Texture, Vector2.Zero, Color.White);
+            //spriteBatch.Draw(src.Texture, new Vector2(dx, dy), new Rectangle(sx, sy, sw, sh), Color.White, 0, Vector2.Zero, new Vector2(dw / (float) sw, dh / (float)sh), SpriteEffects.None, 0);
+            //spriteBatch.End();
 
-            graphicsDevice.SetRenderTargets(aux);
+            //graphicsDevice.SetRenderTargets(aux);
             Texture = img;
         }
 
@@ -175,25 +175,35 @@ namespace Monogame.Processing
             var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, width, height, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
-            graphicsDevice.SetRenderTarget(img);
+            //graphicsDevice.SetRenderTarget(img);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate);
-            spriteBatch.Draw(Texture, Vector2.Zero, Color.White);
-            spriteBatch.End();
+            //spriteBatch.Begin(SpriteSortMode.Immediate);
+            //spriteBatch.Draw(Texture, Vector2.Zero, Color.White);
+            //spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, blend);
-            spriteBatch.Draw(src.Texture, new Vector2(dx, dy), new Rectangle(sx, sy, sw, sh), Color.White, 0, Vector2.Zero, new Vector2(dw / (float)sw, dh / (float)sh), SpriteEffects.None, 0);
-            spriteBatch.End();
+            //spriteBatch.Begin(SpriteSortMode.Immediate, blend);
+            //spriteBatch.Draw(src.Texture, new Vector2(dx, dy), new Rectangle(sx, sy, sw, sh), Color.White, 0, Vector2.Zero, new Vector2(dw / (float)sw, dh / (float)sh), SpriteEffects.None, 0);
+            //spriteBatch.End();
 
-            graphicsDevice.SetRenderTargets(aux);
+            //graphicsDevice.SetRenderTargets(aux);
             Texture = img;
         }
 
         public void save(string filename)
         {
-            Stream stream = File.Create(filename);
-            Texture.SaveAsPng(stream, Texture.Width, Texture.Height);
-            stream.Dispose();
+            switch (Path.GetExtension(filename))
+            {
+                case ".jpg":
+                    using (var stream = File.Create(filename))
+                        Texture.SaveAsJpeg(stream, Texture.Width, Texture.Height);
+                    break;
+                case ".png":
+                    using (var stream = File.Create(filename))
+                        Texture.SaveAsPng(stream, Texture.Width, Texture.Height);
+                    break;
+                default:
+                    throw new Exception("Only jpg and png are supported");
+            }
         }
     }
 }

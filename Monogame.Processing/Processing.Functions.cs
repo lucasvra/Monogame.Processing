@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
@@ -6,11 +7,53 @@ using static System.Math;
 
 namespace Monogame.Processing
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract partial class Processing
     {
+        public void saveFrame(string path = "")
+        {
+            if (path == string.Empty) path = $"screen-{frameCount:0000}.png";
+
+            switch (Path.GetExtension(path))
+            {
+                case ".jpg":
+                    using (var stream = File.Create(path))
+                        _nextFrame.SaveAsJpeg(stream, _nextFrame.Width, _nextFrame.Height);
+                    break;
+                case ".png":
+                    using (var stream = File.Create(path))
+                        _nextFrame.SaveAsPng(stream, _nextFrame.Width, _nextFrame.Height);
+                    break;
+                default:
+                    throw new Exception("Only jpg and png are supported");
+            }
+            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void cursor() => IsMouseVisible = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void noCursor() => IsMouseVisible = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="size"></param>
         public void textSize(float size) => _style.TextSize = size;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public void text(string text, float x, float y) => 
             _basicFont.DrawTextToTexture(text, _style.Fill, _style.TextSize, x, y);
 
@@ -22,32 +65,67 @@ namespace Monogame.Processing
         /// <param name="napTime">int: milliseconds to pause before running draw() again</param>
         public void delay(int napTime) => System.Threading.Thread.Sleep(napTime);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void push()
         {
             pushStyle();
             pushMatrix();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void pop()
         {
             popStyle();
             popMatrix();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void pushMatrix() => _matrixStack.Push(_matrix);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void popMatrix()
         {
             if (_matrixStack.Count <= 0) return;
             _matrix = _matrixStack.Pop();
             _primitives.TransformMat = _matrix;
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public void resetMatrix()
         {
             _matrix = Matrix.Identity;
             _primitives.TransformMat = _matrix;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n00"></param>
+        /// <param name="n01"></param>
+        /// <param name="n02"></param>
+        /// <param name="n03"></param>
+        /// <param name="n10"></param>
+        /// <param name="n11"></param>
+        /// <param name="n12"></param>
+        /// <param name="n13"></param>
+        /// <param name="n20"></param>
+        /// <param name="n21"></param>
+        /// <param name="n22"></param>
+        /// <param name="n23"></param>
+        /// <param name="n30"></param>
+        /// <param name="n31"></param>
+        /// <param name="n32"></param>
+        /// <param name="n33"></param>
         public void applyMatrix(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23, float n30, float n31, float n32, float n33)
         {
             var aux = new Matrix(n00, n01, n02, n03, n10, n11, n12, n13, n20, n21, n22, n23, n30, n31, n32, n33);
@@ -55,11 +133,23 @@ namespace Monogame.Processing
             _primitives.TransformMat = _matrix;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n00"></param>
+        /// <param name="n01"></param>
+        /// <param name="n02"></param>
+        /// <param name="n10"></param>
+        /// <param name="n11"></param>
+        /// <param name="n12"></param>
         public void applyMatrix(float n00, float n01, float n02, float n10, float n11, float n12)
         {
             applyMatrix(n00, n01, n02, 0.0f, n10, n11, n12, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void printMatrix()
         {
             Console.WriteLine($"{_matrix.M11: 0.0000;-0.0000}  {_matrix.M12: 0.0000;-0.0000}  {_matrix.M13: 0.0000;-0.0000}  {_matrix.M14: 0.0000;-0.0000}");
@@ -108,15 +198,27 @@ namespace Monogame.Processing
             for (int i = 0; i < array.Length; i++) Console.WriteLine($"[{i}] {array[i]}");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void pushStyle() => _styleStack.Push(_style);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void popStyle()
         {
             if (_styleStack.Count > 0) _style = _styleStack.Pop();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void exit() => Exit();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void fullScreen()
         {
             size(GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
@@ -168,7 +270,11 @@ namespace Monogame.Processing
         /// within setup() is recommended. The default rate is 60 frames per second.
         /// </summary>
         /// <param name="fps">float: number of desired frames per second</param>
-        public void FrameRate(float fps) => _maxFps = fps;
+        public void FrameRate(float fps)
+        {
+            _maxFps = fps;
+            TargetElapsedTime = TimeSpan.FromSeconds(1d / _maxFps);
+        }
 
         /// <summary>
         /// Draws all geometry with smooth (anti-aliased) edges. This behavior is the default, 
@@ -177,7 +283,12 @@ namespace Monogame.Processing
         /// level of over sampling applied to the graphics buffer.
         /// </summary>
         /// <param name="level">int: either 2, 3, 4, or 8 depending on the renderer</param>
-        public void smooth(int level = 0) => _graphics.PreferMultiSampling = true;
+        public void smooth(int level = 0)
+        {
+            _graphics.PreferMultiSampling = true;
+            GraphicsDevice.PresentationParameters.MultiSampleCount = level;
+            _graphics.ApplyChanges();
+        }
 
         /// <summary>
         /// Draws all geometry and fonts with jagged (aliased) edges and images when hard edges 
@@ -185,7 +296,11 @@ namespace Monogame.Processing
         /// is active by default, so it is necessary to call noSmooth() to disable smoothing of 
         /// geometry, fonts, and images
         /// </summary>
-        public void noSmooth() => _graphics.PreferMultiSampling = false;
+        public void noSmooth()
+        {
+            _graphics.PreferMultiSampling = false;
+            _graphics.ApplyChanges();
+        }
 
         #region Color
 
@@ -213,6 +328,8 @@ namespace Monogame.Processing
         /// <param name="alpha">float: opacity of the background</param>
         public void background(int rgb, float alpha) =>
             GraphicsDevice.Clear(new color(((int)alpha << 24) + rgb));
+
+        public void clear() => background(0);
 
         public void background(PImage img)
         {
@@ -281,7 +398,7 @@ namespace Monogame.Processing
         /// <summary>
         /// Disables filling geometry. If both noStroke() and noFill() are called, nothing will be drawn to the screen.
         /// </summary>
-        public void nofill() => _style.Fill = Color.Transparent;
+        public void noFill() => _style.Fill = Color.Transparent;
 
         /// <summary>
         /// Sets the color used to draw lines and borders around shapes. This color is either specified in 

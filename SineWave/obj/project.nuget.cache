@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2xTXO3RPmJuDXfXs9Rm+IMz708c1lpgwDQfLPwgMgnDIQVYygidf1SxJ3BcxyPQo2b32qv9lqeU2RZJKvR91Vw==",
+  "dgSpecHash": "mGe85U6898q1S2e97+AYqGQ4OCMVYSqs4xPfs3WEr/sGTMSXAZlSoDGXtbl+gsa/3CgeSECm0hvBUhW456/4jg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj",
+  "projectFilePath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1375-develop\\monogame.framework.desktopgl.3.8.0.1375-develop.nupkg.sha512",
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.portable\\3.7.1.189\\monogame.framework.portable.3.7.1.189.nupkg.sha512",

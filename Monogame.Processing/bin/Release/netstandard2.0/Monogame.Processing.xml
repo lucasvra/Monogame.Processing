@@ -4,6 +4,35 @@
         <name>Monogame.Processing</name>
     </assembly>
     <members>
+        <member name="T:Monogame.Processing.Processing">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.cursor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.noCursor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.textSize(System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="size"></param>
+        </member>
+        <member name="M:Monogame.Processing.Processing.text(System.String,System.Single,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
         <member name="M:Monogame.Processing.Processing.delay(System.Int32)">
             <summary>
             The delay() function halts for a specified time. Delay times are specified in thousandths of a second.
@@ -11,6 +40,68 @@
             program for a half-second.
             </summary>
             <param name="napTime">int: milliseconds to pause before running draw() again</param>
+        </member>
+        <member name="M:Monogame.Processing.Processing.push">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.pop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.pushMatrix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.popMatrix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.resetMatrix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.applyMatrix(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="n00"></param>
+            <param name="n01"></param>
+            <param name="n02"></param>
+            <param name="n03"></param>
+            <param name="n10"></param>
+            <param name="n11"></param>
+            <param name="n12"></param>
+            <param name="n13"></param>
+            <param name="n20"></param>
+            <param name="n21"></param>
+            <param name="n22"></param>
+            <param name="n23"></param>
+            <param name="n30"></param>
+            <param name="n31"></param>
+            <param name="n32"></param>
+            <param name="n33"></param>
+        </member>
+        <member name="M:Monogame.Processing.Processing.applyMatrix(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="n00"></param>
+            <param name="n01"></param>
+            <param name="n02"></param>
+            <param name="n10"></param>
+            <param name="n11"></param>
+            <param name="n12"></param>
+        </member>
+        <member name="M:Monogame.Processing.Processing.printMatrix">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:Monogame.Processing.Processing.print(System.Object[])">
             <summary>
@@ -39,6 +130,26 @@
             dimensional arrays.
             </summary>
             <param name="array"></param>
+        </member>
+        <member name="M:Monogame.Processing.Processing.pushStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.popStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.exit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.fullScreen">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:Monogame.Processing.Processing.redraw">
              <summary>
@@ -176,7 +287,7 @@
             <param name="v3">float: blue or brightness value (depending on the current color mode)</param>
             <param name="alpha">float: opacity of the background</param>
         </member>
-        <member name="M:Monogame.Processing.Processing.nofill">
+        <member name="M:Monogame.Processing.Processing.noFill">
             <summary>
             Disables filling geometry. If both noStroke() and noFill() are called, nothing will be drawn to the screen.
             </summary>
@@ -948,6 +1059,138 @@
             location of the opposite corner.
             </summary>
             <param name="mode">int: either CENTER, RADIUS, CORNER, or CORNERS</param>
+        </member>
+        <member name="M:Monogame.Processing.Processing.Setup">
+             <summary>
+             The setup() function is run once, when the program starts. It's used to define initial environment properties
+             such as screen size and to load media such as images and fonts as the program starts. There can only be one
+             setup() function for each program and it shouldn't be called again after its initial execution.
+            
+             If the sketch is a different dimension than the default, the size() function or fullScreen() function must be
+             the first line in setup().
+            
+             Note: Variables declared within setup() are not accessible within other functions, including draw().
+             </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.Draw">
+            <summary>
+            Called directly after setup(), the draw() function continuously executes the lines of code contained inside
+            its block until the program is stopped or noLoop() is called. draw() is called automatically and should never
+            be called explicitly. All Processing programs update the screen at the end of draw(), never earlier.
+            
+            To stop the code inside of draw() from running continuously, use noLoop(), redraw() and loop(). If noLoop()
+            is used to stop the code in draw() from running, then redraw() will cause the code inside draw() to run a
+            single time, and loop() will cause the code inside draw() to resume running continuously.
+            
+            The number of times draw() executes in each second may be controlled with the frameRate() function.
+            
+            It is common to call background() near the beginning of the draw() loop to clear the contents of the window,
+            as shown in the first example above. Since pixels drawn to the window are cumulative, omitting background()
+            may result in unintended results.
+            
+            There can only be one draw() function for each sketch, and draw() must exist if you want the code to run
+            continuously, or to process events such as mousePressed(). Sometimes, you might have an empty call to draw()
+            in your program, as shown in the second example above.
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.Thread">
+             <summary>
+             Processing sketches follow a specific sequence of steps: setup() first, followed by draw() over and over and
+             over again in a loop. A thread is also a series of steps with a beginning, a middle, and an end. A Processing
+             sketch is a single thread, often referred to as the "Animation" thread. Other threads' sequences, however, can
+             run independently of the main animation loop. In fact, you can launch any number of threads at one time, and they
+             will all run concurrently.
+             
+             You cannot draw to the screen from a function called by thread(). Because it runs independently, the code will
+             not be synchronized to the animation thread, causing strange or at least inconsistent results.Use thread() to
+             load files or do other tasks that take time.When the task is finished, set a variable that indicates the task
+             is complete, and check that from inside your draw() method.
+             
+             Processing uses threads quite often, such as with library functions like captureEvent() and movieEvent(). These
+             functions are triggered by a different thread running behind the scenes, and they alert Processing whenever they
+             have something to report.This is useful when you need to perform a task that takes too long and would slow down
+             the main animation's frame rate, such as grabbing data from the network. If a separate thread gets stuck or has
+             an error, the entire program won't grind to a halt, since the error only stops that individual thread.
+            
+             Writing your own thread can be a complex endeavor that involves extending the Java Thread class. However, the
+             thread() method is a quick and dirty way to implement a simple thread in Processing.By passing in a String that
+             matches the name of a function declared elsewhere in the sketch, Processing will execute that function in a separate
+             thread.
+             </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.MousePressed">
+             <summary>
+             The mousePressed() function is called once after every time a mouse button is pressed. The mouseButton variable
+             (see the related reference entry) can be used to determine which button has been pressed.
+            
+             Mouse and keyboard events only work when a program has draw(). Without draw(), the code is only run once and then
+             stops listening for events.
+             </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.MouseReleased">
+             <summary>
+             The mouseReleased() function is called every time a mouse button is released.
+            
+             Mouse and keyboard events only work when a program has draw(). Without draw(), the code is only run once and then
+             stops listening for events.
+             </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.MouseMoved">
+             <summary>
+             The mouseMoved() function is called every time the mouse moves and a mouse button is not pressed. (If a button
+             is being pressed, mouseDragged() is called instead.)
+            
+             Mouse and keyboard events only work when a program has draw(). Without draw(), the code is only run once and then
+             stops listening for events.
+             </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.MouseDragged">
+            <summary>
+            The mouseDragged() function is called once every time the mouse moves while a mouse button is pressed. (If a button
+            is not being pressed, mouseMoved() is called instead.)
+            
+            Mouse and keyboard events only work when a program has draw(). Without draw(), the code is only run once and then
+            stops listening for events.
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.MouseWheel(System.Int32)">
+             <summary>
+             The code within the mouseWheel() event function is run when the mouse wheel is moved. (Some mice don't have wheels
+             and this function is only applicable with mice that have a wheel.) The getCount() function used within mouseWheel()
+             returns positive values when the mouse wheel is rotated down (toward the user), and negative values for the other
+             direction (up or away from the user). On OS X with "natural" scrolling enabled, the values are opposite.
+            
+             Mouse and keyboard events only work when a program has draw(). Without draw(), the code is only run once and then
+             stops listening for events.
+             </summary>
+             <param name="count"></param>
+        </member>
+        <member name="M:Monogame.Processing.Processing.MouseClicked">
+             <summary>
+             The mouseClicked() function is called after a mouse button has been pressed and then released.
+            
+             Mouse and keyboard events only work when a program has draw(). Without draw(), the code is only run once and then stops
+             listening for events.
+             </summary>
+        </member>
+        <member name="M:Monogame.Processing.Processing.KeyPressed(Microsoft.Xna.Framework.Input.Keys)">
+            <summary>
+            The keyPressed() function is called once every time a key is pressed. The key that was pressed is stored in the key variable.
+            </summary>
+            <param name="pkey"></param>
+        </member>
+        <member name="M:Monogame.Processing.Processing.KeyReleased(Microsoft.Xna.Framework.Input.Keys)">
+            <summary>
+            The keyReleased() function is called once every time a key is released. The key that was released will be stored in the key
+            variable. See key and keyCode for more information.
+            </summary>
+            <param name="pkey"></param>
+        </member>
+        <member name="M:Monogame.Processing.Processing.KeyTyped(Microsoft.Xna.Framework.Input.Keys)">
+            <summary>
+            The keyTyped() function is called once every time a key is pressed, but action keys such as Ctrl, Shift, and Alt are ignored.
+            </summary>
+            <param name="pkey"></param>
         </member>
     </members>
 </doc>

@@ -23,6 +23,7 @@ namespace P3
 
         public override void Draw()
         {
+            surface.setTitle($"FPS: {frameRate:00.00}");
             posX += pas1;
             if (posX >= width - 100)
             {
