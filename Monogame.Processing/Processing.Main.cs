@@ -43,6 +43,7 @@ namespace Monogame.Processing
 
         #region Internal Variables
         private Random _rnd = new Random();
+        private PerlinNoise _perlin = new PerlinNoise();
         private readonly Stopwatch _time = new Stopwatch();
         private float _maxFps;
 
@@ -58,6 +59,7 @@ namespace Monogame.Processing
         private int _lastFrameTime;
         private Primitives _primitives;
         private RenderTarget2D _lastFrame;
+        private RenderTarget2D _nextFrame;
         readonly GraphicsDeviceManager _graphics;
         private MouseState pmouse;
         private KeyboardState pkeyboard;
@@ -122,6 +124,7 @@ namespace Monogame.Processing
         };
 
         private BasicFontTexture _basicFont;
+        
 
         protected Processing()
         {
@@ -149,6 +152,8 @@ namespace Monogame.Processing
 
             IsMouseVisible = true;
             IsFixedTimeStep = true;
+
+            _time.Start();
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
@@ -179,27 +184,27 @@ namespace Monogame.Processing
             pmouse = Mouse.GetState();
             pkeyboard = Keyboard.GetState();
 
-            _lastFrame = CreateRenderTarget();
+            _lastFrame = CreateRenderTarget(true);
+            _nextFrame = CreateRenderTarget(true);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
 
-            if (!_redraw && (!_draw || gameTime.TotalGameTime.TotalMilliseconds - _lastFrameTime < 1000 / _maxFps))
+            if (!_redraw && (!_draw || _time.ElapsedMilliseconds - _lastFrameTime < 1000 / _maxFps))
             {
                 DrawToScreen(_lastFrame);
                 base.Draw(gameTime);
                 return;
             }
-
-            if (frameCount == 0) _lastFrame = DrawToTexture(Setup, _lastFrame);
-
-            frameRate = (float) Math.Round(1000.0 / (gameTime.TotalGameTime.TotalMilliseconds - _lastFrameTime), 1);
-            _lastFrameTime = (int)gameTime.TotalGameTime.TotalMilliseconds;
+            
+            frameRate = (float) 1000.0 / (_time.ElapsedMilliseconds - _lastFrameTime);
+            _lastFrameTime = (int)_time.ElapsedMilliseconds;
 
             var target = DrawToTexture(() =>
             {
+                if (frameCount == 0) Setup();
                 UpdateMouse();
                 UpdateKeyboard();
                 Draw();
@@ -207,27 +212,25 @@ namespace Monogame.Processing
 
             DrawToScreen(target);
 
-            _lastFrame.Dispose();
+            _nextFrame = _lastFrame;
             _lastFrame = target;
 
             base.Draw(gameTime);
 
             _redraw = false;
             frameCount++;
-            //Debug.WriteLine($"frameRate: {frameRate}");
         }
 
-        private RenderTarget2D DrawToTexture(Action draw, Texture2D background)
+        private RenderTarget2D DrawToTexture(Action draw, Texture2D background, RenderTarget2D target = null)
         {
-            var target = CreateRenderTarget();
+            target ??= CreateRenderTarget();
             GraphicsDevice.SetRenderTarget(target);
 
             var sw = target.Width / (float) background.Width;
             var sh = target.Height / (float) background.Height;
 
             _primitives.SpriteBatch.Begin();
-            _primitives.SpriteBatch.Draw(background, Vector2.Zero, null, Color.White, 0, Vector2.Zero,
-                new Vector2(sw, sh), SpriteEffects.None, 0);
+            _primitives.SpriteBatch.Draw(background, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(sw, sh), SpriteEffects.None, 0);
             _primitives.SpriteBatch.End();
 
             draw();
@@ -236,15 +239,21 @@ namespace Monogame.Processing
             CheckResize();
             return target;
         }
-        private RenderTarget2D CreateRenderTarget()
+        private RenderTarget2D CreateRenderTarget(bool create = false)
         {
-            var target = new RenderTarget2D(
+            if (!create && _nextFrame.Width == GraphicsDevice.PresentationParameters.BackBufferWidth &&
+                _nextFrame.Height == GraphicsDevice.PresentationParameters.BackBufferHeight) return _nextFrame;
+
+            if (_nextFrame != null && !_nextFrame.IsDisposed) _nextFrame.Dispose();
+
+            _nextFrame = new RenderTarget2D(
                 GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth,
                 GraphicsDevice.PresentationParameters.BackBufferHeight, false,
                 GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
-            return target;
+
+            return _nextFrame;
         }
-        private void DrawToScreen(RenderTarget2D frame)
+        private void DrawToScreen(Texture2D frame)
         {
             var sw = _graphics.PreferredBackBufferWidth / (float) frame.Width;
             var sh = _graphics.PreferredBackBufferHeight / (float) frame.Height;
@@ -268,7 +277,6 @@ namespace Monogame.Processing
 
             _primitives.World = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, 10);
         }
-
         private void UpdateKeyboard()
         {
             var keyboard = Keyboard.GetState();

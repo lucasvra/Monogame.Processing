@@ -23,3 +23,4 @@ C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Text\obj\Release\netcor
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Text\obj\Release\netcoreapp3.1\Text.dll
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Text\obj\Release\netcoreapp3.1\Text.pdb
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Text\obj\Release\netcoreapp3.1\Text.genruntimeconfig.cache
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Text\obj\Release\netcoreapp3.1\Text.csprojAssemblyReference.cache

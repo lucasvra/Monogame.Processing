@@ -49,6 +49,13 @@ namespace Monogame.Processing
             SpriteBatch.End();
         }
 
+        public void DrawPoint(Vector2 position, Color color, float thickness)
+        {
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, TransformMat);
+            SpriteBatch.Draw(Pixel, position, null, color, 0, new Vector2(0.5f, 0.5f), new Vector2(thickness, thickness), SpriteEffects.None, 0);
+            SpriteBatch.End();
+        }
+
         private void DrawPoints(Vector2 position, IReadOnlyList<Vector2> points, Color color, float thickness)
         {
             if (points.Count < 2) return;

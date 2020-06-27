@@ -20,16 +20,13 @@ namespace Text
         {
             surface.setResizable(true);
             size(600, 600);
-            FrameRate(10);
             background(255f);
-            textSize(18);
-            noCursor();
+            textSize(12);
         }
 
         public override void Draw()
         {
             background(255f);
-
             var n = 9;
             var (x0, y0) = (10f, 10f);
             var (dx, dy) = ((width - x0 - x0) / n, (height - y0 - y0) / n);
@@ -53,6 +50,9 @@ namespace Text
                     text(letters[j * n + i], x-6, y-15);
                 }
             }
+
+            fill(0, 255, 0);
+            text("FPS: " + frameRate, 20, 0);
 
         }
 

@@ -11,10 +11,8 @@ namespace Monogame.Processing
         public void cursor() => IsMouseVisible = true;
         public void noCursor() => IsMouseVisible = false;
         public void textSize(float size) => _style.TextSize = size;
-        public void text(string text, float x, float y)
-        {
+        public void text(string text, float x, float y) => 
             _basicFont.DrawTextToTexture(text, _style.Fill, _style.TextSize, x, y);
-        }
 
         /// <summary>
         /// The delay() function halts for a specified time. Delay times are specified in thousandths of a second.
@@ -567,7 +565,7 @@ namespace Monogame.Processing
         /// <param name="z">float: z-coordinate of the point</param>
         public void point(float x, float y, float z = 0)
         {
-            if (_style.Stroke.A != 0) _primitives.DrawEllipse(new Vector2(x, y), 1, 1, _style.Stroke, _style.StrokeWidth);
+            if (_style.Stroke.A != 0) _primitives.DrawPoint(new Vector2(x, y), _style.Stroke, _style.StrokeWidth);
         }
 
         #endregion
@@ -1091,6 +1089,86 @@ namespace Monogame.Processing
         /// </summary>
         /// <param name="seed">int: seed value</param>
         public void randomSeed(int seed) => _rnd = new Random(seed);
+
+        /// <summary>
+        /// Returns a float from a random series of numbers having a mean of 0 and standard
+        /// deviation of 1. Each time the randomGaussian() function is called, it returns a
+        /// number fitting a Gaussian, or normal, distribution. There is theoretically no minimum
+        /// or maximum value that randomGaussian() might return. Rather, there is just a very
+        /// low probability that values far from the mean will be returned; and a higher
+        /// probability that numbers near the mean will be returned.
+        /// </summary>
+        /// <returns>float</returns>
+        public float randomGaussian()
+        {
+            var u1 = 1.0 - _rnd.NextDouble();
+            var u2 = 1.0 - _rnd.NextDouble();
+            return (float)(Sqrt(-2.0 * Log(u1)) * Sin(2.0 * PI * u2));
+        }
+
+        /// <summary>
+        /// 	Returns the Perlin noise value at specified coordinates. Perlin noise is a random
+        /// sequence generator producing a more natural, harmonic succession of numbers than that of
+        /// the standard random() function. It was developed by Ken Perlin in the 1980s and has been
+        /// used in graphical applications to generate procedural textures, shapes, terrains, and other
+        /// seemingly organic forms.
+        /// </summary>
+        /// <param name="x">float: x-coordinate in noise space</param>
+        /// <param name="y">float: y-coordinate in noise space</param>
+        /// <param name="z">float: z-coordinate in noise space</param>
+        /// <returns>float</returns>
+        public float noise(float x, float y = 0, float z = 0) => (float) _perlin.OctavePerlin(x, y, z);
+
+        /// <summary>
+        /// Adjusts the character and level of detail produced by the Perlin noise function. Similar
+        /// to harmonics in physics, noise is computed over several octaves. Lower octaves contribute
+        /// more to the output signal and as such define the overall intensity of the noise, whereas
+        /// higher octaves create finer-grained details in the noise sequence.
+        ///
+        /// By default, noise is computed over 4 octaves with each octave contributing exactly half
+        /// than its predecessor, starting at 50% strength for the first octave.This falloff amount
+        /// can be changed by adding an additional function parameter.For example, a falloff factor
+        /// of 0.75 means each octave will now have 75% impact (25% less) of the previous lower octave.
+        /// While any number between 0.0 and 1.0 is valid, note that values greater than 0.5 may result
+        /// in noise() returning values greater than 1.0.
+        ///
+        /// By changing these parameters, the signal created by the noise() function can be adapted to
+        /// fit very specific needs and characteristics.
+        /// </summary>
+        /// <param name="lod">int: number of octaves to be used by the noise</param>
+        /// <param name="falloff">float: falloff factor for each octave</param>
+        public void noiseDetail(int lod, float falloff)
+        {
+            PerlinNoise.Octaves = lod;
+            PerlinNoise.Persistence = falloff;
+        }
+
+        /// <summary>
+        /// Adjusts the character and level of detail produced by the Perlin noise function. Similar
+        /// to harmonics in physics, noise is computed over several octaves. Lower octaves contribute
+        /// more to the output signal and as such define the overall intensity of the noise, whereas
+        /// higher octaves create finer-grained details in the noise sequence.
+        ///
+        /// By default, noise is computed over 4 octaves with each octave contributing exactly half
+        /// than its predecessor, starting at 50% strength for the first octave.This falloff amount
+        /// can be changed by adding an additional function parameter.For example, a falloff factor
+        /// of 0.75 means each octave will now have 75% impact (25% less) of the previous lower octave.
+        /// While any number between 0.0 and 1.0 is valid, note that values greater than 0.5 may result
+        /// in noise() returning values greater than 1.0.
+        ///
+        /// By changing these parameters, the signal created by the noise() function can be adapted to
+        /// fit very specific needs and characteristics.
+        /// </summary>
+        /// <param name="lod">int: number of octaves to be used by the noise</param>
+        public void noiseDetail(int lod) => PerlinNoise.Octaves = lod;
+
+        /// <summary>
+        /// Sets the seed value for noise(). By default, noise() produces different results each
+        /// time the program is run. Set the seed parameter to a constant to return the same
+        /// pseudo-random numbers each time the software is run.
+        /// </summary>
+        /// <param name="seed">int: seed value</param>
+        public void noiseSeed(int seed) => _perlin = new PerlinNoise(seed, -1);
 
         #endregion
 
