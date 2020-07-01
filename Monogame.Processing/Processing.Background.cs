@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,10 +15,37 @@ namespace Monogame.Processing
 
         private int sides { get; set; }
 
-        private void DrawImage(Texture2D img, float x, float y, float w, float h)
+        private void FillRoundedRectangle(float x, float y, float w, float h, float tl, float tr, float br, float bl, Color color)
+        {
+            FillQuad(new Vector2(x + tl, y), new Vector2(x + w - tr, y), new Vector2(x + w - tr, y + tr), new Vector2(x + tl, y + tl), color);
+            FillQuad(new Vector2(x, y + tl), new Vector2(x + tl, y + tl), new Vector2(x + bl, y + h - bl), new Vector2(x, y + h - bl), color);
+            FillQuad(new Vector2(x + bl, y + h - bl), new Vector2(x + w - br, y + h - br), new Vector2(x + w - br, y + h), new Vector2(x + bl, y + h), color);
+            FillQuad(new Vector2(x + w - tr, y + tr), new Vector2(x + w, y + tr), new Vector2(x + w, y + h - br), new Vector2(x + w - br, y + h - br), color);
+            FillQuad(new Vector2(x + tl, y + tl), new Vector2(x + w - tr, y + tr), new Vector2(x + w - br, y + h - br), new Vector2(x + bl, y + h - bl), color);
+
+            FillArc(new Vector2(x + tl, y + tl), tl, tl, PI, PI+ HALF_PI, color);
+            FillArc(new Vector2(x + w - tr, y + tr), tr, tr, PI + HALF_PI , TWO_PI, color);
+            FillArc(new Vector2(x + bl, y + h - bl), bl, bl, HALF_PI, PI, color);
+            FillArc(new Vector2(x + w - br, y + h - br), br, br, 0, HALF_PI, color);
+        }
+
+        private void DrawRoundedRectangle(float x, float y, float w, float h, float tl, float tr, float br, float bl, Color color, float thickness)
+        {
+            var points = new List<Vector2>();
+            points.AddRange(CreateArcPoints(tl, tl, PI, PI + HALF_PI).Select(p => p + new Vector2(x + tl, y + tl)));
+            points.AddRange(CreateArcPoints(tr, tr, PI + HALF_PI, TWO_PI).Select(p => p + new Vector2(x + w - tr, y + tr)));
+            points.AddRange(CreateArcPoints(br, br, 0, HALF_PI).Select(p => p + new Vector2(x + w - br, y + h - br)));
+            points.AddRange(CreateArcPoints(bl, bl, HALF_PI, PI).Select(p => p + new Vector2(x + bl, y + h - bl)));
+            
+            points.Add(points[0]);
+
+            DrawPoints(Vector2.Zero, points, color, thickness);
+        }
+
+        private void DrawImage(Texture2D img, float x, float y, float w, float h, Color color)
         {
             _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode);
-            _spriteBatch.Draw(img, new Vector2(x, y), null, Color.White, 0, Vector2.Zero, new Vector2(w / img.Width, h / img.Height), SpriteEffects.None, 0);
+            _spriteBatch.Draw(img, new Vector2(x, y), null, color, 0, Vector2.Zero, new Vector2(w / img.Width, h / img.Height), SpriteEffects.None, 0);
             _spriteBatch.End();
         }
 
@@ -188,6 +216,8 @@ namespace Monogame.Processing
                 .Select(theta => new Vector2((float)(radiusx * Cos(theta)), (float)(radiusy * Sin(theta))))
                 .ToList();
 
+            if ((sides - 1) * step + startingAngle < radians)
+                points.Add(new Vector2((float) (radiusx * Cos(radians)), (float) (radiusy * Sin(radians))));
 
             if (mode == 1) points.Add(points[0]);
             if (mode == 2) points.AddRange(new[] { Vector2.Zero, points[0] });

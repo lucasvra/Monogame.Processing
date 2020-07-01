@@ -9,7 +9,7 @@
       "SineWave/1.0.0": {
         "dependencies": {
           "MonoGame.Framework.DesktopGL": "3.8.0.1375-develop",
-          "Monogame.Processing": "0.2.3"
+          "Monogame.Processing": "0.2.4"
         },
         "runtime": {
           "SineWave.dll": {}
@@ -66,7 +66,7 @@
         }
       },
       "MonoGame.Framework.Portable/3.7.1.189": {},
-      "Monogame.Processing/0.2.3": {
+      "Monogame.Processing/0.2.4": {
         "dependencies": {
           "MonoGame.Framework.Portable": "3.7.1.189"
         },
@@ -96,7 +96,7 @@
       "path": "monogame.framework.portable/3.7.1.189",
       "hashPath": "monogame.framework.portable.3.7.1.189.nupkg.sha512"
     },
-    "Monogame.Processing/0.2.3": {
+    "Monogame.Processing/0.2.4": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

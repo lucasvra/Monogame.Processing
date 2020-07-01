@@ -265,10 +265,11 @@ namespace Monogame.Processing
             _style.EllipseMode = ShapeMode.CENTER;
             _style.RectMode = ShapeMode.CORNER;
             _style.Fill = Color.White;
+            _style.Tint = Color.White;
             _style.Stroke = Color.Black;
             _style.StrokeWidth = 1;
             _style.TextSize = 12;
-            _style.BlendMode = BlendState.AlphaBlend;
+            _style.BlendMode = BlendState.NonPremultiplied;
 
             _maxFps = 60;
 

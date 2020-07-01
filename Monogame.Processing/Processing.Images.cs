@@ -18,10 +18,9 @@ namespace Monogame.Processing
         }
 
         public PImage loadImage(string filename) => new PImage(filename);
-        public void image(PImage img, float a, float b, float c, float d) => DrawImage(img.texture, a, b, c, d);
+        public void image(PImage img, float a, float b, float c, float d) => DrawImage(img.texture, a, b, c, d, _style.Tint);
         public void image(PImage img, float a, float b) => image(img, a, b, img.width, img.height);
         public PImage createImage(int w, int h, int format) => new PImage(w, h);
-
         public float blue(color c) => c.B;
         public float red(color c) => c.R;
         public float green(color c) => c.G;

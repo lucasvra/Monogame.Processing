@@ -7,10 +7,13 @@ namespace Monogame.Processing
     {
         public Color Fill;
         public Color Stroke;
+        public Color Tint;
+
         public float StrokeWidth;
         public float TextSize;
         public ShapeMode RectMode;
         public ShapeMode EllipseMode;
         public BlendState BlendMode;
+        
     }
 }

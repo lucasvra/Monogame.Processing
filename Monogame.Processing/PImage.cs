@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
@@ -58,6 +59,7 @@ namespace Monogame.Processing
             var img = new RenderTarget2D(graphicsDevice, w, h, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
             graphicsDevice.SetRenderTarget(img);
+            graphicsDevice.Clear(Color.Transparent);
 
             spriteBatch.Begin();
             spriteBatch.Draw(texture, Vector2.Zero, new Rectangle(x, y, w, h), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
@@ -74,6 +76,7 @@ namespace Monogame.Processing
             var img = new RenderTarget2D(graphicsDevice, w, h, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
             graphicsDevice.SetRenderTarget(img);
+            graphicsDevice.Clear(Color.Transparent);
 
             spriteBatch.Begin();
             spriteBatch.Draw(texture, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(w/(float)width, h/(float)height), SpriteEffects.None, 0);
@@ -104,9 +107,46 @@ namespace Monogame.Processing
             }
         }
 
-        public void filter(int kind, float param)
+        public void filter(Filter kind, float param = -1f)
         {
+            var p = new Color[texture.Width * texture.Height];
+            texture.GetData(p);
 
+            switch (kind)
+            {
+                case Filter.THRESHOLD:
+                    if (param < 0f || param > 1f) param = 0.5f;
+                    p = p.AsParallel().AsOrdered()
+                        .Select(c => (grey: (int) ((0.3 * c.R) + (0.59 * c.G) + (0.11 * c.B)), c.A))
+                        .Select(t => (grey: t.grey / 255.0 < param ? 255 : 0, t.A))
+                        .Select(t => Color.FromNonPremultiplied(t.grey, t.grey, t.grey, t.A)).ToArray();
+                    break;
+                case Filter.GRAY:
+                    p = p.AsParallel().AsOrdered()
+                        .Select(c => (grey: (int) ((0.3 * c.R) + (0.59 * c.G) + (0.11 * c.B)), c.A))
+                        .Select(t => Color.FromNonPremultiplied(t.grey, t.grey, t.grey, t.A)).ToArray();
+                    break;
+                case Filter.OPAQUE:
+                    p = p.AsParallel().AsOrdered().Select(c => Color.FromNonPremultiplied(c.R, c.G, c.B, 255))
+                        .ToArray();
+                    break;
+                case Filter.INVERT:
+                    p = p.AsParallel().AsOrdered()
+                        .Select(c => Color.FromNonPremultiplied(255 - c.R, 255 - c.G, 255 - c.B, c.A)).ToArray();
+                    break;
+                case Filter.POSTERIZE:
+                    if (param < 2f) param = 2f;
+                    if (param > 255f) param = 255f;
+                    p = p.AsParallel().AsOrdered()
+                        .Select(c => Color.FromNonPremultiplied((int)Math.Min(c.R, param), (int)Math.Min(c.G, param), (int)Math.Min(c.B, param), c.A)).ToArray();
+                    break;
+                case Filter.BLUR:
+                case Filter.ERODE:
+                case Filter.DILATE:
+                    break;
+            }
+
+            texture.SetData(p);
         }
 
         public PImage copy() => this;
@@ -120,8 +160,9 @@ namespace Monogame.Processing
             var img = new RenderTarget2D(graphicsDevice, width, height, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
             graphicsDevice.SetRenderTarget(img);
+            graphicsDevice.Clear(Color.Transparent);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             spriteBatch.Draw(texture, Vector2.Zero, Color.White);
             spriteBatch.Draw(src.texture, new Vector2(dx, dy), new Rectangle(sx, sy, sw, sh), Color.White, 0, Vector2.Zero, new Vector2(dw / (float) sw, dh / (float)sh), SpriteEffects.None, 0);
             spriteBatch.End();
@@ -137,10 +178,7 @@ namespace Monogame.Processing
         {
             var blend = mode switch
             {
-                BlendMode.ADD => new BlendState
-                {
-                    ColorBlendFunction = BlendFunction.Add
-                },
+                BlendMode.ADD => BlendState.Additive,
                 BlendMode.DODGE => new BlendState
                 {
                     ColorSourceBlend = Blend.One,
@@ -169,13 +207,14 @@ namespace Monogame.Processing
                 {
                     ColorBlendFunction = BlendFunction.Subtract
                 },
-                _ => new BlendState {ColorBlendFunction = BlendFunction.Add},
+                _ => BlendState.NonPremultiplied,
             };
             
             var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, width, height, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
             graphicsDevice.SetRenderTarget(img);
+            graphicsDevice.Clear(Color.Transparent);
 
             spriteBatch.Begin(SpriteSortMode.Immediate);
             spriteBatch.Draw(texture, Vector2.Zero, Color.White);

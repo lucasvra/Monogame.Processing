@@ -15,11 +15,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("A library that implements Processing Language functions for 2D graphics on Monoga" +
     "me")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("0.2.3.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.2.3")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("0.2.4.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.2.4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Monogame.Processing")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Monogame.Processing")]
-[assembly: System.Reflection.AssemblyVersionAttribute("0.2.3.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("0.2.4.0")]
 
 // Gerado pela classe WriteCodeFragment do MSBuild.
 

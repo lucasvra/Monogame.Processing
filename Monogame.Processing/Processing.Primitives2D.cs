@@ -100,6 +100,7 @@ namespace Monogame.Processing
         /// <param name="extent">float: width and height of the ellipse by default</param>
         public void circle(float x, float y, float extent) => ellipse(x, y, extent, extent);
 
+        public void square(float x, float y, float extent) => rect(x, y, extent, extent);
 
         /// <summary>
         /// Draws a rectangle to the screen. A rectangle is a four-sided shape with every angle at ninety degrees. 
@@ -119,12 +120,31 @@ namespace Monogame.Processing
                 ShapeMode.RADIUS => (a + c, b + d, c * 2, d * 2),
                 ShapeMode.CORNER => (a, b, c, d),
                 ShapeMode.CORNERS => (a, b, c - a, d - b),
+                _ => throw new ArgumentOutOfRangeException()
             };
 
             if (_style.Fill.A != 0) FillRectangle(x, y, w, h, _style.Fill);
             if (_style.Stroke.A != 0) DrawRectangle(x, y, w, h, _style.Stroke, _style.StrokeWidth);
         }
 
+        public void rect(float a, float b, float c, float d, float tl, float tr=-1, float br=-1, float bl=-1)
+        {
+            if (tr < 0) tr = tl;
+            if (br < 0) br = tr;
+            if (bl < 0) bl = br;
+
+            var (x, y, w, h) = _style.RectMode switch
+            {
+                ShapeMode.CENTER => (a - c / 2, b - d / 2, c, d),
+                ShapeMode.RADIUS => (a + c, b + d, c * 2, d * 2),
+                ShapeMode.CORNER => (a, b, c, d),
+                ShapeMode.CORNERS => (a, b, c - a, d - b),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            if (_style.Fill.A != 0) FillRoundedRectangle(x, y, w, h, tl, tr, bl, br, _style.Fill);
+            if (_style.Stroke.A != 0) DrawRoundedRectangle(x, y, w, h, tl, tr, bl, br, _style.Stroke, _style.StrokeWidth);
+        }
 
         /// <summary>
         /// Draws a line (a direct path between two points) to the screen. The version of line() with 

@@ -5,7 +5,34 @@ namespace Monogame.Processing
     partial class Processing
     {
         #region Color
-        
+
+        public void noTint() => _style.Tint = Color.White;
+
+        /// <summary>
+        /// </summary>
+        /// <param name="rgb">int: any value of the color datatype</param>
+        /// <param name="alpha">float: opacity of the background</param>
+        public void tint(int rgb, byte alpha = 255) =>
+            _style.Tint = new color(((alpha << 24) + rgb));
+
+        public void tint(color c) => _style.Tint = c;
+
+        /// <summary>
+        /// </summary>
+        /// <param name="gray">float: opacity of the background</param>
+        public void tint(float gray) => _style.Tint = new color((byte)gray, (byte)gray, (byte)gray);
+
+        /// <summary>
+        /// </summary>
+        /// <param name="v1">float: red or hue value(depending on the current color mode) </param>
+        /// <param name="v2">float: green or saturation value(depending on the current color mode) </param>
+        /// <param name="v3">float: blue or brightness value (depending on the current color mode)</param>
+        /// <param name="alpha">float: opacity of the background</param>
+        public void tint(float v1, float v2, float v3, float alpha = 255) =>
+            _style.Tint = new color((byte)v1, (byte)v2, (byte)v3, (byte)alpha);
+
+
+
         /// <summary>
         /// Draws all geometry with smooth (anti-aliased) edges. This behavior is the default, 
         /// so smooth() only needs to be used when a program needs to set the smoothing in a 
