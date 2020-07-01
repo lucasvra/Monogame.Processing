@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Xml.Schema;
 using Monogame.Processing;
 
 namespace Ball
 {
     public class Ball : Processing
     {
-        private float x = 0, y = 0;
+        private float x, y;
         private float vx = 1, vy = 0.5f;
         public override void Setup()
         {
@@ -18,6 +17,7 @@ namespace Ball
         public override void Draw()
         {
             surface.setTitle($"FPS: {frameRate:00.00}");
+
             var theta = vy < 0 ? TWO_PI - acos(vx / sqrt(sq(vx) + sq(vy))) : acos(vx / sqrt(sq(vx) + sq(vy)));
             var angle = radians(120);
 
@@ -31,7 +31,8 @@ namespace Ball
 
             if (x < 0 || x > width) vx *= -1;
             if (y < 0 || y > height) vy *= -1;
-            saveFrame();
+            
+            printMatrix();
         }
 
         public override void MouseDragged()

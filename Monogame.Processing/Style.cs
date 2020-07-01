@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Monogame.Processing
 {
@@ -10,5 +11,6 @@ namespace Monogame.Processing
         public float TextSize;
         public ShapeMode RectMode;
         public ShapeMode EllipseMode;
+        public BlendState BlendMode;
     }
 }

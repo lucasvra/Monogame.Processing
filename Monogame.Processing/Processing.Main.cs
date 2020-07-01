@@ -31,13 +31,28 @@ namespace Monogame.Processing
 
         public const int LEFT = (int)MouseButton.LEFT;
         public const int RIGHT = (int)MouseButton.RIGHT;
-        public const int OPEN = (int)ArcMode.OPEN;
-        public const int CHORD = (int)ArcMode.CHORD;
-        public const int PIE = (int)ArcMode.PIE;
+        public const ArcMode OPEN = ArcMode.OPEN;
+        public const ArcMode CHORD = ArcMode.CHORD;
+        public const ArcMode PIE = ArcMode.PIE;
         public const int CENTER = (int)ShapeMode.CENTER;
         public const int RADIUS = (int)ShapeMode.RADIUS;
         public const int CORNER = (int)ShapeMode.CORNER;
         public const int CORNERS = (int)ShapeMode.CORNERS;
+
+        public const BlendMode BLEND = BlendMode.BLEND;
+        public const BlendMode ADD = BlendMode.ADD;
+        public const BlendMode SUBTRACT = BlendMode.SUBTRACT;
+        public const BlendMode DARKEST = BlendMode.DARKEST;
+        public const BlendMode LIGHTEST = BlendMode.LIGHTEST;
+        public const BlendMode DIFFERENCE = BlendMode.DIFFERENCE;
+        public const BlendMode EXCLUSION = BlendMode.EXCLUSION;
+        public const BlendMode MULTIPLY = BlendMode.MULTIPLY;
+        public const BlendMode SCREEN = BlendMode.SCREEN;
+        public const BlendMode OVERLAY = BlendMode.OVERLAY;
+        public const BlendMode HARD_LIGHT = BlendMode.HARD_LIGHT;
+        public const BlendMode SOFT_LIGHT = BlendMode.SOFT_LIGHT;
+        public const BlendMode DODGE = BlendMode.DODGE;
+        public const BlendMode BURN = BlendMode.BURN;
 
         #endregion
 
@@ -57,7 +72,6 @@ namespace Monogame.Processing
         private bool _redraw;
 
         private int _lastFrameTime;
-        private Primitives _primitives;
         private BasicFontTexture _basicFont;
         private RenderTarget2D _lastFrame;
         private RenderTarget2D _nextFrame;
@@ -65,7 +79,12 @@ namespace Monogame.Processing
         private MouseState _pmouse;
         private KeyboardState _pkeyboard;
 
-        readonly SamplerState ss_ansiostropic_clamp = new SamplerState()
+        private Matrix _world;
+        private Texture2D _pixel;
+        private SpriteBatch _spriteBatch;
+        private BasicEffect _basicEffect;
+
+        readonly SamplerState _ssAnsiostropicClamp = new SamplerState()
         {
             Filter = TextureFilter.Anisotropic,
             AddressU = TextureAddressMode.Clamp,
@@ -100,6 +119,7 @@ namespace Monogame.Processing
         public char key { get; private set; }
 
         public readonly Surface surface;
+        public color[] pixels { get; private set; }
 
         #endregion
 
@@ -238,6 +258,7 @@ namespace Monogame.Processing
 
         protected Processing()
         {
+            pixels = new color[0];
             surface = new Surface(Window);
             Window.ClientSizeChanged += Window_ClientSizeChanged;
             
@@ -247,6 +268,7 @@ namespace Monogame.Processing
             _style.Stroke = Color.Black;
             _style.StrokeWidth = 1;
             _style.TextSize = 12;
+            _style.BlendMode = BlendState.AlphaBlend;
 
             _maxFps = 60;
 
@@ -261,6 +283,9 @@ namespace Monogame.Processing
                 PreferredBackBufferHeight = height,
                 GraphicsProfile = GraphicsProfile.HiDef
             };
+
+            sides = 30;
+            _matrix = Matrix.Identity;
 
             IsMouseVisible = true;
             IsFixedTimeStep = true;
@@ -278,57 +303,84 @@ namespace Monogame.Processing
         protected override void LoadContent()
         {
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            GraphicsDevice.SamplerStates[0] = ss_ansiostropic_clamp;
+            GraphicsDevice.SamplerStates[0] = _ssAnsiostropicClamp;
             GraphicsDevice.PresentationParameters.MultiSampleCount = 2;
+            _world = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, 10);
 
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _basicEffect = new BasicEffect(GraphicsDevice)
+            {
+                Alpha = 1.0f,
+                VertexColorEnabled = true,
+                LightingEnabled = false,
+                World = _world
 
-            _primitives = new Primitives(GraphicsDevice);
+            };
+
+            _pixel = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            _pixel.SetData(new[] { Color.White });
+
             PImage.graphicsDevice = GraphicsDevice;
-            PImage.spriteBatch = _primitives.SpriteBatch;
+            PImage.spriteBatch = _spriteBatch;
 
-            _basicFont = new BasicFontTexture(GraphicsDevice, _primitives.SpriteBatch);
+            _basicFont = new BasicFontTexture(GraphicsDevice, _spriteBatch);
 
             _pmouse = Mouse.GetState();
             _pkeyboard = Keyboard.GetState();
 
-            _lastFrame = CreateRenderTarget(true);
-            _nextFrame = CreateRenderTarget(true);
+            _lastFrame = CreateRenderTarget(null);
+            _nextFrame = CreateRenderTarget(null);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Black);
 
             if (!_redraw && !_draw )
             {
-                DrawToScreen(_lastFrame);
+                DrawToTarget(_lastFrame);
                 base.Draw(gameTime);
                 return;
             }
 
             // reset transform
             _matrix = Matrix.Identity;
-            _primitives.TransformMat = _matrix;
 
             frameRate = (float) 1000.0 / (_time.ElapsedMilliseconds - _lastFrameTime);
-            _lastFrameTime = (int)_time.ElapsedMilliseconds;
+            _lastFrameTime = (int) _time.ElapsedMilliseconds;
 
             // draw to frame
-            var target = frameCount == 0
-                ? DrawToTexture(Setup, _lastFrame)
-                : DrawToTexture(() =>
-                {
-                    UpdateMouse();
-                    UpdateKeyboard();
-                    Draw();
-                }, _lastFrame);
+            _nextFrame = CreateRenderTarget(_nextFrame);
+            GraphicsDevice.SetRenderTarget(_nextFrame);
+            GraphicsDevice.Clear(Color.Black);
 
-            // draw frame to screen
-            DrawToScreen(target);
+            var sw = _nextFrame.Width / (float)_lastFrame.Width;
+            var sh = _nextFrame.Height / (float)_lastFrame.Height;
+
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_lastFrame, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(sw, sh), SpriteEffects.None, 0);
+            _spriteBatch.End();
+
+            PImage.currentTarget = _nextFrame;
+
+            if (frameCount == 0) Setup();
+            else
+            {
+                UpdateMouse();
+                UpdateKeyboard();
+                Draw();
+            }
+            
+            GraphicsDevice.SetRenderTarget(null);
+            CheckResize();
+
+            DrawToTarget(_nextFrame);
+
 
             // reuse frame
+            var aux = _nextFrame;
             _nextFrame = _lastFrame;
-            _lastFrame = target;
+            _lastFrame = aux;
 
             base.Draw(gameTime);
 
@@ -336,50 +388,32 @@ namespace Monogame.Processing
             frameCount++;
         }
 
-        private RenderTarget2D DrawToTexture(Action draw, Texture2D background, RenderTarget2D target = null)
+        private RenderTarget2D CreateRenderTarget(RenderTarget2D frame)
         {
-            target ??= CreateRenderTarget();
-            GraphicsDevice.SetRenderTarget(target);
+            if (frame != null && (frame.Width == GraphicsDevice.PresentationParameters.BackBufferWidth &&
+                 frame.Height == GraphicsDevice.PresentationParameters.BackBufferHeight)) return frame;
 
-            var sw = target.Width / (float) background.Width;
-            var sh = target.Height / (float) background.Height;
+            if (frame != null && !frame.IsDisposed) frame.Dispose();
 
-            _primitives.SpriteBatch.Begin();
-            _primitives.SpriteBatch.Draw(background, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(sw, sh), SpriteEffects.None, 0);
-            _primitives.SpriteBatch.End();
-
-            draw();
-
-            GraphicsDevice.SetRenderTarget(null);
-            CheckResize();
-            return target;
-        }
-        private RenderTarget2D CreateRenderTarget(bool create = false)
-        {
-            if (!create && _nextFrame.Width == GraphicsDevice.PresentationParameters.BackBufferWidth &&
-                _nextFrame.Height == GraphicsDevice.PresentationParameters.BackBufferHeight) return _nextFrame;
-
-            if (_nextFrame != null && !_nextFrame.IsDisposed) _nextFrame.Dispose();
-
-            _nextFrame = new RenderTarget2D(
+            return new RenderTarget2D(
                 GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth,
                 GraphicsDevice.PresentationParameters.BackBufferHeight, false,
                 GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
-
-            return _nextFrame;
         }
-        private void DrawToScreen(Texture2D frame)
+        private void DrawToTarget(Texture2D frame, RenderTarget2D target = null)
         {
-            var sw = _graphics.PreferredBackBufferWidth / (float) frame.Width;
+            var sw = _graphics.PreferredBackBufferWidth  / (float) frame.Width;
             var sh = _graphics.PreferredBackBufferHeight / (float) frame.Height;
 
+            GraphicsDevice.SetRenderTarget(target);
+            GraphicsDevice.DepthStencilState = new DepthStencilState
+            {
+                DepthBufferEnable = true
+            };
 
-            GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.DepthStencilState = new DepthStencilState { DepthBufferEnable = true };
-
-            _primitives.SpriteBatch.Begin();
-            _primitives.SpriteBatch.Draw(frame, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(sw, sh), SpriteEffects.None, 0);
-            _primitives.SpriteBatch.End();
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(frame, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(sw, sh), SpriteEffects.None, 0);
+            _spriteBatch.End();
         }
         private void CheckResize()
         {
@@ -389,7 +423,7 @@ namespace Monogame.Processing
             _graphics.PreferredBackBufferHeight = height; 
             _graphics.ApplyChanges();
 
-            _primitives.World = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, 10);
+            _world = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, 10);
         }
         private void UpdateKeyboard()
         {

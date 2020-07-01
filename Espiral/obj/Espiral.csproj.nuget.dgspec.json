@@ -1,21 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj": {}
+    "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj": {
+    "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj",
+        "projectUniqueName": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj",
         "projectName": "Espiral",
-        "projectPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj",
+        "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Espiral\\Espiral.csproj",
         "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Espiral\\obj\\",
+        "outputPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Espiral\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
           "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -27,8 +31,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
-                "projectPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
+              "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
+                "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
               }
             }
           }
@@ -66,18 +70,22 @@
         }
       }
     },
-    "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
+    "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
       "version": "0.2.3",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
+        "projectUniqueName": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
         "projectName": "Monogame.Processing",
-        "projectPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
+        "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
         "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\obj\\",
+        "outputPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
           "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace Monogame.Processing
@@ -27,6 +25,7 @@ namespace Monogame.Processing
             R = buffer[2];
             G = buffer[1];
             B = buffer[0];
+
         }
 
         public static implicit operator int(color c) => BitConverter.ToInt32(new[]{c.A, c.R, c.G, c.B}, 0);

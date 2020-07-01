@@ -1,21 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj": {}
+    "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
+    "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
       "version": "0.2.3",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
+        "projectUniqueName": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
         "projectName": "Monogame.Processing",
-        "projectPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
+        "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
         "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\obj\\",
+        "outputPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
           "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -63,18 +67,22 @@
         }
       }
     },
-    "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj": {
+    "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj",
+        "projectUniqueName": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj",
         "projectName": "SineWave",
-        "projectPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj",
+        "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\SineWave\\SineWave.csproj",
         "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\SineWave\\obj\\",
+        "outputPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\SineWave\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
           "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -86,8 +94,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
-                "projectPath": "C:\\Users\\Lucas\\source\\repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
+              "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
+                "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
               }
             }
           }

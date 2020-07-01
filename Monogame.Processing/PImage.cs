@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
 
@@ -9,59 +10,60 @@ namespace Monogame.Processing
     {
         public static GraphicsDevice graphicsDevice;
         public static SpriteBatch spriteBatch;
+        public static RenderTarget2D currentTarget;
 
-        public int width => Texture.Width;
-        public int height => Texture.Height;
-        public Texture2D Texture { get; private set; }
+        public int width => texture.Width;
+        public int height => texture.Height;
+        public Texture2D texture { get; set; }
         public Color[] pixels = new Color[0];
 
         private PImage(Texture2D img)
         {
-            Texture = img;
+            texture = img;
         }
 
         public PImage(int w, int h)
         {
-            Texture = new Texture2D(graphicsDevice, w, h);
+            texture = new Texture2D(graphicsDevice, w, h);
         }
 
         public PImage(string path)
         {
             var fileStream = new FileStream(path, FileMode.Open);
-            Texture = Texture2D.FromStream(graphicsDevice, fileStream);
+            texture = Texture2D.FromStream(graphicsDevice, fileStream);
             fileStream.Dispose();
         }
 
         public void loadPixels()
         {
-            pixels = new Color[Texture.Width*Texture.Height];
-            Texture.GetData(pixels);
+            pixels = new Color[texture.Width*texture.Height];
+            texture.GetData(pixels);
         }
 
         public void updatePixels()
         {
-            Texture.SetData(pixels);
+            texture.SetData(pixels);
         }
 
         public void updatePixels(int x, int y, int w, int h)
         {
-            for (var i = 0; i <= h; i++) Texture.SetData(pixels, (y + i) * width + x, w);
+            for (var i = 0; i <= h; i++) 
+                texture.SetData(pixels, (y + i) * width + x, w);
         }
 
         public PImage get() => this;
 
         public PImage get(int x, int y, int w, int h)
         {
-            var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, w, h, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
-            //graphicsDevice.SetRenderTarget(img);
+            graphicsDevice.SetRenderTarget(img);
 
-            //spriteBatch.Begin();
-            //spriteBatch.Draw(Texture, Vector2.Zero, new Rectangle(x, y, w, h), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-            //spriteBatch.End();
+            spriteBatch.Begin();
+            spriteBatch.Draw(texture, Vector2.Zero, new Rectangle(x, y, w, h), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            spriteBatch.End();
 
-            //graphicsDevice.SetRenderTargets(aux);
+            graphicsDevice.SetRenderTargets(currentTarget);
             return new PImage(img);
         }
 
@@ -69,22 +71,21 @@ namespace Monogame.Processing
 
         public void resize(int w, int h)
         {
-            var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, w, h, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
-            //graphicsDevice.SetRenderTarget(img);
+            graphicsDevice.SetRenderTarget(img);
 
-            //spriteBatch.Begin();
-            //spriteBatch.Draw(Texture, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(w/(float)width, h/(float)height), SpriteEffects.None, 0);
-            //spriteBatch.End();
+            spriteBatch.Begin();
+            spriteBatch.Draw(texture, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(w/(float)width, h/(float)height), SpriteEffects.None, 0);
+            spriteBatch.End();
 
-            //graphicsDevice.SetRenderTargets(aux);
-            Texture = img;
+            graphicsDevice.SetRenderTargets(currentTarget);
+            texture = img;
         }
 
         public void mask(color[] m)
         {
-            for (int i = 0; i < pixels.Length; i++)
+            for (var i = 0; i < pixels.Length; i++)
             {
                 var aux = pixels[i];
                 aux.A = m[i].A;
@@ -116,18 +117,17 @@ namespace Monogame.Processing
 
         public void copy(PImage src,int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh)
         {
-            var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, width, height, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
-            //graphicsDevice.SetRenderTarget(img);
+            graphicsDevice.SetRenderTarget(img);
 
-            //spriteBatch.Begin();
-            //spriteBatch.Draw(Texture, Vector2.Zero, Color.White);
-            //spriteBatch.Draw(src.Texture, new Vector2(dx, dy), new Rectangle(sx, sy, sw, sh), Color.White, 0, Vector2.Zero, new Vector2(dw / (float) sw, dh / (float)sh), SpriteEffects.None, 0);
-            //spriteBatch.End();
+            spriteBatch.Begin();
+            spriteBatch.Draw(texture, Vector2.Zero, Color.White);
+            spriteBatch.Draw(src.texture, new Vector2(dx, dy), new Rectangle(sx, sy, sw, sh), Color.White, 0, Vector2.Zero, new Vector2(dw / (float) sw, dh / (float)sh), SpriteEffects.None, 0);
+            spriteBatch.End();
 
-            //graphicsDevice.SetRenderTargets(aux);
-            Texture = img;
+            graphicsDevice.SetRenderTargets(currentTarget);
+            texture = img;
         }
 
         public void blend(int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh, BlendMode mode) =>
@@ -175,18 +175,18 @@ namespace Monogame.Processing
             var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, width, height, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 
-            //graphicsDevice.SetRenderTarget(img);
+            graphicsDevice.SetRenderTarget(img);
 
-            //spriteBatch.Begin(SpriteSortMode.Immediate);
-            //spriteBatch.Draw(Texture, Vector2.Zero, Color.White);
-            //spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate);
+            spriteBatch.Draw(texture, Vector2.Zero, Color.White);
+            spriteBatch.End();
 
-            //spriteBatch.Begin(SpriteSortMode.Immediate, blend);
-            //spriteBatch.Draw(src.Texture, new Vector2(dx, dy), new Rectangle(sx, sy, sw, sh), Color.White, 0, Vector2.Zero, new Vector2(dw / (float)sw, dh / (float)sh), SpriteEffects.None, 0);
-            //spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, blend);
+            spriteBatch.Draw(src.texture, new Vector2(dx, dy), new Rectangle(sx, sy, sw, sh), Color.White, 0, Vector2.Zero, new Vector2(dw / (float)sw, dh / (float)sh), SpriteEffects.None, 0);
+            spriteBatch.End();
 
-            //graphicsDevice.SetRenderTargets(aux);
-            Texture = img;
+            graphicsDevice.SetRenderTargets(currentTarget);
+            texture = img;
         }
 
         public void save(string filename)
@@ -195,11 +195,11 @@ namespace Monogame.Processing
             {
                 case ".jpg":
                     using (var stream = File.Create(filename))
-                        Texture.SaveAsJpeg(stream, Texture.Width, Texture.Height);
+                        texture.SaveAsJpeg(stream, texture.Width, texture.Height);
                     break;
                 case ".png":
                     using (var stream = File.Create(filename))
-                        Texture.SaveAsPng(stream, Texture.Width, Texture.Height);
+                        texture.SaveAsPng(stream, texture.Width, texture.Height);
                     break;
                 default:
                     throw new Exception("Only jpg and png are supported");
