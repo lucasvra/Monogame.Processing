@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "qL+kZyWIYJmEbOm7o3Xzo4uUd4Wo6VTTjNS2t8Tg+luttmngqCCYzcfmdrEqaFnfMh870qb0HfWr19jjPzAcuw==",
+  "dgSpecHash": "PKCaYynunJNatOfz11lENpQkUmiAInNdv1cSPyHDp6sw/CH/tjC0glr0375v+XggMsYyIj9mb8+/5hAOaiwefA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Crowded\\Crowded.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1375-develop\\monogame.framework.desktopgl.3.8.0.1375-develop.nupkg.sha512",
-    "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.portable\\3.7.1.189\\monogame.framework.portable.3.7.1.189.nupkg.sha512",
-    "C:\\Users\\Lucas\\.nuget\\packages\\monogame.processing\\0.2.4\\monogame.processing.0.2.4.nupkg.sha512"
+    "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.portable\\3.7.1.189\\monogame.framework.portable.3.7.1.189.nupkg.sha512"
   ],
   "logs": [
     {

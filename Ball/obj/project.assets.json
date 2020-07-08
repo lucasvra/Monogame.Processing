@@ -2264,7 +2264,7 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "Monogame.Processing/0.2.4": {
+      "Monogame.Processing/0.2.5": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -7317,7 +7317,7 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
-    "Monogame.Processing/0.2.4": {
+    "Monogame.Processing/0.2.5": {
       "type": "project",
       "path": "../Monogame.Processing/Monogame.Processing.csproj",
       "msbuildProject": "../Monogame.Processing/Monogame.Processing.csproj"
@@ -7326,7 +7326,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "MonoGame.Framework.WindowsDX >= 3.8.0.1375-develop",
-      "Monogame.Processing >= 0.2.4"
+      "Monogame.Processing >= 0.2.5"
     ]
   },
   "packageFolders": {

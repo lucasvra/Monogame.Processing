@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "j8KTfmjw9mFNJay4AYbpCw7t1GMSFzXeWc6+svzC284bA+i/XxgQyH+WHRe6KcuJKP20plLf9wY0M9KY0QktuA==",
+  "dgSpecHash": "Wc/pGbM3iVY1r2T7IbOo2dhkW7l+oxnL8kmPTlKsvkltjixaNihfZzrAvBKoqLm2Y7+vvlZ5oUyPKFERUm6wmg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Ball\\Ball.csproj",
   "expectedPackageFiles": [
@@ -124,8 +124,7 @@
     "C:\\Users\\Lucas\\.nuget\\packages\\system.xml.xdocument\\4.0.11\\system.xml.xdocument.4.0.11.nupkg.sha512",
     "C:\\Users\\Lucas\\.nuget\\packages\\system.xml.xmldocument\\4.0.1\\system.xml.xmldocument.4.0.1.nupkg.sha512",
     "C:\\Users\\Lucas\\.nuget\\packages\\system.xml.xpath\\4.0.1\\system.xml.xpath.4.0.1.nupkg.sha512",
-    "C:\\Users\\Lucas\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512",
-    "C:\\Users\\Lucas\\.nuget\\packages\\monogame.processing\\0.2.4\\monogame.processing.0.2.4.nupkg.sha512"
+    "C:\\Users\\Lucas\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512"
   ],
   "logs": [
     {

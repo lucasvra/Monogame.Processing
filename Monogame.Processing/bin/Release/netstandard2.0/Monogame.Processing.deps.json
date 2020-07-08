@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Monogame.Processing/0.2.4": {
+      "Monogame.Processing/0.2.5": {
         "dependencies": {
           "MonoGame.Framework.Portable": "3.7.1.189",
           "NETStandard.Library": "2.0.3"
@@ -33,7 +33,7 @@
     }
   },
   "libraries": {
-    "Monogame.Processing/0.2.4": {
+    "Monogame.Processing/0.2.5": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
