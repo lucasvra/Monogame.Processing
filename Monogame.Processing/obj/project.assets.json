@@ -204,21 +204,19 @@
   },
   "packageFolders": {
     "C:\\Users\\Lucas\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "0.2.4",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
+      "projectUniqueName": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
       "projectName": "Monogame.Processing",
-      "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
+      "projectPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
       "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\obj\\",
+      "outputPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -267,7 +265,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400-preview-015178\\RuntimeIdentifierGraph.json"
       }
     }
   },

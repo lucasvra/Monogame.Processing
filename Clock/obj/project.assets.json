@@ -125,21 +125,19 @@
   },
   "packageFolders": {
     "C:\\Users\\Lucas\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Clock\\Clock.csproj",
+      "projectUniqueName": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Clock\\Clock.csproj",
       "projectName": "Clock",
-      "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Clock\\Clock.csproj",
+      "projectPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Clock\\Clock.csproj",
       "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Clock\\obj\\",
+      "outputPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Clock\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -156,8 +154,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
-              "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
+            "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
+              "projectPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
             }
           }
         }
@@ -191,7 +189,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400-preview-015178\\RuntimeIdentifierGraph.json"
       }
     }
   },

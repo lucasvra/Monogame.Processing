@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D1Mb6r074jJHwiYYXltpEUhbmWuemElPrRAZEg5X0WYkB9uxcU16C9ETt5Dee/qJL7LV30jW1qBnxUDSpZ3cjQ==",
+  "dgSpecHash": "ez2vn3U2nGbsYyg8culGMVsA8BCiXMAfyn2XkCltiE6S83Cj1JVxH9ZRmVSf0jHpQEwOGIF0d1ZulwMrvVspVg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
+  "projectFilePath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lucas\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\Lucas\\.nuget\\packages\\monogame.framework.portable\\3.7.1.189\\monogame.framework.portable.3.7.1.189.nupkg.sha512",

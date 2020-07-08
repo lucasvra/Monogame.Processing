@@ -199,6 +199,37 @@ namespace Monogame.Processing
             DrawPoints(Vector2.Zero, points, color, thickness);
         }
 
+        private static Vector2 BezierPoint(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float t)
+        {
+            return (float)Pow(1 - t, 3) * p1 + 3.0f * (float)Pow(1 - t, 2) * t * p2 +
+                   3.0f * (1 - t) * t * t * p3 + t * t * t * p4;
+        }
+
+        private static float BezierPoint(float x1, float x2, float x3, float x4, float t)
+        {
+            return (float)Pow(1 - t, 3) * x1 + 3.0f * (float)Pow(1 - t, 2) * t * x2 +
+                   3.0f * (1 - t) * t * t * x3 + t * t * t * x4;
+        }
+
+        private float SplinePoint(float x0, float x1, float x2, float x3, float t, float alpha = 0.5f)
+        {
+            float Tj(float ti, float xi, float xj) => (float)Pow((xj - xi) * (xj - xi), alpha / 2) + ti;
+
+            const float t0 = 0f;
+            var t1 = Tj(t0, x0, x1);
+            var t2 = Tj(t1, x1, x2);
+            var t3 = Tj(t2, x2, x3);
+
+            var a1 = (t1 - t) / (t1 - t0) * x0 + (t - t0) / (t1 - t0) * x1;
+            var a2 = (t2 - t) / (t2 - t1) * x1 + (t - t1) / (t2 - t1) * x2;
+            var a3 = (t3 - t) / (t3 - t2) * x2 + (t - t2) / (t3 - t2) * x3;
+
+            var b1 = (t2 - t) / (t2 - t0) * a1 + (t - t0) / (t2 - t0) * a2;
+            var b2 = (t3 - t) / (t3 - t1) * a2 + (t - t1) / (t3 - t1) * a3;
+
+            return (t2 - t) / (t2 - t1) * b1 + (t - t1) / (t2 - t1) * b2;
+        }
+
         private List<Vector2> CreateCirclePoints(double radius) =>
             CreateEllipsePoints(radius, radius);
 

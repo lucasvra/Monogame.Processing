@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Monogame.Processing
 {
@@ -120,6 +121,8 @@ namespace Monogame.Processing
 
         public readonly Surface surface;
         public color[] pixels { get; private set; }
+
+        public TouchLocation[] touches { get; private set; } = new TouchLocation[0];
 
         #endregion
 
@@ -255,6 +258,11 @@ namespace Monogame.Processing
         /// <param name="pkey"></param>
         public virtual void KeyTyped(Keys pkey) { }
 
+        protected virtual void TouchMoved(TouchLocation touch) { }
+
+        protected virtual void TouchEnded(TouchLocation touch) { }
+
+        protected virtual void TouchStarted(TouchLocation touch) { }
 
         protected Processing()
         {
@@ -369,6 +377,7 @@ namespace Monogame.Processing
             {
                 UpdateMouse();
                 UpdateKeyboard();
+                UpdateTouch();
                 Draw();
             }
             
@@ -500,6 +509,20 @@ namespace Monogame.Processing
                 MouseWheel(mouse.HorizontalScrollWheelValue - _pmouse.HorizontalScrollWheelValue);
 
             _pmouse = mouse;
+        }
+
+        private void UpdateTouch()
+        {
+            touches = TouchPanel.GetState().Select(t => t).ToArray();
+
+            foreach (var touch in touches.Where(t => t.State == TouchLocationState.Pressed))
+                TouchStarted(touch);
+
+            foreach (var touch in touches.Where(t => t.State == TouchLocationState.Released))
+                TouchEnded(touch);
+
+            foreach (var touch in touches.Where(t => t.State == TouchLocationState.Moved))
+                TouchMoved(touch);
         }
     }
 }

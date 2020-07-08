@@ -9,6 +9,18 @@ namespace Monogame.Processing
     {
         #region String Functions
 
+        public string binary(int value) => Convert.ToString(value, 2);
+
+        public string hex(int value) => Convert.ToString(value, 16);
+
+        public bool boolean(string txt) => bool.Parse(txt);
+
+        public string str(object obj) => obj.ToString();
+
+        public int unhex(string hex) => int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+
+        public int unbinary(string bin) => Convert.ToInt32(bin, 2);
+
         public string join(string[] list, string separator) => list.Skip(1).Aggregate(list[0], (str, acc) => acc + separator + str);
 
         public string[] split(string value, string delim) => value.Split(new[] { delim }, StringSplitOptions.RemoveEmptyEntries);
