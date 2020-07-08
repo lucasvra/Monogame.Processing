@@ -1,20 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Ball\\Ball.csproj": {}
+    "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Ball\\Ball.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Ball\\Ball.csproj": {
+    "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Ball\\Ball.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Ball\\Ball.csproj",
+        "projectUniqueName": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Ball\\Ball.csproj",
         "projectName": "Ball",
-        "projectPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Ball\\Ball.csproj",
+        "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Ball\\Ball.csproj",
         "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Ball\\obj\\",
+        "outputPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Ball\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
           "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -31,8 +32,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
-                "projectPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
+              "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
+                "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj"
               }
             }
           }
@@ -66,21 +67,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400-preview-015178\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
+    "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj": {
       "version": "0.2.4",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
+        "projectUniqueName": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
         "projectName": "Monogame.Processing",
-        "projectPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
+        "projectPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\Monogame.Processing.csproj",
         "packagesPath": "C:\\Users\\Lucas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lucas\\OneDrive - ufmg.br\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\obj\\",
+        "outputPath": "C:\\Users\\Lucas\\Source\\Repos\\lucasvra\\Monogame.Processing\\Monogame.Processing\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
           "C:\\Users\\Lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -129,7 +131,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400-preview-015178\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

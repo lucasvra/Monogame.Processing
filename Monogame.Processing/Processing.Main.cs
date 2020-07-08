@@ -497,9 +497,9 @@ namespace Monogame.Processing
             if (!mousePressed) MouseReleased();
 
             // clicked
-            if (mouse.LeftButton == ButtonState.Released && _pmouse.LeftButton == ButtonState.Released) MouseClicked();
-            if (mouse.RightButton == ButtonState.Released && _pmouse.RightButton == ButtonState.Released) MouseClicked();
-            if (mouse.MiddleButton == ButtonState.Released && _pmouse.MiddleButton == ButtonState.Released) MouseClicked();
+            if (mouse.LeftButton == ButtonState.Released && _pmouse.LeftButton == ButtonState.Pressed) MouseClicked();
+            if (mouse.RightButton == ButtonState.Released && _pmouse.RightButton == ButtonState.Pressed) MouseClicked();
+            if (mouse.MiddleButton == ButtonState.Released && _pmouse.MiddleButton == ButtonState.Pressed) MouseClicked();
 
             if (pmouseY != mouseY || pmouseX != mouseX)
             {
