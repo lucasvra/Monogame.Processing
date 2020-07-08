@@ -1251,5 +1251,57 @@
             <param name="degrees">float: degree value to convert to radians</param>
             <returns>float</returns>
         </member>
+        <member name="M:Monogame.Processing.Sound.Generator.play">
+            <summary>
+            Starts the oscillator
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Sound.Generator.set(System.Single,System.Single,System.Single)">
+            <summary>
+            Set multiple parameters at once
+            </summary>
+            <param name="freq"></param>
+            <param name="amp"></param>
+            <param name="add"></param>
+            <param name="pos"></param>
+        </member>
+        <member name="M:Monogame.Processing.Sound.Generator.amp(System.Single)">
+            <summary>
+            Change the amplitude/volume of this sound.
+            </summary>
+            <param name="amp"></param>
+        </member>
+        <member name="M:Monogame.Processing.Sound.Generator.add(System.Single)">
+            <summary>
+            Offset the output of this generator by given value
+            </summary>
+            <param name="add"></param>
+        </member>
+        <member name="M:Monogame.Processing.Sound.Generator.pan(System.Single)">
+            <summary>
+            Move the sound in a stereo panorama.
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:Monogame.Processing.Sound.Generator.stop">
+            <summary>
+            Stop the oscillator.
+            </summary>
+        </member>
+        <member name="M:Monogame.Processing.Sound.Oscilator.set(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Set multiple parameters at once
+            </summary>
+            <param name="freq"></param>
+            <param name="amp"></param>
+            <param name="add"></param>
+            <param name="pos"></param>
+        </member>
+        <member name="M:Monogame.Processing.Sound.Oscilator.freq(System.Single)">
+            <summary>
+            Set the frequency of the oscillator in Hz.
+            </summary>
+            <param name="freq"></param>
+        </member>
     </members>
 </doc>

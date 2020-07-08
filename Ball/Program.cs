@@ -1,5 +1,6 @@
 ﻿using System;
 using Monogame.Processing;
+using Monogame.Processing.Sound;
 
 namespace Ball
 {
@@ -39,6 +40,15 @@ namespace Ball
         {
             vx = mouseX - pmouseX;
             vy = mouseY - pmouseY;
+        }
+
+        private SinOsc sine;
+        public override void MouseClicked()
+        {
+            sine = new SinOsc();
+            var f = (float) (440.0 * Math.Pow(2, (1 - 9) / 12.0f));
+            sine.set(f,1,0,0);
+            sine.play();
         }
     }
     public class Program
