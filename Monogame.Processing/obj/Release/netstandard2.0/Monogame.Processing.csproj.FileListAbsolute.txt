@@ -1,9 +1,0 @@
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Monogame.Processing\bin\Release\netstandard2.0\Monogame.Processing.deps.json
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Monogame.Processing\bin\Release\netstandard2.0\Monogame.Processing.dll
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Monogame.Processing\bin\Release\netstandard2.0\Monogame.Processing.pdb
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Monogame.Processing\bin\Release\netstandard2.0\Monogame.Processing.xml
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Monogame.Processing\obj\Release\netstandard2.0\Monogame.Processing.AssemblyInfoInputs.cache
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Monogame.Processing\obj\Release\netstandard2.0\Monogame.Processing.AssemblyInfo.cs
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Monogame.Processing\obj\Release\netstandard2.0\Monogame.Processing.csproj.CoreCompileInputs.cache
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Monogame.Processing\obj\Release\netstandard2.0\Monogame.Processing.dll
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Monogame.Processing\obj\Release\netstandard2.0\Monogame.Processing.pdb
