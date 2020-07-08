@@ -7,6 +7,19 @@ namespace Monogame.Processing
     {
         #region Transform
 
+        public float modelX(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), _matrix).X;
+
+        public float modelY(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), _matrix).Y;
+
+        public float modelZ(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), _matrix).Z;
+
+        public float screenX(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), Matrix.Invert(_matrix)).X;
+
+        public float screenY(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), Matrix.Invert(_matrix)).Y;
+
+        public float screenZ(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), Matrix.Invert(_matrix)).Z;
+
+
         /// <summary>
         /// Rotates the amount specified by the angle parameter. Angles must be specified 
         /// in radians (values from 0 to TWO_PI), or they can be converted from degrees 

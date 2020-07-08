@@ -40,7 +40,12 @@ namespace Monogame.Processing
                 },
                 BlendMode.SUBTRACT => new BlendState
                 {
-                    ColorBlendFunction = BlendFunction.Subtract
+                    ColorSourceBlend = Blend.One,
+                    AlphaSourceBlend = Blend.One,
+                    ColorDestinationBlend = Blend.One,
+                    AlphaDestinationBlend = Blend.One,
+                    ColorBlendFunction = BlendFunction.ReverseSubtract,
+                    AlphaBlendFunction = BlendFunction.ReverseSubtract
                 },
                 _ => BlendState.AlphaBlend,
             };
