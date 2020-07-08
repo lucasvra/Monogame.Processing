@@ -5,20 +5,11 @@ C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcorea
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\Ball.dll
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\Ball.pdb
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\MonoGame.Framework.dll
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\linux-x64\native\libSDL2-2.0.so.0
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\linux-x64\native\libopenal.so.1
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\osx\native\libSDL2-2.0.0.dylib
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\osx\native\libopenal.1.dylib
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\SDL2.dll
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\soft_oal.dll
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\SDL2.dll
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\soft_oal.dll
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\Monogame.Processing.dll
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\Monogame.Processing.pdb
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.csprojAssemblyReference.cache
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.AssemblyInfoInputs.cache
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.AssemblyInfo.cs
-C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.csproj.CoreCompileInputs.cache
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.csproj.CopyComplete
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.dll
 C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.pdb
@@ -48,3 +39,25 @@ C:\Users\Lucas\OneDrive - ufmg.br\Repos\lucasvra\Monogame.Processing\Ball\obj\De
 C:\Users\Lucas\OneDrive - ufmg.br\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.dll
 C:\Users\Lucas\OneDrive - ufmg.br\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.pdb
 C:\Users\Lucas\OneDrive - ufmg.br\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.genruntimeconfig.cache
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\Microsoft.VisualBasic.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\SharpDX.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\SharpDX.Direct2D1.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\SharpDX.Direct3D11.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\SharpDX.Direct3D9.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\SharpDX.DXGI.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\SharpDX.Mathematics.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\SharpDX.MediaFoundation.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\SharpDX.XAudio2.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\SharpDX.XInput.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\debian-x64\native\libuv.so
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\fedora-x64\native\libuv.so
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\opensuse-x64\native\libuv.so
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\osx\native\libuv.dylib
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\rhel-x64\native\libuv.so
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\win7-arm\native\libuv.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\win7-x64\native\libuv.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\bin\Debug\netcoreapp3.1\runtimes\win7-x86\native\libuv.dll
+C:\Users\Lucas\Source\Repos\lucasvra\Monogame.Processing\Ball\obj\Debug\netcoreapp3.1\Ball.csproj.CoreCompileInputs.cache

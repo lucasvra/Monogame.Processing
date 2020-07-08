@@ -2,6 +2,9 @@
 // Based on https://github.com/davidluzgouveia/blog-simple-synth
 // ----------------------
 using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 
@@ -10,32 +13,70 @@ namespace Monogame.Processing.Sound
     public abstract class Generator
     {
         private const int SampleRate = 44100;
-        private const int SamplesInBuffer = 1000;
+        private const int SamplesInBuffer = 50000;
         private const int BytesPerSample = 2;
         private const int Channels = 2;
         private readonly DynamicSoundEffectInstance sound = new DynamicSoundEffectInstance(SampleRate, AudioChannels.Stereo);
         private readonly float[,] floatBuffer = new float[Channels, SamplesInBuffer];
-        private readonly byte[] byteBuffer = new byte[BytesPerSample * Channels * SamplesInBuffer];
+        private byte[] byteBuffer1 = new byte[BytesPerSample * Channels * SamplesInBuffer];
+        private byte[] byteBuffer2 = new byte[BytesPerSample * Channels * SamplesInBuffer];
+        private bool running = true;
 
         protected float offset = 0.0f;
- 
         protected float time = 0.0f;
+
+        private Task task;
 
         protected Generator()
         {
-            sound.BufferNeeded += Sound_BufferNeeded;
+            UpdateBuffer();
+            task = Task.Run(SoundLoop);
         }
 
-        private void Sound_BufferNeeded(object sender, EventArgs e)
+        ~Generator()
+        {
+            running = false;
+            task.Wait();
+        }
+
+        private void SoundLoop()
+        {
+            while (running)
+            {
+                if(sound.PendingBufferCount > 10) Thread.Sleep(10);
+                try
+                {
+                    UpdateSound();
+                }
+                catch (Exception e)
+                {
+                    break;
+                }
+                
+            }
+        }
+
+        private void UpdateSound()
+        {
+            sound.SubmitBuffer(byteBuffer1);
+
+            var aux = byteBuffer1;
+            byteBuffer1 = byteBuffer2;
+            byteBuffer2 = aux;
+
+            UpdateBuffer();
+        }
+
+        private void UpdateBuffer()
         {
             for (int i = 0; i < floatBuffer.GetLength(1); i++)
             {
                 floatBuffer[0, i] = OscilatorFunction();
+                floatBuffer[1, i] = floatBuffer[0, i];
                 time += 1f / SampleRate;
             }
 
-            ConvertBuffer(floatBuffer, byteBuffer);
-            sound.SubmitBuffer(byteBuffer);
+            ConvertBuffer(floatBuffer, byteBuffer1);
         }
 
         private void ConvertBuffer(float[,] from, byte[] to)

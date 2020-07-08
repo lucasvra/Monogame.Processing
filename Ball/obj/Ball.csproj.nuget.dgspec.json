@@ -47,7 +47,7 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "MonoGame.Framework.DesktopGL": {
+            "MonoGame.Framework.WindowsDX": {
               "target": "Package",
               "version": "[3.8.0.1375-develop, )"
             }
@@ -65,6 +65,9 @@
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"

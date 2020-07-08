@@ -29,7 +29,7 @@ namespace Monogame.Processing.Sound
         }
     }
 
-    public class pinkNoise : Generator
+    public class PinkNoise : Generator
     {
         readonly Random _rnd = new Random();
         private float b0 = 0f, b1 = 0f, b2 = 0f, b3 = 0f, b4 = 0f, b5 = 0f, b6 = 0f;

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Monogame.Processing;
 using Monogame.Processing.Sound;
 
@@ -32,8 +34,7 @@ namespace Ball
 
             if (x < 0 || x > width) vx *= -1;
             if (y < 0 || y > height) vy *= -1;
-            
-            printMatrix();
+
         }
 
         public override void MouseDragged()
@@ -42,14 +43,8 @@ namespace Ball
             vy = mouseY - pmouseY;
         }
 
-        private SinOsc sine;
-        public override void MouseClicked()
-        {
-            sine = new SinOsc();
-            var f = (float) (440.0 * Math.Pow(2, (1 - 9) / 12.0f));
-            sine.set(f,1,0,0);
-            sine.play();
-        }
+        
+
     }
     public class Program
     {
