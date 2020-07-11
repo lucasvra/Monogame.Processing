@@ -48,7 +48,7 @@ namespace Text
                     fill(200f);
                     ellipse(x, y, 0.8f * dx, 0.8f * dy);
                     fill(map(x, 0, width, 0, 255), map(y, 0, height, 0, 255), b);
-                    text(letters[j * n + i], x-6, y-15);
+                    text(letters[j * n + i], x-3, y-10);
                 }
             }
 

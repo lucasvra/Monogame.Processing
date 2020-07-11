@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
@@ -75,7 +73,7 @@ namespace Monogame.Processing
         private bool _redraw;
 
         private int _lastFrameTime;
-        private BasicFontTexture _basicFont;
+        private SpriteFont _basicFont;
         private RenderTarget2D _lastFrame;
         private RenderTarget2D _nextFrame;
         readonly GraphicsDeviceManager _graphics;
@@ -127,6 +125,8 @@ namespace Monogame.Processing
         public TouchLocation[] touches { get; private set; } = new TouchLocation[0];
 
         #endregion
+
+        #region Processing Functions and Events
 
         /// <summary>
         /// The setup() function is run once, when the program starts. It's used to define initial environment properties
@@ -266,6 +266,8 @@ namespace Monogame.Processing
 
         protected virtual void TouchStarted(TouchLocation touch) { }
 
+        #endregion
+
         protected Processing()
         {
             pixels = new color[0];
@@ -325,7 +327,6 @@ namespace Monogame.Processing
                 VertexColorEnabled = true,
                 LightingEnabled = false,
                 World = _world
-
             };
 
             _pixel = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
@@ -334,7 +335,8 @@ namespace Monogame.Processing
             PImage.graphicsDevice = GraphicsDevice;
             PImage.spriteBatch = _spriteBatch;
 
-            _basicFont = new BasicFontTexture(GraphicsDevice, _spriteBatch);
+            //_basicFont = new BasicFontTexture(GraphicsDevice, _spriteBatch);
+            _basicFont = (new EmbeddedResourceContentManager(GraphicsDevice)).Load<SpriteFont>("font");
 
             _pmouse = Mouse.GetState();
             _pkeyboard = Keyboard.GetState();

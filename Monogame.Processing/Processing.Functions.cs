@@ -51,8 +51,9 @@ namespace Monogame.Processing
         /// <param name="text"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void text(string text, float x, float y) => 
-            _basicFont.DrawTextToTexture(text, _style.Fill, _style.TextSize, x, y);
+        public void text(string text, float x, float y) =>
+            DrawText(new Vector2(x, y), text, _basicFont, _style.Fill);
+            //_basicFont.DrawTextToTexture(text, _style.Fill, _style.TextSize, x, y);
 
         /// <summary>
         /// The delay() function halts for a specified time. Delay times are specified in thousandths of a second.

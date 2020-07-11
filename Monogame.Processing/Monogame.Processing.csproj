@@ -30,6 +30,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="font.xnb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Content\font.xnb" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
   </ItemGroup>
 
