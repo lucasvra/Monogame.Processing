@@ -17,13 +17,13 @@ public class Star : Processing
 	{
 		size(1080, 720); 
 		stroke(t, t, 0);
-		translate(560,360);
-	}
+}
 
 	public override void Draw()
 	{
 		surface.setTitle($"FPS: {frameRate:00.00}");
-		background(0); 
+    translate(560,360);
+    background(0); 
 		t -= .01f; 
 		for (i = 2e3f; i > 0; i--)
 		{

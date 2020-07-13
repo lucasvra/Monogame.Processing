@@ -52,7 +52,7 @@ namespace Monogame.Processing
         /// <param name="x"></param>
         /// <param name="y"></param>
         public void text(string text, float x, float y) =>
-            DrawText(new Vector2(x, y), text, _basicFont, _style.Fill);
+            DrawText(new Vector2(x, y), text, _basicFont, _style.Fill, _style.TextSize);
             //_basicFont.DrawTextToTexture(text, _style.Fill, _style.TextSize, x, y);
 
         /// <summary>
