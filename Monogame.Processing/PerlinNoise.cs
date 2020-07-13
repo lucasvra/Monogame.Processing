@@ -16,7 +16,6 @@ namespace Monogame.Processing
         public int seed { get; }
         public int Repeat;
 
-
         public PerlinNoise(int seed, int repeat = -1)
         {
             this.seed = seed;

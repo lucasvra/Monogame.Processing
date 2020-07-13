@@ -51,7 +51,7 @@ namespace Monogame.Processing
 
         private void DrawText(Vector2 position, string text, SpriteFont font, Color color, float size)
         {
-            _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode, null, null, null, null, _matrix);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode, SamplerState.PointClamp, null, null, null, _matrix);
             _spriteBatch.DrawString(font, text, position, color, 0f, Vector2.Zero, size / 48f * Vector2.One,
                 SpriteEffects.None, 0f);
             _spriteBatch.End();
