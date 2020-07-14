@@ -18,7 +18,7 @@ namespace Monogame.Processing.Sound
         private static HashSet<Generator> _generators = new HashSet<Generator>();
 
         private static int SampleRate = 44100;
-        private static int SamplesInBuffer = 3000;
+        private static int SamplesInBuffer = 1000;
         private static int BytesPerSample = 2;
         private static int Channels = 2;
         private static readonly DynamicSoundEffectInstance sound = new DynamicSoundEffectInstance(SampleRate, AudioChannels.Stereo);
