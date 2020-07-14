@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
+using Monogame.Processing.Sound;
 
 namespace Monogame.Processing
 {
@@ -311,7 +312,11 @@ namespace Monogame.Processing
             if(Window.AllowUserResizing) size(Window.ClientBounds.Width, Window.ClientBounds.Height);
         }
 
-        protected override void Update(GameTime gameTime) => Thread();
+        protected override void Update(GameTime gameTime)
+        {
+            //Generator.SoundLoop();
+            Thread();
+        }
 
         protected override void LoadContent()
         {

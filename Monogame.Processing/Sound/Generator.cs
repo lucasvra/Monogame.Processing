@@ -2,9 +2,12 @@
 // Based on https://github.com/davidluzgouveia/blog-simple-synth
 // ----------------------
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 
@@ -12,74 +15,84 @@ namespace Monogame.Processing.Sound
 {
     public abstract class Generator
     {
-        private const int SampleRate = 44100;
-        private const int SamplesInBuffer = 50000;
-        private const int BytesPerSample = 2;
-        private const int Channels = 2;
-        private readonly DynamicSoundEffectInstance sound = new DynamicSoundEffectInstance(SampleRate, AudioChannels.Stereo);
-        private readonly float[,] floatBuffer = new float[Channels, SamplesInBuffer];
-        private byte[] byteBuffer1 = new byte[BytesPerSample * Channels * SamplesInBuffer];
-        private byte[] byteBuffer2 = new byte[BytesPerSample * Channels * SamplesInBuffer];
-        private bool running = true;
+        private static HashSet<Generator> _generators = new HashSet<Generator>();
+
+        private static int SampleRate = 44100;
+        private static int SamplesInBuffer = 3000;
+        private static int BytesPerSample = 2;
+        private static int Channels = 2;
+        private static readonly DynamicSoundEffectInstance sound = new DynamicSoundEffectInstance(SampleRate, AudioChannels.Stereo);
+        private static readonly float[,] floatBuffer = new float[Channels, SamplesInBuffer];
+        private static byte[] byteBuffer1 = new byte[BytesPerSample * Channels * SamplesInBuffer];
 
         protected float offset = 0.0f;
         protected float time = 0.0f;
+        private float _pan = 0f;
+        private float _amp = 0.2f;
 
-        private Task task;
+        private static Task task;
 
-        protected Generator()
+        static Generator()
         {
-            UpdateBuffer();
-            task = Task.Run(SoundLoop);
+            task = Task.Factory.StartNew(() => SoundLoop(Task.Factory.CancellationToken));
+            sound.Play();
         }
 
-        ~Generator()
-        {
-            running = false;
-            task.Wait();
-        }
 
-        private void SoundLoop()
+        public static void SoundLoop(CancellationToken token)
         {
-            while (running)
+            while (!token.IsCancellationRequested)
             {
-                if(sound.PendingBufferCount > 10) Thread.Sleep(10);
-                try
-                {
-                    UpdateSound();
-                }
-                catch (Exception e)
-                {
-                    break;
-                }
-                
+                if (sound.PendingBufferCount < 5) UpdateSound();
+                else Thread.Sleep(1);
             }
+            
         }
 
-        private void UpdateSound()
+        private static void UpdateSound()
         {
             sound.SubmitBuffer(byteBuffer1);
-
-            var aux = byteBuffer1;
-            byteBuffer1 = byteBuffer2;
-            byteBuffer2 = aux;
-
             UpdateBuffer();
         }
 
-        private void UpdateBuffer()
+        private static void UpdateBuffer()
         {
-            for (int i = 0; i < floatBuffer.GetLength(1); i++)
+
+            for (var i = 0; i < floatBuffer.GetLength(1); i++)
             {
-                floatBuffer[0, i] = OscilatorFunction();
-                floatBuffer[1, i] = floatBuffer[0, i];
-                time += 1f / SampleRate;
+                floatBuffer[0, i] = 0;
+                floatBuffer[1, i] = 0;
+                lock (_generators)
+                {
+                    foreach (var generator in _generators)
+                    {
+                        var val = generator._amp * generator.OscilatorFunction();
+                        var p = generator._pan;
+                        float l = 1f, r = 1f;
+
+                        if (p > 0)
+                        {
+                            r = p;
+                            l = 1 - p;
+                        }
+
+                        if (p < 0)
+                        {
+                            l = -p;
+                            r = 1 + p;
+                        }
+
+                        floatBuffer[0, i] += l * val;
+                        floatBuffer[1, i] += r * val;
+                        generator.time += 1f / SampleRate;
+                    }
+                }
             }
 
             ConvertBuffer(floatBuffer, byteBuffer1);
         }
 
-        private void ConvertBuffer(float[,] from, byte[] to)
+        private static void ConvertBuffer(float[,] from, byte[] to)
         {
             for (var i = 0; i < from.GetLength(1); i++)
             {
@@ -110,7 +123,10 @@ namespace Monogame.Processing.Sound
         /// <summary>
         /// Starts the oscillator
         /// </summary>
-        public void play() => sound.Play();
+        public void play()
+        {
+            lock (_generators) _generators.Add(this);
+        }
 
         /// <summary>
         /// Set multiple parameters at once
@@ -130,7 +146,7 @@ namespace Monogame.Processing.Sound
         /// Change the amplitude/volume of this sound.
         /// </summary>
         /// <param name="amp"></param>
-        public void amp(float amp) => sound.Volume = MathHelper.Clamp(amp, 0f, 1f);
+        public void amp(float amp) => _amp = MathHelper.Clamp(amp, 0f, 1f);
 
         /// <summary>
         /// Offset the output of this generator by given value
@@ -142,11 +158,19 @@ namespace Monogame.Processing.Sound
         /// Move the sound in a stereo panorama.
         /// </summary>
         /// <param name="pos"></param>
-        public void pan(float pos) => sound.Pan = MathHelper.Clamp(pos, -1f, 1f);
+        public void pan(float pos) => _pan = MathHelper.Clamp(pos, -1f, 1f);
 
         /// <summary>
         /// Stop the oscillator.
         /// </summary>
-        public void stop() => sound.Stop();
+        public void stop()
+        {
+            lock (_generators) _generators.Remove(this);
+        }
+
+        ~Generator()
+        {
+            lock (_generators) _generators.Remove(this);
+        }
     }
 }

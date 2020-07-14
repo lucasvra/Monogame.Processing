@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Monogame.Processing;
 using Monogame.Processing.Sound;
 
@@ -19,6 +18,9 @@ namespace Ball
 
         public override void Draw()
         {
+            var p = (x - (width / 2f))/ (width / 2f);
+
+
             surface.setTitle($"FPS: {frameRate:00.00}");
 
             var theta = vy < 0 ? TWO_PI - acos(vx / sqrt(sq(vx) + sq(vy))) : acos(vx / sqrt(sq(vx) + sq(vy)));
@@ -27,7 +29,7 @@ namespace Ball
             strokeWeight(1);
             stroke(0);
             fill(0, 100, 0, 200);
-            arc(x, y, 50, 50, theta - angle, theta + angle, (ArcMode)CHORD);
+            arc(x, y, 50, 50, theta - angle, theta + angle, CHORD);
 
             x += vx;
             y += vy;
