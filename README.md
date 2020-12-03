@@ -31,7 +31,7 @@ static void Main()
 
 - Most 2D Primitives are implemented, but the drawing functions need optimization for better performance. 
 - Some types as *color*, *PImage* and *PVector* are partially implemented.
-- Many implemented functions were not tested, so but could occur.
+- Many implemented functions were not tested, so bugs could occur.
 
 For details, see the [Wiki](https://github.com/lucasvra/Monogame.Processing/wiki/Implementation) 
 
