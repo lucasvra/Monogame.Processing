@@ -1,6 +1,9 @@
 # Monogame.Processing
 A library that implements Processing Language functions for 2D graphics on Monogame
 
+ <a href="https://www.nuget.org/packages/Monogame.Processing/"><img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Monogame.Processing?color=blue&label=NuGet&logo=nuget&style=flat-square"></a>
+ </br>
+  <a href="https://www.nuget.org/packages/Monogame.Processing/"><img alt="Nuget" src="https://img.shields.io/nuget/dt/Monogame.Processing?color=darkblue&label=Downloads&style=flat-square"></a>
 
 To create a new sketch, it is necessary to create a class that inherits *Processing*
 ```csharp
