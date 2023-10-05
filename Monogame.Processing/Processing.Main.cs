@@ -119,6 +119,7 @@ namespace Monogame.Processing
         public bool keyPressed { get; private set; } = false;
         public Keys keyCode { get; private set; } = 0;
         public char key { get; private set; }
+        public bool focused { get; private set; } = false;
 
         public readonly Surface surface;
         public color[] pixels { get; private set; }
@@ -368,6 +369,7 @@ namespace Monogame.Processing
             frameRate = (float) 1000.0 / (_time.ElapsedMilliseconds - _lastFrameTime);
             _lastFrameTime = (int) _time.ElapsedMilliseconds;
 
+
             // draw to frame
             _nextFrame = CreateRenderTarget(_nextFrame);
             GraphicsDevice.SetRenderTarget(_nextFrame);
@@ -381,6 +383,8 @@ namespace Monogame.Processing
             _spriteBatch.End();
 
             PImage.currentTarget = _nextFrame;
+
+            focused = IsActive;
 
             if (frameCount == 0) Setup();
             else

@@ -107,6 +107,115 @@ namespace Monogame.Processing
             }
         }
 
+        private void ApplyBoxBlur(Color[] p, int width, int height, int radius)
+        {
+            Color[] output = new Color[width * height];
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int redSum = 0;
+                    int greenSum = 0;
+                    int blueSum = 0;
+                    int count = 0;
+
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int posX = x + kx;
+                            int posY = y + ky;
+
+                            if (posX >= 0 && posX < width && posY >= 0 && posY < height)
+                            {
+                                Color neighbor = p[posY * width + posX];
+                                redSum += neighbor.R;
+                                greenSum += neighbor.G;
+                                blueSum += neighbor.B;
+                                count++;
+                            }
+                        }
+                    }
+
+                    if (count > 0)
+                    {
+                        output[y * width + x] = new Color(redSum / count, greenSum / count, blueSum / count);
+                    }
+                }
+            }
+
+            Array.Copy(output, p, p.Length);
+        }
+
+        // Apply erode
+        private void ApplyErosion(Color[] p, int width, int height, int radius)
+        {
+            Color[] output = new Color[width * height];
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int minIntensity = 255;
+
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int posX = x + kx;
+                            int posY = y + ky;
+
+                            if (posX >= 0 && posX < width && posY >= 0 && posY < height)
+                            {
+                                Color neighbor = p[posY * width + posX];
+                                int intensity = (neighbor.R + neighbor.G + neighbor.B) / 3;
+                                minIntensity = Math.Min(minIntensity, intensity);
+                            }
+                        }
+                    }
+
+                    output[y * width + x] = new Color(minIntensity, minIntensity, minIntensity);
+                }
+            }
+
+            Array.Copy(output, p, p.Length);
+        }
+
+        // Appy Dilation
+        private void ApplyDilation(Color[] p, int width, int height, int radius)
+        {
+            Color[] output = new Color[width * height];
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int maxIntensity = 0;
+
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int posX = x + kx;
+                            int posY = y + ky;
+
+                            if (posX >= 0 && posX < width && posY >= 0 && posY < height)
+                            {
+                                Color neighbor = p[posY * width + posX];
+                                int intensity = (neighbor.R + neighbor.G + neighbor.B) / 3;
+                                maxIntensity = Math.Max(maxIntensity, intensity);
+                            }
+                        }
+                    }
+
+                    output[y * width + x] = new Color(maxIntensity, maxIntensity, maxIntensity);
+                }
+            }
+
+            Array.Copy(output, p, p.Length);
+        }
+
         public void filter(Filter kind, float param = -1f)
         {
             var p = new Color[texture.Width * texture.Height];
@@ -141,9 +250,15 @@ namespace Monogame.Processing
                         .Select(c => Color.FromNonPremultiplied((int)Math.Min(c.R, param), (int)Math.Min(c.G, param), (int)Math.Min(c.B, param), c.A)).ToArray();
                     break;
                 case Filter.BLUR:
-                case Filter.ERODE:
-                case Filter.DILATE:
+                    ApplyBoxBlur(p, texture.Width, texture.Height, 3);
                     break;
+                case Filter.ERODE:
+                    ApplyErosion(p, texture.Width, texture.Height, 3);
+                    break;
+                case Filter.DILATE:
+                    ApplyDilation(p, texture.Width, texture.Height, 3);
+                    break;
+                    
             }
 
             texture.SetData(p);
