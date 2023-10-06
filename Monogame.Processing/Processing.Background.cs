@@ -51,8 +51,7 @@ namespace Monogame.Processing
         private void DrawText(Vector2 position, string text, SpriteFont font, Color color, float size)
         {
             _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode, SamplerState.PointClamp, null, null, null, _matrix);
-            _spriteBatch.DrawString(font, text, position, color, 0f, Vector2.Zero, size / 48f * Vector2.One,
-                SpriteEffects.None, 0f);
+            _spriteBatch.DrawString(font, text, position, color, 0f, Vector2.Zero, size / 48f * Vector2.One, SpriteEffects.None, 0f);
             _spriteBatch.End();
         }
 
@@ -91,6 +90,37 @@ namespace Monogame.Processing
                     new VertexPositionColor(new Vector3(v1.X, v1.Y, 0), color),
                     new VertexPositionColor(new Vector3(v2.X, v2.Y, 0), color),
                     new VertexPositionColor(new Vector3(v3.X, v3.Y, 0), color)
+                };
+            }).ToArray();
+
+            _basicEffect.Alpha = color.A / 255.0f;
+            _basicEffect.World = _world;
+            _basicEffect.VertexColorEnabled = true;
+            _basicEffect.LightingEnabled = false;
+
+            GraphicsDevice.BlendState = _style.BlendMode;
+
+            foreach (var pass in _basicEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
+            }
+        }
+
+        private void FillTriangle(IEnumerable<(Vector3 v1, Vector3 v2, Vector3 v3)> triangles, Color color)
+        {
+            var vertices = triangles.SelectMany(t =>
+            {
+                var (v1, v2, v3) = t;
+                v1 = Vector3.Transform(v1, _matrix);
+                v2 = Vector3.Transform(v2, _matrix);
+                v3 = Vector3.Transform(v3, _matrix);
+
+                return new[]
+                {
+                    new VertexPositionColor(v1, color),
+                    new VertexPositionColor(v2, color),
+                    new VertexPositionColor(v3, color)
                 };
             }).ToArray();
 
@@ -258,6 +288,102 @@ namespace Monogame.Processing
 
         private void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color, float thickness) =>
             DrawPoints(Vector2.Zero, new List<Vector2> { v1, v2, v3, v1 }, color, thickness);
+
+        public void FillPolygon(Vector2 position, List<Vector2> vertices, Color color)
+        {
+            var triangles = TriangulatePolygon(vertices);
+            FillTriangles(position, triangles, color);
+        }
+
+        private List<(Vector2, Vector2, Vector2)> TriangulatePolygon(List<Vector2> vertices)
+        {
+            var triangles = new List<(Vector2, Vector2, Vector2)>();
+
+            int n = vertices.Count;
+            if (n < 3) return triangles;  // A polygon must have at least 3 vertices
+
+            // Initialize a list of vertex indices, in counterclockwise order.
+            var indices = new List<int>();
+            for (int i = 0; i < n; i++)
+            {
+                indices.Add(i);
+            }
+
+            int indexCount = indices.Count;
+
+            // Loop to remove ears
+            while (indexCount > 3)
+            {
+                bool earFound = false;
+                for (int i = 0; i < indexCount; i++)
+                {
+                    int i1 = indices[i];
+                    int i2 = indices[(i + 1) % indexCount];
+                    int i3 = indices[(i + 2) % indexCount];
+
+                    Vector2 p1 = vertices[i1];
+                    Vector2 p2 = vertices[i2];
+                    Vector2 p3 = vertices[i3];
+
+                    if (IsEar(p1, p2, p3, vertices, indices))
+                    {
+                        triangles.Add((p1, p2, p3));
+                        indices.RemoveAt((i + 1) % indexCount);
+                        indexCount--;
+                        earFound = true;
+                        break;
+                    }
+                }
+
+                // If no ear is found, the polygon is not simple.
+                if (!earFound)
+                {
+                    return new List<(Vector2, Vector2, Vector2)>(); // Return an empty list
+                }
+            }
+
+            // Add the remaining triangle
+            triangles.Add((vertices[indices[0]], vertices[indices[1]], vertices[indices[2]]));
+
+            return triangles;
+        }
+
+        private bool IsEar(Vector2 p1, Vector2 p2, Vector2 p3, List<Vector2> vertices, List<int> indices)
+        {
+            // Check if angle is convex (this assumes a counterclockwise vertex order)
+            Vector2 v1 = p2 - p1;
+            Vector2 v2 = p3 - p2;
+            if (Vector2.Cross(v1, v2) > 0)
+            {
+                return false;
+            }
+
+            // Check if any point is inside the triangle formed by p1, p2, p3
+            foreach (int i in indices)
+            {
+                Vector2 pt = vertices[i];
+                if (pt != p1 && pt != p2 && pt != p3)
+                {
+                    if (IsPointInTriangle(pt, p1, p2, p3)) return false;                    
+                }
+            }
+
+            return true;
+        }
+
+        private bool IsPointInTriangle(Vector2 pt, Vector2 v1, Vector2 v2, Vector2 v3)
+        {
+            float d1 = Sign(pt, v1, v2);
+            float d2 = Sign(pt, v2, v3);
+            float d3 = Sign(pt, v3, v1);
+
+            bool hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+            bool hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+
+            return !(hasNeg && hasPos);
+        }
+
+        private float Sign(Vector2 p1, Vector2 p2, Vector2 p3) => (p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y);
 
         private void FillTriangles(Vector2 position, List<(Vector2 v1, Vector2 v2, Vector2 v3)> triangles, Color color)
         {

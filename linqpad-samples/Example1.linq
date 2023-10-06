@@ -1,5 +1,5 @@
 <Query Kind="Program">
-  <NuGetReference Prerelease="true">MonoGame.Framework.WindowsDX</NuGetReference>
+  <NuGetReference>MonoGame.Framework.WindowsDX</NuGetReference>
   <NuGetReference>Monogame.Processing</NuGetReference>
   <Namespace>Microsoft.Xna.Framework.Input</Namespace>
   <Namespace>Monogame.Processing</Namespace>
