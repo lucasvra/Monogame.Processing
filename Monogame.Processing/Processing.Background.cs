@@ -304,10 +304,7 @@ namespace Monogame.Processing
 
             // Initialize a list of vertex indices, in counterclockwise order.
             var indices = new List<int>();
-            for (int i = 0; i < n; i++)
-            {
-                indices.Add(i);
-            }
+            for (int i = 0; i < n; i++) indices.Add(i);
 
             int indexCount = indices.Count;
 
@@ -353,10 +350,8 @@ namespace Monogame.Processing
             // Check if angle is convex (this assumes a counterclockwise vertex order)
             Vector2 v1 = p2 - p1;
             Vector2 v2 = p3 - p2;
-            if (Vector2.Cross(v1, v2) > 0)
-            {
-                return false;
-            }
+            if (v1.Cross(v2) > 0) return false;
+            
 
             // Check if any point is inside the triangle formed by p1, p2, p3
             foreach (int i in indices)
