@@ -38,7 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
+	<PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
+    <PackageReference Include="Triangle" Version="0.0.6-Beta3" />
   </ItemGroup>
 
 </Project>

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using static System.Math;
+using TriangleNet.Geometry;
+using TriangleNet.Topology;
+using TriangleNet.Meshing;
+using Point = TriangleNet.Geometry.Point;
 
 namespace Monogame.Processing
 {
@@ -289,96 +292,50 @@ namespace Monogame.Processing
         private void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color, float thickness) =>
             DrawPoints(Vector2.Zero, new List<Vector2> { v1, v2, v3, v1 }, color, thickness);
 
-        public void FillPolygon(Vector2 position, List<Vector2> vertices, Color color)
-        {
-            var triangles = TriangulatePolygon(vertices);
-            FillTriangles(position, triangles, color);
-        }
 
-        private List<(Vector2, Vector2, Vector2)> TriangulatePolygon(List<Vector2> vertices)
+
+        public void FillPolygonWithHoles(Vector2 position, List<List<Vector2>> contours, Color color)
         {
+            // Criar uma nova instância da classe Polygon (definida em Triangle.NET)
+            var polygon = new Polygon();
+
+            // Adicionar o contorno principal ao polígono
+            var mainContour = contours[0];
+            var points = new Vertex[mainContour.Count];
+            for (int i = 0; i < mainContour.Count; i++)
+            {
+                points[i] = new Vertex(mainContour[i].X, mainContour[i].Y);
+            }
+            polygon.Add(new Contour(points));
+
+            // Adicionar buracos ao polígono
+            for (int i = 1; i < contours.Count; i++)
+            {
+                List<Vector2> hole = contours[i];
+                points = new Vertex[hole.Count];
+                for (int j = 0; j < hole.Count; j++)
+                {
+                    points[j] = new Vertex(hole[j].X, hole[j].Y);
+                }
+                polygon.Add(new Contour(points), true);
+            }
+
+            // Realizar a triangulação
+            ConstraintOptions options = new ConstraintOptions() { ConformingDelaunay = true };
+            var mesh = polygon.Triangulate(options);
+
+            // Converter os triângulos de volta para o tipo Vector2 e adicioná-los a uma lista
             var triangles = new List<(Vector2, Vector2, Vector2)>();
-
-            int n = vertices.Count;
-            if (n < 3) return triangles;  // A polygon must have at least 3 vertices
-
-            // Initialize a list of vertex indices, in counterclockwise order.
-            var indices = new List<int>();
-            for (int i = 0; i < n; i++) indices.Add(i);
-
-            int indexCount = indices.Count;
-
-            // Loop to remove ears
-            while (indexCount > 3)
+            foreach (Triangle triangle in mesh.Triangles)
             {
-                bool earFound = false;
-                for (int i = 0; i < indexCount; i++)
-                {
-                    int i1 = indices[i];
-                    int i2 = indices[(i + 1) % indexCount];
-                    int i3 = indices[(i + 2) % indexCount];
-
-                    Vector2 p1 = vertices[i1];
-                    Vector2 p2 = vertices[i2];
-                    Vector2 p3 = vertices[i3];
-
-                    if (IsEar(p1, p2, p3, vertices, indices))
-                    {
-                        triangles.Add((p1, p2, p3));
-                        indices.RemoveAt((i + 1) % indexCount);
-                        indexCount--;
-                        earFound = true;
-                        break;
-                    }
-                }
-
-                // If no ear is found, the polygon is not simple.
-                if (!earFound)
-                {
-                    return new List<(Vector2, Vector2, Vector2)>(); // Return an empty list
-                }
+                Vector2 p1 = new Vector2((float)triangle.GetVertex(0).X, (float)triangle.GetVertex(0).Y);
+                Vector2 p2 = new Vector2((float)triangle.GetVertex(1).X, (float)triangle.GetVertex(1).Y);
+                Vector2 p3 = new Vector2((float)triangle.GetVertex(2).X, (float)triangle.GetVertex(2).Y);
+                triangles.Add((p1, p2, p3));
             }
 
-            // Add the remaining triangle
-            triangles.Add((vertices[indices[0]], vertices[indices[1]], vertices[indices[2]]));
-
-            return triangles;
+            FillTriangles(Vector2.Zero, triangles, color);
         }
-
-        private bool IsEar(Vector2 p1, Vector2 p2, Vector2 p3, List<Vector2> vertices, List<int> indices)
-        {
-            // Check if angle is convex (this assumes a counterclockwise vertex order)
-            Vector2 v1 = p2 - p1;
-            Vector2 v2 = p3 - p2;
-            if (v1.Cross(v2) > 0) return false;
-            
-
-            // Check if any point is inside the triangle formed by p1, p2, p3
-            foreach (int i in indices)
-            {
-                Vector2 pt = vertices[i];
-                if (pt != p1 && pt != p2 && pt != p3)
-                {
-                    if (IsPointInTriangle(pt, p1, p2, p3)) return false;                    
-                }
-            }
-
-            return true;
-        }
-
-        private bool IsPointInTriangle(Vector2 pt, Vector2 v1, Vector2 v2, Vector2 v3)
-        {
-            float d1 = Sign(pt, v1, v2);
-            float d2 = Sign(pt, v2, v3);
-            float d3 = Sign(pt, v3, v1);
-
-            bool hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0);
-            bool hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0);
-
-            return !(hasNeg && hasPos);
-        }
-
-        private float Sign(Vector2 p1, Vector2 p2, Vector2 p3) => (p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y);
 
         private void FillTriangles(Vector2 position, List<(Vector2 v1, Vector2 v2, Vector2 v3)> triangles, Color color)
         {

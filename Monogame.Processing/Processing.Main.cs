@@ -18,7 +18,7 @@ namespace Monogame.Processing
 
             public Surface(GameWindow window) => _window = window;
 
-            public void setLocation(int x, int y) => _window.Position = new Point(x, y);
+            //public void setLocation(int x, int y) => _window.Position = new Point(x, y);
             public void setResizable(bool val) => _window.AllowUserResizing = val;
             public void setTitle(string title) => _window.Title = title;
         }
