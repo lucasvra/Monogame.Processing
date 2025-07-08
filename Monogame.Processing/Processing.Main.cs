@@ -453,11 +453,11 @@ namespace Monogame.Processing
         {
             var keyboard = Keyboard.GetState();
 
-            keyPressed = false;
+            keyPressed = keyboard.GetPressedKeys().Any();
             foreach (var pkey in keyboard.GetPressedKeys().Except(_pkeyboard.GetPressedKeys()))
             {
                 KeyPressed(pkey);
-                keyPressed = true;
+                
                 keyCode = pkey;
                 if (!_letterKeys.ContainsKey(pkey)) continue;
 
