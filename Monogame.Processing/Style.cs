@@ -14,6 +14,7 @@ namespace Monogame.Processing
         public ShapeMode RectMode;
         public ShapeMode EllipseMode;
         public BlendState BlendMode;
-        
+
+        public TextAlign TextAlign { get; internal set; }
     }
 }

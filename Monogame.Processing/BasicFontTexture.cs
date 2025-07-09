@@ -13,7 +13,7 @@ namespace Monogame.Processing
         private readonly int letterWidth = 4;
         private readonly int letterHeight = 6;
 
-        readonly Dictionary<string, int[]> dic = new Dictionary<string, int[]>();
+        readonly Dictionary<string, int[]> dic = new();
         readonly Dictionary<string, Texture2D> textures;
 
         public BasicFontTexture(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch)
@@ -26,9 +26,9 @@ namespace Monogame.Processing
 
         private void CreateLettersModels()
         {
-            dic.Add(" ", new[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-            dic.Add("!", new[] {0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0});
-            dic.Add("\"", new[] {0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+            dic.Add(" ", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+            dic.Add("!", [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]);
+            dic.Add("\"", [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
             dic.Add("#", new[] {0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0});
             dic.Add("$", new[] {0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0});
             dic.Add("%", new[] {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0});

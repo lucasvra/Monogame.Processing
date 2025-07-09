@@ -46,14 +46,38 @@ namespace Monogame.Processing
         public void textSize(float size) => _style.TextSize = size;
 
         /// <summary>
+        /// Sets the current alignment for drawing text. 
+        /// </summary>
+        /// <param name="align">horizontal alignment, either LEFT, CENTER, or RIGHT</param>
+        public void textAlign(TextAlign align) => _style.TextAlign = align;
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="text"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void text(string text, float x, float y) =>
-            DrawText(new Vector2(x, y), text, _basicFont, _style.Fill, _style.TextSize);
+        public void text(string text, float x, float y)
+        {
             //_basicFont.DrawTextToTexture(text, _style.Fill, _style.TextSize, x, y);
+
+            switch (_style.TextAlign)
+            {
+                case TextAlign.LEFT:
+                    DrawText(new Vector2(x, y), text, _basicFont, _style.Fill, _style.TextSize);
+                    break;
+                case TextAlign.RIGHT:
+                    var m = _basicFont.MeasureString(text);
+                    DrawText(new Vector2(x - m.X, y), text, _basicFont, _style.Fill, _style.TextSize);
+                    break;
+                case TextAlign.CENTER:
+                    var measure = _basicFont.MeasureString(text);
+                    DrawText(new Vector2(x - (measure.X / 2), y), text, _basicFont, _style.Fill, _style.TextSize);
+                    break;
+            }
+
+        }
+
 
         /// <summary>
         /// The delay() function halts for a specified time. Delay times are specified in thousandths of a second.

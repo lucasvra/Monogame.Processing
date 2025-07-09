@@ -1,5 +1,11 @@
 ﻿namespace Monogame.Processing
 {
+    public enum TextAlign
+    {
+        LEFT = 0,
+        CENTER = 1,
+        RIGHT = 2,
+    }
     public enum ShapeMode
     {
         CENTER = 0,
