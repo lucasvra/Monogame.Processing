@@ -67,12 +67,12 @@ namespace Monogame.Processing
                     DrawText(new Vector2(x, y), text, _basicFont, _style.Fill, _style.TextSize);
                     break;
                 case TextAlign.RIGHT:
-                    var m = _basicFont.MeasureString(text);
-                    DrawText(new Vector2(x - m.X, y), text, _basicFont, _style.Fill, _style.TextSize);
+                    var measure1 = _basicFont.MeasureString(text) * _style.TextSize / 48f;
+                    DrawText(new Vector2(x - measure1.X, y), text, _basicFont, _style.Fill, _style.TextSize);
                     break;
                 case TextAlign.CENTER:
-                    var measure = _basicFont.MeasureString(text);
-                    DrawText(new Vector2(x - (measure.X / 2), y), text, _basicFont, _style.Fill, _style.TextSize);
+                    var measure2 = _basicFont.MeasureString(text) * _style.TextSize / 48f;
+                    DrawText(new Vector2(x - (measure2.X / 2), y), text, _basicFont, _style.Fill, _style.TextSize);
                     break;
             }
 

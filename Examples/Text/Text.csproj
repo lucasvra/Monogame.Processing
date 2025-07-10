@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net8.0</TargetFramework>
-	</PropertyGroup>
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.4.0" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\..\Monogame.Processing\Monogame.Processing.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Monogame.Processing\Monogame.Processing.csproj" />
+  </ItemGroup>
 
 </Project>

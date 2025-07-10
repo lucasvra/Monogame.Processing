@@ -307,12 +307,11 @@ namespace Monogame.Processing
             {
                 _graphics = new GraphicsDeviceManager(this)
                 {
-                    //PreferMultiSampling = true,
-                    //HardwareModeSwitch = false,
-                    //SynchronizeWithVerticalRetrace = false,
-                    //PreferredBackBufferWidth = width,
-                    //PreferredBackBufferHeight = height,
-                    //GraphicsProfile = GraphicsProfile.HiDef
+                    HardwareModeSwitch = false,
+                    SynchronizeWithVerticalRetrace = false,
+                    PreferredBackBufferWidth = width,
+                    PreferredBackBufferHeight = height,
+                    GraphicsProfile = GraphicsProfile.HiDef
                 };
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -481,9 +480,10 @@ namespace Monogame.Processing
         private void UpdateKeyboard()
         {
             var keyboard = Keyboard.GetState();
+            var pressedKeys = keyboard.GetPressedKeys()
 
-            keyPressed = keyboard.GetPressedKeys().Any();
-            foreach (var pkey in keyboard.GetPressedKeys().Except(_pkeyboard.GetPressedKeys()))
+            keyPressed = pressedKeys.Any();
+            foreach (var pkey in pressedKeys.Except(_pkeyboard.GetPressedKeys()))
             {
                 KeyPressed(pkey);
                 
@@ -496,13 +496,14 @@ namespace Monogame.Processing
                     key = _letterKeys[pkey].ToLower()[0];
             }
 
-            foreach (var pkey in _pkeyboard.GetPressedKeys().Except(keyboard.GetPressedKeys()))
+            foreach (var pkey in _pkeyboard.GetPressedKeys().Except(pressedKeys))
             {
                 KeyReleased(pkey);
                 if (_letterKeys.ContainsKey(pkey)) KeyTyped(pkey);
             }
 
             _pkeyboard = keyboard;
+            //_ppressedKeys = pressedKeys;
         }
         private void UpdateMouse()
         {
