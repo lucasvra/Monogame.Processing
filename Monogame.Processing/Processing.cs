@@ -78,9 +78,12 @@ namespace Monogame.Processing
         private SpriteFont _basicFont;
         private RenderTarget2D _lastFrame;
         private RenderTarget2D _nextFrame;
-        readonly GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
+        private readonly DepthStencilState _depthStencilStateWithBuffer = new() { DepthBufferEnable = true };
+
         private MouseState _pmouse;
         private KeyboardState _pkeyboard;
+        private Keys[] _ppressedKeys;
 
         private Matrix _world;
         private Texture2D _pixel;
@@ -123,6 +126,7 @@ namespace Monogame.Processing
         public bool focused { get; private set; } = false;
 
         public readonly Surface surface;
+        
         public color[] pixels { get; private set; }
 
         public TouchLocation[] touches { get; private set; } = new TouchLocation[0];
@@ -376,6 +380,7 @@ namespace Monogame.Processing
 
             _pmouse = Mouse.GetState();
             _pkeyboard = Keyboard.GetState();
+            _ppressedKeys = _pkeyboard.GetPressedKeys();
 
             _lastFrame = CreateRenderTarget(null);
             _nextFrame = CreateRenderTarget(null);
@@ -458,10 +463,7 @@ namespace Monogame.Processing
             var sh = _graphics.PreferredBackBufferHeight / (float) frame.Height;
 
             GraphicsDevice.SetRenderTarget(target);
-            GraphicsDevice.DepthStencilState = new DepthStencilState
-            {
-                DepthBufferEnable = true
-            };
+            GraphicsDevice.DepthStencilState = _depthStencilStateWithBuffer;
 
             _spriteBatch.Begin();
             _spriteBatch.Draw(frame, Vector2.Zero, null, Color.White, 0, Vector2.Zero, new Vector2(sw, sh), SpriteEffects.None, 0);
@@ -480,10 +482,10 @@ namespace Monogame.Processing
         private void UpdateKeyboard()
         {
             var keyboard = Keyboard.GetState();
-            var pressedKeys = keyboard.GetPressedKeys()
+            var pressedKeys = keyboard.GetPressedKeys();
 
             keyPressed = pressedKeys.Any();
-            foreach (var pkey in pressedKeys.Except(_pkeyboard.GetPressedKeys()))
+            foreach (var pkey in pressedKeys.Except(_ppressedKeys))
             {
                 KeyPressed(pkey);
                 
@@ -496,14 +498,14 @@ namespace Monogame.Processing
                     key = _letterKeys[pkey].ToLower()[0];
             }
 
-            foreach (var pkey in _pkeyboard.GetPressedKeys().Except(pressedKeys))
+            foreach (var pkey in _ppressedKeys.Except(pressedKeys))
             {
                 KeyReleased(pkey);
                 if (_letterKeys.ContainsKey(pkey)) KeyTyped(pkey);
             }
 
             _pkeyboard = keyboard;
-            //_ppressedKeys = pressedKeys;
+            _ppressedKeys = pressedKeys;
         }
         private void UpdateMouse()
         {

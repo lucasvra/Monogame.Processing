@@ -14,7 +14,7 @@ namespace LineRendering
         {
             surface.setTitle($"FPS: {frameRate:00.00}");
             background(255);
-            stroke(0, 200);
+            stroke(0);
             for (int i = 0; i < 5000; i++)
             {
                 float x0 = random(width);

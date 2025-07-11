@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worm", "..\Examples\Worm\Wo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Circle", "..\Examples\Circle\Circle.csproj", "{3AA227AD-5B55-4338-B364-14220D8FDC83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{E10F963C-C872-3787-016E-4A8A2BDA1069}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E10F963C-C872-3787-016E-4A8A2BDA1069}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E10F963C-C872-3787-016E-4A8A2BDA1069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AA227AD-5B55-4338-B364-14220D8FDC83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA227AD-5B55-4338-B364-14220D8FDC83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA227AD-5B55-4338-B364-14220D8FDC83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA227AD-5B55-4338-B364-14220D8FDC83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +98,7 @@ Global
 		{DF7F36E5-8E35-CC79-11AF-D6407A39579A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{02947215-3362-1D04-9D58-97E7E1979169} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{E10F963C-C872-3787-016E-4A8A2BDA1069} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{3AA227AD-5B55-4338-B364-14220D8FDC83} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42F708BE-D2E3-45B4-83B1-5CE9F3019D47}

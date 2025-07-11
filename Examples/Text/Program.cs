@@ -22,6 +22,8 @@ namespace Text
             size(600, 600);
             background(255f);
             textSize(12);
+            FrameRate(30);
+            textAlign(TextAlign.CENTER);
         }
 
         public override void Draw()
@@ -48,7 +50,7 @@ namespace Text
                     fill(200f);
                     ellipse(x, y, 0.8f * dx, 0.8f * dy);
                     fill(map(x, 0, width, 0, 255), map(y, 0, height, 0, 255), b);
-                    text(letters[j * n + i], x-3, y-10);
+                    text(letters[j * n + i], x, y-10);
                 }
             }
 
@@ -64,7 +66,8 @@ namespace Text
         [STAThread]
         static void Main()
         {
-            using (var game = new Text()) game.Run();
+            using var game = new Text();
+            game.Run();
         }
     }
 }

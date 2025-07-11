@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -8,20 +7,18 @@ using static System.Math;
 using TriangleNet.Geometry;
 using TriangleNet.Topology;
 using TriangleNet.Meshing;
-using Point = TriangleNet.Geometry.Point;
-using SimdVector = System.Numerics.Vector; // Alias para o Vector do System.Numerics
+using SimdVector = System.Numerics.Vector<float>; // Alias for Vector of System.Numerics
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Monogame.Processing
 {
     partial class Processing
     {
-        // Cache expandido para incluir arcos
-        private readonly Dictionary<(double, double), List<Vector2>> _circleBuffer = new Dictionary<(double, double), List<Vector2>>();
-        private readonly Dictionary<(float, float, float, float), List<Vector2>> _arcBuffer = new Dictionary<(float, float, float, float), List<Vector2>>();
+    
+        private readonly Dictionary<(double, double), List<Vector2>> _circleBuffer = new();
+        private readonly Dictionary<(float, float, float, float), List<Vector2>> _arcBuffer = new();
         
-        // Arrays reutilizáveis para evitar alocações
+        
         private VertexPositionColor[] _vertexBuffer = new VertexPositionColor[1024];
         private Vector2[] _pointBuffer = new Vector2[1024];
         private (Vector2 v1, Vector2 v2, Vector2 v3)[] _triangleBuffer = new (Vector2, Vector2, Vector2)[512];
@@ -163,10 +160,8 @@ namespace Monogame.Processing
             var vertexCount = triangleCount * 3;
             if (vertexCount > _vertexBuffer.Length)
                 Array.Resize(ref _vertexBuffer, vertexCount);
-                
-            // Use SIMD when possible for matrix transformations
-            if (SimdVector.IsHardwareAccelerated && triangleCount > 8)       
-                TransformTrianglesSIMD(triangleCount, color);
+            
+            if (triangleCount > 8) TransformTrianglesSIMD(triangleCount, color);
             else TransformTrianglesNormal(triangleCount, color);
             
 
@@ -203,7 +198,88 @@ namespace Monogame.Processing
 
         private void TransformTrianglesSIMD(int triangleCount, Color color)
         {
-            // Extract matrix components for SIMD
+            // Tamanho do vetor SIMD (quantos floats cabem em um registrador, ex: 4, 8)
+            int vectorSize = SimdVector.Count;
+            int vertexCount = triangleCount * 3;
+
+            // Pré-calcula os vetores da matriz. Fazemos isso fora do loop.
+            var m11_vec = new SimdVector(_matrix.M11);
+            var m12_vec = new SimdVector(_matrix.M12);
+            var m21_vec = new SimdVector(_matrix.M21);
+            var m22_vec = new SimdVector(_matrix.M22);
+            var m41_vec = new SimdVector(_matrix.M41);
+            var m42_vec = new SimdVector(_matrix.M42);
+
+            // Arrays temporários para carregar os dados dos vértices para os vetores SIMD
+            var xVals = new float[vectorSize];
+            var yVals = new float[vectorSize];
+
+            int i = 0;
+            // ===== LOOP PRINCIPAL SIMD =====
+            // Processa os vértices em blocos do tamanho do vetor SIMD
+            for (; i <= vertexCount - vectorSize; i += vectorSize)
+            {
+                // 1. CARREGAMENTO (Gather / De-interleave)
+                // Pega os dados dos vértices do _triangleBuffer (que é AoS)
+                // e os organiza em arrays simples (SoA) para o SIMD.
+                for (int j = 0; j < vectorSize; j++)
+                {
+                    int currentVertexIndex = i + j;
+                    int triangleIndex = currentVertexIndex / 3;
+                    int vertexInTriangle = currentVertexIndex % 3;
+
+                    // Pega o vértice correto (v1, v2 ou v3) do triângulo
+                    Vector2 sourceVertex;
+                    switch (vertexInTriangle)
+                    {
+                        case 0: sourceVertex = _triangleBuffer[triangleIndex].v1; break;
+                        case 1: sourceVertex = _triangleBuffer[triangleIndex].v2; break;
+                        default: sourceVertex = _triangleBuffer[triangleIndex].v3; break;
+                    }
+                    xVals[j] = sourceVertex.X;
+                    yVals[j] = sourceVertex.Y;
+                }
+
+                // Carrega os arrays nos tipos SimdVector
+                var xVec = new SimdVector(xVals);
+                var yVec = new SimdVector(yVals);
+
+                // 2. CÁLCULO SIMD
+                // Executa a transformação da matriz em todos os vértices do bloco de uma só vez.
+                var resX = (xVec * m11_vec) + (yVec * m21_vec) + m41_vec;
+                var resY = (xVec * m12_vec) + (yVec * m22_vec) + m42_vec;
+
+                // 3. ARMAZENAMENTO (Scatter)
+                // Coloca os resultados de volta no buffer de vértices final.
+                for (int j = 0; j < vectorSize; j++) 
+                    _vertexBuffer[i + j] = new VertexPositionColor(new Vector3(resX[j], resY[j], 0), color);
+            }
+
+            // ===== LOOP ESCALAR (Restante) =====
+            // Processa os vértices restantes que não couberam em um bloco SIMD completo.
+            for (; i < vertexCount; i++)
+            {
+                int triangleIndex = i / 3;
+                int vertexInTriangle = i % 3;
+
+                var sourceVertex = vertexInTriangle switch
+                {
+                    0 => _triangleBuffer[triangleIndex].v1,
+                    1 => _triangleBuffer[triangleIndex].v2,
+                    _ => _triangleBuffer[triangleIndex].v3
+                };
+
+                // Cálculo escalar original para os vértices restantes
+                float x = sourceVertex.X * _matrix.M11 + sourceVertex.Y * _matrix.M21 + _matrix.M41;
+                float y = sourceVertex.X * _matrix.M12 + sourceVertex.Y * _matrix.M22 + _matrix.M42;
+
+                _vertexBuffer[i] = new VertexPositionColor(new Vector3(x, y, 0), color);
+            }
+        }
+
+        private void TransformTrianglesDirect(int triangleCount, Color color)
+        {
+            // Extract matrix components
             var m11 = _matrix.M11;
             var m12 = _matrix.M12;
             var m21 = _matrix.M21;
@@ -230,10 +306,10 @@ namespace Monogame.Processing
             }
         }
 
-        private void FillTriangle(IEnumerable<(Vector2 v1, Vector2 v2, Vector2 v3)> triangles, Color color)
+        private void FillTriangle((Vector2 v1, Vector2 v2, Vector2 v3)[] triangles, Color color)
         {
-            var triangleList = triangles as List<(Vector2, Vector2, Vector2)> ?? triangles.ToList();
-            var triangleCount = triangleList.Count;
+            var triangleList = triangles;
+            var triangleCount = triangleList.Length;
             
             if (triangleCount > _triangleBuffer.Length)
                 Array.Resize(ref _triangleBuffer, triangleCount);
@@ -300,6 +376,7 @@ namespace Monogame.Processing
             vectors.Add(vectors[0]); // Close the circle
 
             _circleBuffer[key] = vectors;
+            if(_circleBuffer.Count > 10_000) _circleBuffer.Clear();
             return vectors;
         }
 
@@ -323,7 +400,7 @@ namespace Monogame.Processing
                 triangles.Add((points[i - 1], points[i], Vector2.Zero));
 
             if (chord)
-                triangles.Add((points[points.Count - 1], points[0], Vector2.Zero));
+                triangles.Add((points[^1], points[0], Vector2.Zero));
 
             return triangles;
         }
@@ -420,10 +497,8 @@ namespace Monogame.Processing
         private List<Vector2> CreateCirclePoints(double radius) =>
             CreateEllipsePoints(radius, radius);
 
-        private List<Vector2> CreateArcPoints(float radiusx, float radiusy, float startingAngle, float radians, int mode = 0)
-        {
-            return CreateArcPointsOptimized(radiusx, radiusy, startingAngle, radians, mode);
-        }
+        private List<Vector2> CreateArcPoints(float radiusx, float radiusy, float startingAngle, float radians, int mode = 0) => 
+            CreateArcPointsOptimized(radiusx, radiusy, startingAngle, radians, mode);
 
         private List<Vector2> CreateArcPointsOptimized(float radiusx, float radiusy, float startingAngle, float radians, int mode = 0)
         {
@@ -442,15 +517,19 @@ namespace Monogame.Processing
                 if (theta >= radians) break;
             }
 
-            if (mode == 1) points.Add(points[0]);
-            if (mode == 2)
+            switch (mode)
             {
-                points.Add(Vector2.Zero);
-                points.Add(points[0]);
+                case 1:
+                    points.Add(points[0]);
+                    break;
+                case 2:
+                    points.Add(Vector2.Zero);
+                    points.Add(points[0]);
+                    break;
+                case 0:
+                    _arcBuffer[key] = points;
+                    break;
             }
-
-            if (mode == 0)
-                _arcBuffer[key] = points;
 
             return points;
         }
@@ -478,7 +557,7 @@ namespace Monogame.Processing
 
             for (int i = 1; i < contours.Count; i++)
             {
-                List<Vector2> hole = contours[i];
+                var hole = contours[i];
                 points = new Vertex[hole.Count];
                 for (int j = 0; j < hole.Count; j++)
                 {
@@ -487,7 +566,7 @@ namespace Monogame.Processing
                 polygon.Add(new Contour(points), true);
             }
 
-            ConstraintOptions options = new ConstraintOptions() { ConformingDelaunay = true };
+            var options = new ConstraintOptions { ConformingDelaunay = true };
             var mesh = polygon.Triangulate(options);
 
             var triangleCount = 0;
@@ -496,9 +575,9 @@ namespace Monogame.Processing
                 if (triangleCount >= _triangleBuffer.Length)
                     Array.Resize(ref _triangleBuffer, _triangleBuffer.Length * 2);
                     
-                Vector2 p1 = new Vector2((float)triangle.GetVertex(0).X, (float)triangle.GetVertex(0).Y) + position;
-                Vector2 p2 = new Vector2((float)triangle.GetVertex(1).X, (float)triangle.GetVertex(1).Y) + position;
-                Vector2 p3 = new Vector2((float)triangle.GetVertex(2).X, (float)triangle.GetVertex(2).Y) + position;
+                var p1 = new Vector2((float)triangle.GetVertex(0).X, (float)triangle.GetVertex(0).Y) + position;
+                var p2 = new Vector2((float)triangle.GetVertex(1).X, (float)triangle.GetVertex(1).Y) + position;
+                var p3 = new Vector2((float)triangle.GetVertex(2).X, (float)triangle.GetVertex(2).Y) + position;
                 _triangleBuffer[triangleCount++] = (p1, p2, p3);
             }
 
@@ -557,31 +636,31 @@ namespace Monogame.Processing
         private void DrawLine(IEnumerable<(float x1, float y1, float x2, float y2)> lines, Color color, float thickness)
         {
             _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, null, _matrix);
-            
+
             foreach (var (x1, y1, x2, y2) in lines)
             {
                 var p1 = new Vector2(x1, y1);
                 var p2 = new Vector2(x2, y2);
                 var distance = Vector2.Distance(p1, p2);
                 var angle = (float)Atan2(y2 - y1, x2 - x1);
-                
+
                 _spriteBatch.Draw(_pixel, p1, null, color, angle, new Vector2(0, 0.5f), new Vector2(distance, thickness), SpriteEffects.None, 0);
             }
-            
+
             _spriteBatch.End();
         }
 
         private void DrawLine(float x1, float y1, float x2, float y2, Color color, float thickness)
         {
             _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, null, _matrix);
-            
+
             var p1 = new Vector2(x1, y1);
             var p2 = new Vector2(x2, y2);
             var distance = Vector2.Distance(p1, p2);
             var angle = (float)Atan2(y2 - y1, x2 - x1);
-            
+
             _spriteBatch.Draw(_pixel, p1, null, color, angle, new Vector2(0, 0.5f), new Vector2(distance, thickness), SpriteEffects.None, 0);
-            
+
             _spriteBatch.End();
         }
 
