@@ -8,16 +8,12 @@ namespace Monogame.Processing
         #region Transform
 
         public float modelX(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), _matrix).X;
-
         public float modelY(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), _matrix).Y;
-
         public float modelZ(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), _matrix).Z;
 
-        public float screenX(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), Matrix.Invert(_matrix)).X;
-
-        public float screenY(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), Matrix.Invert(_matrix)).Y;
-
-        public float screenZ(float x, float y, float z) => Vector3.Transform(new Vector3(x, y, z), Matrix.Invert(_matrix)).Z;
+        public float screenX(float x, float y, float z) => modelX(x, y, z);
+        public float screenY(float x, float y, float z) => modelY(x, y, z);
+        public float screenZ(float x, float y, float z) => modelZ(x, y, z);
 
 
         /// <summary>
@@ -26,7 +22,7 @@ namespace Monogame.Processing
         /// to radians with the radians() function. 
         /// </summary>
         /// <param name="angle">float: angle of rotation specified in radians</param>
-        public void rotate(float angle) => _matrix *= Matrix.CreateRotationZ(angle);
+        public void rotate(float angle) => _matrix = Matrix.CreateRotationZ(angle) * _matrix;
 
         /// <summary>
         /// Increases or decreases the size of a shape by expanding and contracting vertices. 
@@ -35,7 +31,7 @@ namespace Monogame.Processing
         /// increases the dimension of a shape by 200%.
         /// </summary>
         /// <param name="s">float: percentage to scale the object</param>
-        public void scale(float s) => _matrix *= Matrix.CreateScale(s);
+        public void scale(float s) => _matrix = Matrix.CreateScale(s) * _matrix;
 
         /// <summary>
         /// Increases or decreases the size of a shape by expanding and contracting vertices. 
@@ -45,7 +41,7 @@ namespace Monogame.Processing
         /// </summary>
         /// <param name="x">float: percentage to scale the object in the x-axis</param>
         /// <param name="y">float: percentage to scale the object in the y-axis</param>
-        public void scale(float x, float y) => _matrix *= Matrix.CreateScale(x, y, 1);
+        public void scale(float x, float y) => _matrix = Matrix.CreateScale(x, y, 1f) * _matrix;
 
         /// <summary>
         /// Specifies an amount to displace objects within the display window. The x parameter specifies
@@ -60,7 +56,7 @@ namespace Monogame.Processing
         /// </summary>
         /// <param name="x">float: left/right translation</param>
         /// <param name="y">float: up/down translation</param>
-        public void translate(float x, float y) => _matrix *= Matrix.CreateTranslation(x, y, 0);
+        public void translate(float x, float y) => _matrix = Matrix.CreateTranslation(x, y, 0f) * _matrix;
 
         /// <summary>
         /// Shears a shape around the y-axis the amount specified by the angle parameter. Angles should be specified in
@@ -77,8 +73,8 @@ namespace Monogame.Processing
         public void shearY(float angle)
         {
             var aux = Matrix.Identity;
-            aux.M12 = (float)Tan(angle);
-            _matrix *= aux;
+            aux.M12 = (float)Tan(angle);          // y' = y + k*x  (row-major: M12 afeta y por x)
+            _matrix = aux * _matrix;
         }
 
         /// <summary>
@@ -96,8 +92,8 @@ namespace Monogame.Processing
         public void shearX(float angle)
         {
             var aux = Matrix.Identity;
-            aux.M21 = (float)Tan(angle);
-            _matrix *= aux;
+            aux.M21 = (float)Tan(angle);          // x' = x + k*y  (row-major: M21 afeta x por y)
+            _matrix = aux * _matrix;
         }
 
         #endregion

@@ -9,31 +9,29 @@ game.Run();
 
 public class Test : Processing
 {
+    float x = 300, y = 300, angulo = 0;
     public override void Setup()
     {
         size(600, 600);
-        background(255f);
-
-        stroke(255, 0, 0);
-        strokeWeight(5);
-        fill(0,0,255);
     }
 
     public override void Draw()
-    {        
-        beginShape();
-        // Exterior part of shape, clockwise winding
-        vertex(300 -160, 300 -160);
-        vertex(300 +160, 300 -160);
-        vertex(300 +160, 300 +160);
-        vertex(300 -160, 300 +160);
-        // Interior part of shape, counter-clockwise winding
-        beginContour();
-        vertex(300-80, 300-80);
-        vertex(300-80, 300+80);
-        vertex(300+80, 300+80);
-        vertex(300+80, 300-80);
-        endContour();
-        endShape();
+    {
+        background(255f);
+        translate(x, y);
+        rotate(angulo);
+       
+        
+        rect(-15, -15, 30, 30);
+
+        if(keyPressed)
+        {
+            if (key == 'q') angulo -= 0.1f;
+            if (key == 'e') angulo += 0.1f;
+            if (key == 'w') y -= 1.0f;
+            if (key == 's') y += 1.0f;
+            if (key == 'a') x -= 1.0f;
+            if (key == 'd') x += 1.0f;
+        }
     }
 }
