@@ -98,7 +98,7 @@ namespace Monogame.Processing
 
         private void DrawImage(Texture2D img, float x, float y, float w, float h, Color color)
         {
-            _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode, transformMatrix: _matrix);
             _spriteBatch.Draw(img, new Vector2(x, y), null, color, 0, Vector2.Zero, new Vector2(w / img.Width, h / img.Height), SpriteEffects.None, 0);
             _spriteBatch.End();
         }
