@@ -98,21 +98,21 @@ namespace Monogame.Processing
 
         private void DrawImage(Texture2D img, float x, float y, float w, float h, Color color)
         {
-            _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode, transformMatrix: _matrix);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode, effect: ActiveSpriteBatchEffect, transformMatrix: _matrix);
             _spriteBatch.Draw(img, new Vector2(x, y), null, color, 0, Vector2.Zero, new Vector2(w / img.Width, h / img.Height), SpriteEffects.None, 0);
             _spriteBatch.End();
         }
 
         private void DrawText(Vector2 position, string text, SpriteFont font, Color color, float size)
         {
-            _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode, SamplerState.PointClamp, null, null, null, _matrix);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode, SamplerState.PointClamp, null, null, ActiveSpriteBatchEffect, _matrix);
             _spriteBatch.DrawString(font, text, position, color, 0f, Vector2.Zero, size / 48f * Vector2.One, SpriteEffects.None, 0f);
             _spriteBatch.End();
         }
 
         private void DrawPoint(Vector2 position, Color color, float thickness)
         {
-            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, null, _matrix);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, ActiveSpriteBatchEffect, _matrix);
             _spriteBatch.Draw(_pixel, position, null, color, 0, new Vector2(0.5f, 0.5f), new Vector2(thickness, thickness), SpriteEffects.None, 0);
             _spriteBatch.End();
         }
@@ -121,7 +121,7 @@ namespace Monogame.Processing
         {
             if (points.Count < 2) return;
             
-            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, null, _matrix);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, ActiveSpriteBatchEffect, _matrix);
             
             for (int i = 1; i < points.Count; i++)
             {
@@ -140,7 +140,7 @@ namespace Monogame.Processing
         {
             if (pointCount < 2) return;
             
-            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, null, _matrix);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, ActiveSpriteBatchEffect, _matrix);
             
             for (int i = 1; i < pointCount; i++)
             {
@@ -172,7 +172,7 @@ namespace Monogame.Processing
 
             GraphicsDevice.BlendState = _style.BlendMode;
 
-            foreach (var pass in _basicEffect.CurrentTechnique.Passes)
+            foreach (var pass in ActivePrimitiveEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, _vertexBuffer, 0, triangleCount);
@@ -344,7 +344,7 @@ namespace Monogame.Processing
 
             GraphicsDevice.BlendState = _style.BlendMode;
 
-            foreach (var pass in _basicEffect.CurrentTechnique.Passes)
+            foreach (var pass in ActivePrimitiveEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
@@ -635,7 +635,7 @@ namespace Monogame.Processing
 
         private void DrawLine(IEnumerable<(float x1, float y1, float x2, float y2)> lines, Color color, float thickness)
         {
-            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, null, _matrix);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, ActiveSpriteBatchEffect, _matrix);
 
             foreach (var (x1, y1, x2, y2) in lines)
             {
@@ -652,7 +652,7 @@ namespace Monogame.Processing
 
         private void DrawLine(float x1, float y1, float x2, float y2, Color color, float thickness)
         {
-            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, null, _matrix);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, _style.BlendMode, null, null, null, ActiveSpriteBatchEffect, _matrix);
 
             var p1 = new Vector2(x1, y1);
             var p2 = new Vector2(x2, y2);
