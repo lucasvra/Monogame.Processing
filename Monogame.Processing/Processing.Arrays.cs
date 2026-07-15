@@ -32,6 +32,7 @@ namespace Monogame.Processing
         public T[] sort<T>(T[] list) => list.OrderBy(e => e).ToArray();
 
         public T[] splice<T>(T[] list, T[] value, int index) => list.Take(index).Concat(value).Concat(list.Skip(index)).ToArray();
+        public T[] splice<T>(T[] list, T value, int index) => splice(list, new[] { value }, index);
 
         public T[] subset<T>(T[] list, int start, int count) => list.Skip(start).Take(count).ToArray();
         public T[] subset<T>(T[] list, int start) => list.Skip(start).ToArray();
