@@ -110,6 +110,29 @@ namespace Monogame.Processing
     {
         private readonly List<string> _columns = new List<string>();
         private readonly List<TableRow> _rows = new List<TableRow>();
+
+        public static Table Parse(string text)
+        {
+            var table = new Table();
+            var lines = text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Length == 0) return table;
+
+            var headers = lines[0].Split(',');
+            foreach (var header in headers) table.addColumn(header);
+
+            foreach (var line in lines.Skip(1))
+            {
+                var values = line.Split(',');
+                var row = table.addRow();
+                for (var i = 0; i < values.Length && i < headers.Length; i++)
+                {
+                    row.setString(headers[i], values[i]);
+                }
+            }
+
+            return table;
+        }
+
         public int getColumnCount() => _columns.Count;
         public int getRowCount() => _rows.Count;
         public string[] getColumnTitles() => _columns.ToArray();
@@ -145,6 +168,7 @@ namespace Monogame.Processing
         public JSONArray(string json) => _array = JsonNode.Parse(json)?.AsArray() ?? new JsonArray();
         internal JSONArray(JsonArray array) => _array = array;
         internal JsonArray Node => _array;
+        public static JSONArray Parse(string json) => new JSONArray(json);
         public int size() => _array.Count;
         public void append(int value) => _array.Add(value);
         public void append(float value) => _array.Add(value);
@@ -172,6 +196,7 @@ namespace Monogame.Processing
         public JSONObject(string json) => _object = JsonNode.Parse(json)?.AsObject() ?? new JsonObject();
         internal JSONObject(JsonObject obj) => _object = obj;
         internal JsonObject Node => _object;
+        public static JSONObject Parse(string json) => new JSONObject(json);
         public int size() => _object.Count;
         public bool hasKey(string key) => _object.ContainsKey(key);
         public string[] keys() => _object.Select(p => p.Key).ToArray();
@@ -198,6 +223,7 @@ namespace Monogame.Processing
         public XML(string name) => _element = new XElement(name);
         internal XML(XElement element) => _element = element;
         public static XML parse(string xml) => new XML(XElement.Parse(xml));
+        public static XML Parse(string xml) => parse(xml);
         public string getName() => _element.Name.LocalName;
         public string getContent() => _element.Value;
         public void setContent(string content) => _element.Value = content;

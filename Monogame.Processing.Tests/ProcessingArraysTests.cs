@@ -7,6 +7,13 @@ public class ProcessingArraysTests
 {
     private sealed class TestProcessing : Processing
     {
+        public override void Setup()
+        {
+        }
+
+        public override void Draw()
+        {
+        }
     }
 
     [Theory]
