@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
@@ -13,10 +14,15 @@ namespace Monogame.Processing
         public static SpriteBatch spriteBatch;
         public static RenderTarget2D currentTarget;
 
-        public int width => texture.Width;
-        public int height => texture.Height;
+        public int width => texture?.Width ?? 0;
+        public int height => texture?.Height ?? 0;
+        public bool IsLoaded => texture != null;
         public Texture2D texture { get; set; }
         public Color[] pixels = new Color[0];
+
+        private PImage()
+        {
+        }
 
         private PImage(Texture2D img)
         {
@@ -35,20 +41,37 @@ namespace Monogame.Processing
             fileStream.Dispose();
         }
 
+        public static PImage Request(string path)
+        {
+            var image = new PImage();
+            Task.Run(() =>
+            {
+                using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                image.texture = Texture2D.FromStream(graphicsDevice, fileStream);
+            });
+            return image;
+        }
+
         public void loadPixels()
         {
+            if (texture == null)
+            {
+                pixels = [];
+                return;
+            }
             pixels = new Color[texture.Width*texture.Height];
             texture.GetData(pixels);
         }
 
         public void updatePixels()
         {
+            if (texture == null || pixels == null || pixels.Length == 0) return;
             texture.SetData(pixels);
         }
 
         public void updatePixels(int x, int y, int w, int h)
         {
-            for (var i = 0; i <= h; i++) 
+            for (var i = 0; i <= h; i++)
                 texture.SetData(pixels, (y + i) * width + x, w);
         }
 
@@ -69,7 +92,34 @@ namespace Monogame.Processing
             return new PImage(img);
         }
 
-        public color get(int x, int y) => pixels[y * width + x];
+        public color get(int x, int y)
+        {
+            if (pixels == null || pixels.Length != width * height) loadPixels();
+            return pixels[y * width + x];
+        }
+
+        public void set(int x, int y, color c)
+        {
+            if (pixels == null || pixels.Length != width * height) loadPixels();
+            pixels[y * width + x] = c;
+            texture.SetData(0, new Rectangle(x, y, 1, 1), new[] { (Color)c }, 0, 1);
+        }
+
+        public void set(int x, int y, PImage img)
+        {
+            if (img == null || !img.IsLoaded) return;
+            if (pixels == null || pixels.Length != width * height) loadPixels();
+            img.loadPixels();
+            for (var iy = 0; iy < img.height; iy++)
+            for (var ix = 0; ix < img.width; ix++)
+            {
+                var dx = x + ix;
+                var dy = y + iy;
+                if (dx < 0 || dy < 0 || dx >= width || dy >= height) continue;
+                pixels[dy * width + dx] = img.pixels[iy * img.width + ix];
+            }
+            updatePixels();
+        }
 
         public void resize(int w, int h)
         {
@@ -258,7 +308,7 @@ namespace Monogame.Processing
                 case Filter.DILATE:
                     ApplyDilation(p, texture.Width, texture.Height, 3);
                     break;
-                    
+
             }
 
             texture.SetData(p);
@@ -329,7 +379,7 @@ namespace Monogame.Processing
                 },
                 _ => BlendState.NonPremultiplied,
             };
-            
+
             var aux = graphicsDevice.GetRenderTargets();
             var img = new RenderTarget2D(graphicsDevice, width, height, false, graphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 

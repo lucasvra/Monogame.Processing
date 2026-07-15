@@ -41,6 +41,10 @@ namespace Monogame.Processing
         public const int RADIUS = (int)ShapeMode.RADIUS;
         public const int CORNER = (int)ShapeMode.CORNER;
         public const int CORNERS = (int)ShapeMode.CORNERS;
+        public const int IMAGE = (int)TextureMode.IMAGE;
+        public const int NORMAL = (int)TextureMode.NORMAL;
+        public const int CLAMP = (int)TextureWrap.CLAMP;
+        public const int REPEAT = (int)TextureWrap.REPEAT;
 
         public const BlendMode BLEND = BlendMode.BLEND;
         public const BlendMode ADD = BlendMode.ADD;
@@ -97,7 +101,7 @@ namespace Monogame.Processing
             AddressV = TextureAddressMode.Clamp,
             AddressW = TextureAddressMode.Clamp,
         };
-        
+
         private readonly Dictionary<Keys, string> _letterKeys = new Dictionary<Keys, string>
         {
             {Keys.A,"A"}, {Keys.B, "B"}, {Keys.C, "C"}, {Keys.D, "D"}, {Keys.E, "E"}, {Keys.F, "F"},
@@ -126,7 +130,7 @@ namespace Monogame.Processing
         public bool focused { get; private set; } = false;
 
         public readonly Surface surface;
-        
+
         public color[] pixels { get; private set; }
 
         public TouchLocation[] touches { get; private set; } = new TouchLocation[0];
@@ -151,17 +155,17 @@ namespace Monogame.Processing
         /// Called directly after setup(), the draw() function continuously executes the lines of code contained inside
         /// its block until the program is stopped or noLoop() is called. draw() is called automatically and should never
         /// be called explicitly. All Processing programs update the screen at the end of draw(), never earlier.
-        /// 
+        ///
         /// To stop the code inside of draw() from running continuously, use noLoop(), redraw() and loop(). If noLoop()
         /// is used to stop the code in draw() from running, then redraw() will cause the code inside draw() to run a
         /// single time, and loop() will cause the code inside draw() to resume running continuously.
-        /// 
+        ///
         /// The number of times draw() executes in each second may be controlled with the frameRate() function.
-        /// 
+        ///
         /// It is common to call background() near the beginning of the draw() loop to clear the contents of the window,
         /// as shown in the first example above. Since pixels drawn to the window are cumulative, omitting background()
         /// may result in unintended results.
-        /// 
+        ///
         /// There can only be one draw() function for each sketch, and draw() must exist if you want the code to run
         /// continuously, or to process events such as mousePressed(). Sometimes, you might have an empty call to draw()
         /// in your program, as shown in the second example above.
@@ -174,12 +178,12 @@ namespace Monogame.Processing
         /// sketch is a single thread, often referred to as the "Animation" thread. Other threads' sequences, however, can
         /// run independently of the main animation loop. In fact, you can launch any number of threads at one time, and they
         /// will all run concurrently.
-        /// 
+        ///
         /// You cannot draw to the screen from a function called by thread(). Because it runs independently, the code will
         /// not be synchronized to the animation thread, causing strange or at least inconsistent results.Use thread() to
         /// load files or do other tasks that take time.When the task is finished, set a variable that indicates the task
         /// is complete, and check that from inside your draw() method.
-        /// 
+        ///
         /// Processing uses threads quite often, such as with library functions like captureEvent() and movieEvent(). These
         /// functions are triggered by a different thread running behind the scenes, and they alert Processing whenever they
         /// have something to report.This is useful when you need to perform a task that takes too long and would slow down
@@ -222,7 +226,7 @@ namespace Monogame.Processing
         /// <summary>
         /// The mouseDragged() function is called once every time the mouse moves while a mouse button is pressed. (If a button
         /// is not being pressed, mouseMoved() is called instead.)
-        /// 
+        ///
         /// Mouse and keyboard events only work when a program has draw(). Without draw(), the code is only run once and then
         /// stops listening for events.
         /// </summary>
@@ -280,10 +284,13 @@ namespace Monogame.Processing
             pixels = [];
             surface = new Surface(Window);
             Window.ClientSizeChanged += Window_ClientSizeChanged;
-            
+
             _style.EllipseMode = ShapeMode.CENTER;
             _style.TextAlign = TextAlign.LEFT;
             _style.RectMode = ShapeMode.CORNER;
+            _style.ImageMode = ShapeMode.CORNER;
+            _style.TextureMode = TextureMode.IMAGE;
+            _style.TextureWrap = TextureWrap.CLAMP;
             _style.Fill = Color.White;
             _style.Tint = Color.White;
             _style.Stroke = Color.Black;
@@ -331,7 +338,7 @@ namespace Monogame.Processing
                 };
             }
 
-            
+
 
             sides = 30;
             _matrix = Matrix.Identity;
@@ -429,7 +436,7 @@ namespace Monogame.Processing
                 UpdateTouch();
                 Draw();
             }
-            
+
             GraphicsDevice.SetRenderTarget(null);
             CheckResize();
 
@@ -473,8 +480,8 @@ namespace Monogame.Processing
         {
             if (_graphics.PreferredBackBufferWidth == width && _graphics.PreferredBackBufferHeight == height) return;
 
-            _graphics.PreferredBackBufferWidth = width; 
-            _graphics.PreferredBackBufferHeight = height; 
+            _graphics.PreferredBackBufferWidth = width;
+            _graphics.PreferredBackBufferHeight = height;
             _graphics.ApplyChanges();
 
             _world = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, 10);
@@ -488,7 +495,7 @@ namespace Monogame.Processing
             foreach (var pkey in pressedKeys.Except(_ppressedKeys))
             {
                 KeyPressed(pkey);
-                
+
                 keyCode = pkey;
                 if (!_letterKeys.ContainsKey(pkey)) continue;
 
@@ -535,7 +542,7 @@ namespace Monogame.Processing
                 mouseButton = CENTER;
                 MousePressed();
             }
-            
+
             mousePressed = mouseButton != 0;
             if (!mousePressed) MouseReleased();
 

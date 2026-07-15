@@ -14,6 +14,18 @@
         CORNERS = 3,
     }
 
+    public enum TextureMode
+    {
+        IMAGE = 0,
+        NORMAL = 1,
+    }
+
+    public enum TextureWrap
+    {
+        CLAMP = 0,
+        REPEAT = 1,
+    }
+
     public enum ArcMode
     {
         OPEN = 0,

@@ -13,6 +13,9 @@ namespace Monogame.Processing
         public float TextSize;
         public ShapeMode RectMode;
         public ShapeMode EllipseMode;
+        public ShapeMode ImageMode;
+        public TextureMode TextureMode;
+        public TextureWrap TextureWrap;
         public BlendState BlendMode;
 
         public TextAlign TextAlign { get; internal set; }
