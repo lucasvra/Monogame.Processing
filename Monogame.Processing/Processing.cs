@@ -15,13 +15,14 @@ namespace Monogame.Processing
     {
         public class Surface
         {
-            private readonly GameWindow _window;
+            private readonly Processing _processing;
 
-            public Surface(GameWindow window) => _window = window;
+            public Surface(Processing processing) => _processing = processing;
 
-            //public void setLocation(int x, int y) => _window.Position = new Point(x, y);
-            public void setResizable(bool val) => _window.AllowUserResizing = val;
-            public void setTitle(string title) => _window.Title = title;
+            public void setLocation(int x, int y) => _processing.windowMove(x, y);
+            public void setResizable(bool val) => _processing.windowResizable(val);
+            public void setSize(int width, int height) => _processing.windowResize(width, height);
+            public void setTitle(string title) => _processing.windowTitle(title);
         }
 
         #region Constants
@@ -82,6 +83,10 @@ namespace Monogame.Processing
         private RenderTarget2D _nextFrame;
         private readonly GraphicsDeviceManager _graphics;
         private readonly DepthStencilState _depthStencilStateWithBuffer = new() { DepthBufferEnable = true };
+        private int _pixelDensity = 1;
+        private Point _lastWindowPosition;
+        private Point _lastClientSize;
+        private bool _settingsCalled;
 
         private MouseState _pmouse;
         private KeyboardState _pkeyboard;
@@ -119,6 +124,10 @@ namespace Monogame.Processing
         public int mouseButton { get; private set; } = 0;
         public int width { get; private set; } = 300;
         public int height { get; private set; } = 300;
+        public int displayWidth => GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        public int displayHeight => GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        public int pixelWidth => width * _pixelDensity;
+        public int pixelHeight => height * _pixelDensity;
         public int frameCount { get; private set; } = 0;
         public float frameRate { get; private set; } = 0;
         public bool mousePressed { get; private set; } = false;
@@ -148,6 +157,11 @@ namespace Monogame.Processing
         /// Note: Variables declared within setup() are not accessible within other functions, including draw().
         /// </summary>
         public abstract void Setup();
+
+        /// <summary>
+        /// Override to configure size, pixel density, and other window settings before Setup() runs.
+        /// </summary>
+        public virtual void settings() { }
 
         /// <summary>
         /// Called directly after setup(), the draw() function continuously executes the lines of code contained inside
@@ -275,12 +289,18 @@ namespace Monogame.Processing
 
         protected virtual void TouchStarted(TouchLocation touch) { }
 
+        /// <summary>Called after the game window position changes, when supported by the current platform.</summary>
+        public virtual void WindowMoved() { }
+
+        /// <summary>Called after the game window client size changes.</summary>
+        public virtual void WindowResized() { }
+
         #endregion
 
         protected Processing()
         {
             pixels = [];
-            surface = new Surface(Window);
+            surface = new Surface(this);
             Window.ClientSizeChanged += Window_ClientSizeChanged;
             
             _style.EllipseMode = ShapeMode.CENTER;
@@ -343,18 +363,41 @@ namespace Monogame.Processing
             IsMouseVisible = true;
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromSeconds(1d / _maxFps);
+            _lastWindowPosition = Window.Position;
+            _lastClientSize = new Point(Window.ClientBounds.Width, Window.ClientBounds.Height);
             _time.Start();
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            if(Window.AllowUserResizing) size(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            var clientSize = new Point(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            if (clientSize == _lastClientSize) return;
+
+            _lastClientSize = clientSize;
+            if (Window.AllowUserResizing)
+            {
+                size(Math.Max(1, clientSize.X / _pixelDensity), Math.Max(1, clientSize.Y / _pixelDensity));
+            }
+
+            WindowResized();
+            redraw();
         }
 
         protected override void Update(GameTime gameTime)
         {
             //Generator.SoundLoop();
+            UpdateWindowPosition();
             Thread();
+            base.Update(gameTime);
+        }
+
+        private void UpdateWindowPosition()
+        {
+            var position = Window.Position;
+            if (position == _lastWindowPosition) return;
+
+            _lastWindowPosition = position;
+            WindowMoved();
         }
 
         protected override void LoadContent()
@@ -426,6 +469,12 @@ namespace Monogame.Processing
 
             focused = IsActive;
 
+            if (!_settingsCalled)
+            {
+                settings();
+                _settingsCalled = true;
+            }
+
             if (frameCount == 0) Setup();
             else
             {
@@ -476,10 +525,10 @@ namespace Monogame.Processing
         }
         private void CheckResize()
         {
-            if (_graphics.PreferredBackBufferWidth == width && _graphics.PreferredBackBufferHeight == height) return;
+            if (_graphics.PreferredBackBufferWidth == pixelWidth && _graphics.PreferredBackBufferHeight == pixelHeight) return;
 
-            _graphics.PreferredBackBufferWidth = width; 
-            _graphics.PreferredBackBufferHeight = height; 
+            _graphics.PreferredBackBufferWidth = pixelWidth; 
+            _graphics.PreferredBackBufferHeight = pixelHeight; 
             _graphics.ApplyChanges();
 
             _world = Matrix.CreateOrthographicOffCenter(0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0, 0, 10);
