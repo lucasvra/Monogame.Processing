@@ -6,6 +6,11 @@
         CENTER = 1,
         RIGHT = 2,
     }
+    public enum TextMode
+    {
+        MODEL = 0,
+    }
+
     public enum ShapeMode
     {
         CENTER = 0,

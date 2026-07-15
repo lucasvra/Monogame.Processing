@@ -43,7 +43,11 @@ namespace Monogame.Processing
         /// 
         /// </summary>
         /// <param name="size"></param>
-        public void textSize(float size) => _style.TextSize = size;
+        public void textSize(float size)
+        {
+            if (size <= 0) throw new ArgumentOutOfRangeException(nameof(size), "Text size must be greater than zero.");
+            _style.TextSize = size;
+        }
 
         /// <summary>
         /// Sets the current alignment for drawing text. 
@@ -59,20 +63,20 @@ namespace Monogame.Processing
         /// <param name="y"></param>
         public void text(string text, float x, float y)
         {
-            //_basicFont.DrawTextToTexture(text, _style.Fill, _style.TextSize, x, y);
+            var font = CurrentFont;
 
             switch (_style.TextAlign)
             {
                 case TextAlign.LEFT:
-                    DrawText(new Vector2(x, y), text, _basicFont, _style.Fill, _style.TextSize);
+                    DrawText(new Vector2(x, y), text, font, _style.Fill, _style.TextSize);
                     break;
                 case TextAlign.RIGHT:
-                    var measure1 = _basicFont.MeasureString(text) * _style.TextSize / 48f;
-                    DrawText(new Vector2(x - measure1.X, y), text, _basicFont, _style.Fill, _style.TextSize);
+                    var measure1 = textWidth(text);
+                    DrawText(new Vector2(x - measure1, y), text, font, _style.Fill, _style.TextSize);
                     break;
                 case TextAlign.CENTER:
-                    var measure2 = _basicFont.MeasureString(text) * _style.TextSize / 48f;
-                    DrawText(new Vector2(x - (measure2.X / 2), y), text, _basicFont, _style.Fill, _style.TextSize);
+                    var measure2 = textWidth(text);
+                    DrawText(new Vector2(x - (measure2 / 2), y), text, font, _style.Fill, _style.TextSize);
                     break;
             }
 
