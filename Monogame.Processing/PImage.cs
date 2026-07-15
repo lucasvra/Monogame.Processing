@@ -18,7 +18,7 @@ namespace Monogame.Processing
         public Texture2D texture { get; set; }
         public Color[] pixels = new Color[0];
 
-        private PImage(Texture2D img)
+        protected PImage(Texture2D img)
         {
             texture = img;
         }

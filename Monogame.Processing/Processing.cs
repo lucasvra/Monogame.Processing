@@ -75,11 +75,35 @@ namespace Monogame.Processing
         private bool _redraw;
 
         private int _lastFrameTime;
+        private int _renderWidth;
+        private int _renderHeight;
         private SpriteFont _basicFont;
         private RenderTarget2D _lastFrame;
         private RenderTarget2D _nextFrame;
         private readonly GraphicsDeviceManager _graphics;
         private readonly DepthStencilState _depthStencilStateWithBuffer = new() { DepthBufferEnable = true };
+        private readonly RasterizerState _rasterizerState = new() { CullMode = CullMode.None };
+        private readonly RasterizerState _scissorRasterizerState = new() { CullMode = CullMode.None, ScissorTestEnable = true };
+        private Rectangle? _clipRectangle;
+        private readonly Stack<RenderContext> _renderContextStack = new Stack<RenderContext>();
+
+        private readonly struct RenderContext
+        {
+            public RenderContext(RenderTargetBinding[] targets, Matrix world, int renderWidth, int renderHeight, Rectangle? clip)
+            {
+                Targets = targets;
+                World = world;
+                RenderWidth = renderWidth;
+                RenderHeight = renderHeight;
+                Clip = clip;
+            }
+
+            public RenderTargetBinding[] Targets { get; }
+            public Matrix World { get; }
+            public int RenderWidth { get; }
+            public int RenderHeight { get; }
+            public Rectangle? Clip { get; }
+        }
 
         private MouseState _pmouse;
         private KeyboardState _pkeyboard;
@@ -409,6 +433,9 @@ namespace Monogame.Processing
             _nextFrame = CreateRenderTarget(_nextFrame);
             GraphicsDevice.SetRenderTarget(_nextFrame);
             GraphicsDevice.Clear(Color.Black);
+            _renderWidth = _nextFrame.Width;
+            _renderHeight = _nextFrame.Height;
+            noClip();
 
             var sw = _nextFrame.Width / (float)_lastFrame.Width;
             var sh = _nextFrame.Height / (float)_lastFrame.Height;
@@ -444,6 +471,69 @@ namespace Monogame.Processing
             _redraw = false;
             frameCount++;
         }
+
+        public PGraphics createGraphics(int w, int h) => new PGraphics(this, w, h);
+
+        /// <summary>
+        /// Restricts drawing to a rectangular area using MonoGame scissor testing.
+        /// Call noClip() to restore drawing to the full current render target.
+        /// </summary>
+        public void clip(float x, float y, float w, float h)
+        {
+            var left = Math.Max(0, (int)MathF.Floor(x));
+            var top = Math.Max(0, (int)MathF.Floor(y));
+            var right = Math.Min(_renderWidth > 0 ? _renderWidth : width, (int)MathF.Ceiling(x + w));
+            var bottom = Math.Min(_renderHeight > 0 ? _renderHeight : height, (int)MathF.Ceiling(y + h));
+            _clipRectangle = new Rectangle(left, top, Math.Max(0, right - left), Math.Max(0, bottom - top));
+            GraphicsDevice.ScissorRectangle = _clipRectangle.Value;
+            ApplyRasterizerState();
+        }
+
+        public void noClip()
+        {
+            _clipRectangle = null;
+            if (GraphicsDevice != null) ApplyRasterizerState();
+        }
+
+        /// <summary>
+        /// Documents Processing hint flags. Unsupported hints are currently accepted and ignored.
+        /// </summary>
+        public void hint(params int[] options) { }
+
+        internal void BeginPGraphics(PGraphics graphics)
+        {
+            _renderContextStack.Push(new RenderContext(GraphicsDevice.GetRenderTargets(), _world, _renderWidth, _renderHeight, _clipRectangle));
+            GraphicsDevice.SetRenderTarget(graphics.RenderTarget);
+            _renderWidth = graphics.width;
+            _renderHeight = graphics.height;
+            _world = Matrix.CreateOrthographicOffCenter(0, graphics.width, graphics.height, 0, 0, 10);
+            _basicEffect.World = _world;
+            PImage.currentTarget = graphics.RenderTarget;
+            noClip();
+        }
+
+        internal void EndPGraphics(PGraphics graphics)
+        {
+            if (_renderContextStack.Count == 0) return;
+
+            var context = _renderContextStack.Pop();
+            GraphicsDevice.SetRenderTargets(context.Targets);
+            _world = context.World;
+            _renderWidth = context.RenderWidth;
+            _renderHeight = context.RenderHeight;
+            _clipRectangle = context.Clip;
+            if (_clipRectangle.HasValue) GraphicsDevice.ScissorRectangle = _clipRectangle.Value;
+            ApplyRasterizerState();
+            PImage.currentTarget = context.Targets.Length > 0 ? context.Targets[0].RenderTarget as RenderTarget2D : _nextFrame;
+        }
+
+        internal void BeginSpriteBatch(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, Effect effect = null, Matrix? transformMatrix = null)
+        {
+            if (_clipRectangle.HasValue) GraphicsDevice.ScissorRectangle = _clipRectangle.Value;
+            _spriteBatch.Begin(sortMode, blendState ?? _style.BlendMode, samplerState, depthStencilState, _clipRectangle.HasValue ? _scissorRasterizerState : _rasterizerState, effect, transformMatrix);
+        }
+
+        internal void ApplyRasterizerState() => GraphicsDevice.RasterizerState = _clipRectangle.HasValue ? _scissorRasterizerState : _rasterizerState;
 
         private RenderTarget2D CreateRenderTarget(RenderTarget2D frame)
         {
