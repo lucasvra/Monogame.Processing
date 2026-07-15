@@ -248,6 +248,66 @@ namespace Monogame.Processing
             _graphics.ToggleFullScreen();
         } 
 
+
+        /// <summary>
+        /// Returns the current pixel density used to scale logical sketch dimensions to the back buffer.
+        /// </summary>
+        public int displayDensity() => _pixelDensity;
+
+        /// <summary>
+        /// Sets the pixel density used by pixelWidth and pixelHeight. Values lower than 1 are not allowed.
+        /// </summary>
+        /// <param name="density">The density multiplier for the back buffer.</param>
+        public void pixelDensity(int density)
+        {
+            if (density < 1) throw new ArgumentOutOfRangeException(nameof(density), "Pixel density must be at least 1.");
+            if (_pixelDensity == density) return;
+
+            _pixelDensity = density;
+            redraw();
+        }
+
+        /// <summary>
+        /// Moves the game window to a screen position, when supported by the platform.
+        /// </summary>
+        public void windowMove(int x, int y)
+        {
+            Window.Position = new Point(x, y);
+            _lastWindowPosition = Window.Position;
+            WindowMoved();
+        }
+
+        /// <summary>
+        /// Resizes the sketch window using logical Processing dimensions.
+        /// </summary>
+        public void windowResize(int w, int h)
+        {
+            size(w, h);
+            CheckResize();
+        }
+
+        /// <summary>
+        /// Enables or disables user resizing for the game window.
+        /// </summary>
+        public void windowResizable(bool value) => Window.AllowUserResizing = value;
+
+        /// <summary>
+        /// Sets the game window title.
+        /// </summary>
+        public void windowTitle(string title) => Window.Title = title;
+
+        /// <summary>
+        /// Resizes the window while preserving the current sketch area according to an aspect ratio.
+        /// </summary>
+        public void windowRatio(float w, float h)
+        {
+            if (w <= 0) throw new ArgumentOutOfRangeException(nameof(w), "Ratio width must be greater than zero.");
+            if (h <= 0) throw new ArgumentOutOfRangeException(nameof(h), "Ratio height must be greater than zero.");
+
+            var targetHeight = Math.Max(1, (int)MathF.Round(width * h / w));
+            windowResize(width, targetHeight);
+        }
+
         /// <summary>
         /// Executes the code within draw() one time. This functions allows the program to update the
         /// display window only when necessary, for example when an event registered by mousePressed()
