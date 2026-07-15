@@ -103,10 +103,17 @@ namespace Monogame.Processing
             _spriteBatch.End();
         }
 
-        private void DrawText(Vector2 position, string text, SpriteFont font, Color color, float size)
+        private void DrawText(Vector2 position, string text, PFont font, Color color, float size)
         {
+            var scale = font.GetScale(size);
+            var lines = (text ?? string.Empty).Split('\n');
+
             _spriteBatch.Begin(SpriteSortMode.Immediate, _style.BlendMode, SamplerState.PointClamp, null, null, null, _matrix);
-            _spriteBatch.DrawString(font, text, position, color, 0f, Vector2.Zero, size / 48f * Vector2.One, SpriteEffects.None, 0f);
+            for (var i = 0; i < lines.Length; i++)
+            {
+                var linePosition = position + new Vector2(0, _style.TextLeading * i);
+                _spriteBatch.DrawString(font.SpriteFont, lines[i].TrimEnd('\r'), linePosition, color, 0f, Vector2.Zero, scale * Vector2.One, SpriteEffects.None, 0f);
+            }
             _spriteBatch.End();
         }
 

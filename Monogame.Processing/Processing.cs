@@ -42,6 +42,8 @@ namespace Monogame.Processing
         public const int CORNER = (int)ShapeMode.CORNER;
         public const int CORNERS = (int)ShapeMode.CORNERS;
 
+        public const TextMode MODEL = TextMode.MODEL;
+
         public const BlendMode BLEND = BlendMode.BLEND;
         public const BlendMode ADD = BlendMode.ADD;
         public const BlendMode SUBTRACT = BlendMode.SUBTRACT;
@@ -289,6 +291,8 @@ namespace Monogame.Processing
             _style.Stroke = Color.Black;
             _style.StrokeWidth = 1;
             _style.TextSize = 12;
+            _style.TextLeading = 14;
+            _style.TextMode = TextMode.MODEL;
             _style.BlendMode = BlendState.NonPremultiplied;
 
             _maxFps = 60;
@@ -377,6 +381,7 @@ namespace Monogame.Processing
 
             //_basicFont = new BasicFontTexture(GraphicsDevice, _spriteBatch);
             _basicFont = (new EmbeddedResourceContentManager(GraphicsDevice)).Load<SpriteFont>("font");
+            _style.TextFont ??= new PFont(_basicFont, "font");
 
             _pmouse = Mouse.GetState();
             _pkeyboard = Keyboard.GetState();
